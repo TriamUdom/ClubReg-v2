@@ -43,6 +43,10 @@ class UserController extends Controller {
         // Check if user is president
         if (in_array($token->getClaim('id'), config('core.admin'))) {
             $request->session()->put('usertype', 'admin');
+            $ispresident = file_get_contents('https://clubs.triamudom.ac.th/api/president?id=' . $token->getClaim('id'));
+            if ($ispresident != 'NOT_FOUND' && starts_with($ispresident, 'ก')) {
+                $request->session()->put('president', $ispresident);
+            }
         } else {
             $ispresident = file_get_contents('https://clubs.triamudom.ac.th/api/president?id=' . $token->getClaim('id'));
             if ($ispresident != 'NOT_FOUND' && starts_with($ispresident, 'ก')) {
