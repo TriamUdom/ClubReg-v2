@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.4.11 on 2017-02-14.
+ * Generated for Laravel 5.4.13 on 2017-03-05.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -1864,18 +1864,6 @@ namespace Illuminate\Support\Facades {
         /**
          * Determine if the current user is authenticated.
          *
-         * @return \App\User 
-         * @throws \Illuminate\Auth\AuthenticationException
-         * @static 
-         */
-        public static function authenticate()
-        {
-            return \Illuminate\Auth\SessionGuard::authenticate();
-        }
-        
-        /**
-         * Determine if the current user is authenticated.
-         *
          * @return bool 
          * @static 
          */
@@ -1893,6 +1881,18 @@ namespace Illuminate\Support\Facades {
         public static function guest()
         {
             return \Illuminate\Auth\SessionGuard::guest();
+        }
+        
+        /**
+         * Determine if the current user is authenticated.
+         *
+         * @return \App\User 
+         * @throws \Illuminate\Auth\AuthenticationException
+         * @static 
+         */
+        public static function authenticate()
+        {
+            return \Illuminate\Auth\SessionGuard::authenticate();
         }
         
     }         
@@ -10923,6 +10923,32 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
+         * Register a view composer event.
+         *
+         * @param array|string $views
+         * @param \Closure|string $callback
+         * @return array 
+         * @static 
+         */
+        public static function composer($views, $callback)
+        {
+            return \Illuminate\View\Factory::composer($views, $callback);
+        }
+        
+        /**
+         * Register a view creator event.
+         *
+         * @param array|string $views
+         * @param \Closure|string $callback
+         * @return array 
+         * @static 
+         */
+        public static function creator($views, $callback)
+        {
+            return \Illuminate\View\Factory::creator($views, $callback);
+        }
+        
+        /**
          * Start a component rendering process.
          *
          * @param string $name
@@ -10971,19 +10997,6 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Register a view creator event.
-         *
-         * @param array|string $views
-         * @param \Closure|string $callback
-         * @return array 
-         * @static 
-         */
-        public static function creator($views, $callback)
-        {
-            return \Illuminate\View\Factory::creator($views, $callback);
-        }
-        
-        /**
          * Register multiple view composers via an array.
          *
          * @param array $composers
@@ -10993,19 +11006,6 @@ namespace Illuminate\Support\Facades {
         public static function composers($composers)
         {
             return \Illuminate\View\Factory::composers($composers);
-        }
-        
-        /**
-         * Register a view composer event.
-         *
-         * @param array|string $views
-         * @param \Closure|string $callback
-         * @return array 
-         * @static 
-         */
-        public static function composer($views, $callback)
-        {
-            return \Illuminate\View\Factory::composer($views, $callback);
         }
         
         /**
@@ -11309,10 +11309,72 @@ namespace Illuminate\Support\Facades {
     }         
 }
     
-namespace Illuminate\Database\Eloquent {
+    
+namespace {
 
-    class Model {
-        
+    class App extends \Illuminate\Support\Facades\App {}
+    
+    class Artisan extends \Illuminate\Support\Facades\Artisan {}
+    
+    class Auth extends \Illuminate\Support\Facades\Auth {}
+    
+    class Blade extends \Illuminate\Support\Facades\Blade {}
+    
+    class Broadcast extends \Illuminate\Support\Facades\Broadcast {}
+    
+    class Bus extends \Illuminate\Support\Facades\Bus {}
+    
+    class Cache extends \Illuminate\Support\Facades\Cache {}
+    
+    class Config extends \Illuminate\Support\Facades\Config {}
+    
+    class Cookie extends \Illuminate\Support\Facades\Cookie {}
+    
+    class Crypt extends \Illuminate\Support\Facades\Crypt {}
+    
+    class DB extends \Illuminate\Support\Facades\DB {}
+    
+    class Event extends \Illuminate\Support\Facades\Event {}
+    
+    class File extends \Illuminate\Support\Facades\File {}
+    
+    class Gate extends \Illuminate\Support\Facades\Gate {}
+    
+    class Hash extends \Illuminate\Support\Facades\Hash {}
+    
+    class Lang extends \Illuminate\Support\Facades\Lang {}
+    
+    class Log extends \Illuminate\Support\Facades\Log {}
+    
+    class Mail extends \Illuminate\Support\Facades\Mail {}
+    
+    class Notification extends \Illuminate\Support\Facades\Notification {}
+    
+    class Password extends \Illuminate\Support\Facades\Password {}
+    
+    class Queue extends \Illuminate\Support\Facades\Queue {}
+    
+    class Redirect extends \Illuminate\Support\Facades\Redirect {}
+    
+    class Request extends \Illuminate\Support\Facades\Request {}
+    
+    class Response extends \Illuminate\Support\Facades\Response {}
+    
+    class Route extends \Illuminate\Support\Facades\Route {}
+    
+    class Schema extends \Illuminate\Support\Facades\Schema {}
+    
+    class Session extends \Illuminate\Support\Facades\Session {}
+    
+    class Storage extends \Illuminate\Support\Facades\Storage {}
+    
+    class URL extends \Illuminate\Support\Facades\URL {}
+    
+    class Validator extends \Illuminate\Support\Facades\Validator {}
+    
+    class View extends \Illuminate\Support\Facades\View {}
+    
+    class Eloquent extends \Illuminate\Database\Eloquent\Model {    
         /**
          * Register a new global scope.
          *
@@ -13247,76 +13309,7 @@ namespace Illuminate\Database\Eloquent {
         {
             return \Illuminate\Database\Query\Builder::macroCall($method, $parameters);
         }
-        
-    }         
-}
-    
-    
-namespace {
-
-    class App extends \Illuminate\Support\Facades\App {}
-    
-    class Artisan extends \Illuminate\Support\Facades\Artisan {}
-    
-    class Auth extends \Illuminate\Support\Facades\Auth {}
-    
-    class Blade extends \Illuminate\Support\Facades\Blade {}
-    
-    class Broadcast extends \Illuminate\Support\Facades\Broadcast {}
-    
-    class Bus extends \Illuminate\Support\Facades\Bus {}
-    
-    class Cache extends \Illuminate\Support\Facades\Cache {}
-    
-    class Config extends \Illuminate\Support\Facades\Config {}
-    
-    class Cookie extends \Illuminate\Support\Facades\Cookie {}
-    
-    class Crypt extends \Illuminate\Support\Facades\Crypt {}
-    
-    class DB extends \Illuminate\Support\Facades\DB {}
-    
-    class Event extends \Illuminate\Support\Facades\Event {}
-    
-    class File extends \Illuminate\Support\Facades\File {}
-    
-    class Gate extends \Illuminate\Support\Facades\Gate {}
-    
-    class Hash extends \Illuminate\Support\Facades\Hash {}
-    
-    class Lang extends \Illuminate\Support\Facades\Lang {}
-    
-    class Log extends \Illuminate\Support\Facades\Log {}
-    
-    class Mail extends \Illuminate\Support\Facades\Mail {}
-    
-    class Notification extends \Illuminate\Support\Facades\Notification {}
-    
-    class Password extends \Illuminate\Support\Facades\Password {}
-    
-    class Queue extends \Illuminate\Support\Facades\Queue {}
-    
-    class Redirect extends \Illuminate\Support\Facades\Redirect {}
-    
-    class Request extends \Illuminate\Support\Facades\Request {}
-    
-    class Response extends \Illuminate\Support\Facades\Response {}
-    
-    class Route extends \Illuminate\Support\Facades\Route {}
-    
-    class Schema extends \Illuminate\Support\Facades\Schema {}
-    
-    class Session extends \Illuminate\Support\Facades\Session {}
-    
-    class Storage extends \Illuminate\Support\Facades\Storage {}
-    
-    class URL extends \Illuminate\Support\Facades\URL {}
-    
-    class Validator extends \Illuminate\Support\Facades\Validator {}
-    
-    class View extends \Illuminate\Support\Facades\View {}
-    
-    class Eloquent extends \Illuminate\Database\Eloquent\Model {}
+        }
     
 }
 

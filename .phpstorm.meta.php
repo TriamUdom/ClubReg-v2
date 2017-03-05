@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2017-02-15.
+    * Generated on 2017-03-05.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -39,6 +39,10 @@ namespace PHPSTORM_META {
             'view' instanceof \Illuminate\View\Factory,
             'view.finder' instanceof \Illuminate\View\FileViewFinder,
             'view.engine.resolver' instanceof \Illuminate\View\Engines\EngineResolver,
+            'command.ide-helper.generate' instanceof \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand,
+            'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
+            'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,
+            'command.tinker' instanceof \Laravel\Tinker\Console\TinkerCommand,
             'blade.compiler' instanceof \Illuminate\View\Compilers\BladeCompiler,
             'cache' instanceof \Illuminate\Cache\CacheManager,
             'cache.store' instanceof \Illuminate\Cache\Repository,
@@ -124,7 +128,6 @@ namespace PHPSTORM_META {
             'translation.loader' instanceof \Illuminate\Translation\FileLoader,
             'translator' instanceof \Illuminate\Translation\Translator,
             'validation.presence' instanceof \Illuminate\Validation\DatabasePresenceVerifier,
-            'command.tinker' instanceof \Laravel\Tinker\Console\TinkerCommand,
         ],
         \Illuminate\Contracts\Container\Container::make('') => [
             '' == '@',
@@ -156,6 +159,10 @@ namespace PHPSTORM_META {
             'view' instanceof \Illuminate\View\Factory,
             'view.finder' instanceof \Illuminate\View\FileViewFinder,
             'view.engine.resolver' instanceof \Illuminate\View\Engines\EngineResolver,
+            'command.ide-helper.generate' instanceof \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand,
+            'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
+            'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,
+            'command.tinker' instanceof \Laravel\Tinker\Console\TinkerCommand,
             'blade.compiler' instanceof \Illuminate\View\Compilers\BladeCompiler,
             'cache' instanceof \Illuminate\Cache\CacheManager,
             'cache.store' instanceof \Illuminate\Cache\Repository,
@@ -241,7 +248,6 @@ namespace PHPSTORM_META {
             'translation.loader' instanceof \Illuminate\Translation\FileLoader,
             'translator' instanceof \Illuminate\Translation\Translator,
             'validation.presence' instanceof \Illuminate\Validation\DatabasePresenceVerifier,
-            'command.tinker' instanceof \Laravel\Tinker\Console\TinkerCommand,
         ],
         \App::make('') => [
             '' == '@',
@@ -273,6 +279,10 @@ namespace PHPSTORM_META {
             'view' instanceof \Illuminate\View\Factory,
             'view.finder' instanceof \Illuminate\View\FileViewFinder,
             'view.engine.resolver' instanceof \Illuminate\View\Engines\EngineResolver,
+            'command.ide-helper.generate' instanceof \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand,
+            'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
+            'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,
+            'command.tinker' instanceof \Laravel\Tinker\Console\TinkerCommand,
             'blade.compiler' instanceof \Illuminate\View\Compilers\BladeCompiler,
             'cache' instanceof \Illuminate\Cache\CacheManager,
             'cache.store' instanceof \Illuminate\Cache\Repository,
@@ -358,7 +368,6 @@ namespace PHPSTORM_META {
             'translation.loader' instanceof \Illuminate\Translation\FileLoader,
             'translator' instanceof \Illuminate\Translation\Translator,
             'validation.presence' instanceof \Illuminate\Validation\DatabasePresenceVerifier,
-            'command.tinker' instanceof \Laravel\Tinker\Console\TinkerCommand,
         ],
         \app('') => [
             '' == '@',
@@ -390,6 +399,10 @@ namespace PHPSTORM_META {
             'view' instanceof \Illuminate\View\Factory,
             'view.finder' instanceof \Illuminate\View\FileViewFinder,
             'view.engine.resolver' instanceof \Illuminate\View\Engines\EngineResolver,
+            'command.ide-helper.generate' instanceof \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand,
+            'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
+            'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,
+            'command.tinker' instanceof \Laravel\Tinker\Console\TinkerCommand,
             'blade.compiler' instanceof \Illuminate\View\Compilers\BladeCompiler,
             'cache' instanceof \Illuminate\Cache\CacheManager,
             'cache.store' instanceof \Illuminate\Cache\Repository,
@@ -475,7 +488,6 @@ namespace PHPSTORM_META {
             'translation.loader' instanceof \Illuminate\Translation\FileLoader,
             'translator' instanceof \Illuminate\Translation\Translator,
             'validation.presence' instanceof \Illuminate\Validation\DatabasePresenceVerifier,
-            'command.tinker' instanceof \Laravel\Tinker\Console\TinkerCommand,
         ],
     ];
 }
