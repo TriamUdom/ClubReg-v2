@@ -56,8 +56,8 @@ class Club extends Model {
         $studentData = $this->members;
         
         $fileName = '[FM 33-04] ' . substr($this->id, -2) . '_' . $this->name;
-        if (file_exists(public_path('FMOutput/' . $fileName . '.docx'))) {
-            unlink(public_path('FMOutput/' . $fileName . '.docx'));
+        if (file_exists(storage_path('app/FMOutput/' . $fileName . '.docx'))) {
+            unlink(storage_path('app/FMOutput/' . $fileName . '.docx'));
         }
         
         $templateProcessor = new TemplateProcessor(base_path('resources/FMtemplate/FM3304.docx'));
@@ -83,10 +83,9 @@ class Club extends Model {
         
         $templateProcessor->setValue('adviserName', htmlspecialchars($this->getAdviserName()));
         
-        $templateProcessor->saveAs(public_path('FMOutput/' . $fileName . '.docx'));
+        $templateProcessor->saveAs(storage_path('app/FMOutput/' . $fileName . '.docx'));
         
-        // @todo Security Vulnerability: Expose sensitive information to public access
-        return public_path('FMOutput/' . $fileName . '.docx');
+        return storage_path('app/FMOutput/' . $fileName . '.docx');
     }
     
     private function getAdviserName() {
@@ -99,6 +98,6 @@ class Club extends Model {
     
     public function isAvailable():bool {
         // @todo
-        return true;
+        return $this->countMember() < 200;
     }
 }
