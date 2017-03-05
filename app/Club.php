@@ -6,12 +6,44 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use PhpOffice\PhpWord\TemplateProcessor;
 
+/**
+ * App\Club
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\User[] $members
+ * @mixin \Eloquent
+ * @property string $id
+ * @property string $name
+ * @property string $english_name
+ * @property bool $is_audition
+ * @property bool $is_active
+ * @property bool $subject_code
+ * @property int $fix_teacher
+ * @property string $president_title
+ * @property string $president_fname
+ * @property string $president_lname
+ * @property string $adviser_title
+ * @property string $adviser_fname
+ * @property string $adviser_lname
+ * @method static \Illuminate\Database\Query\Builder|\App\Club whereAdviserFname($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Club whereAdviserLname($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Club whereAdviserTitle($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Club whereEnglishName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Club whereFixTeacher($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Club whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Club whereIsActive($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Club whereIsAudition($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Club whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Club wherePresidentFname($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Club wherePresidentLname($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Club wherePresidentTitle($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Club whereSubjectCode($value)
+ */
 class Club extends Model {
     public $incrementing = false;
     public $timestamps = false;
     
     public function members() {
-        return $this->hasMany('App\User', 'club', 'id');
+        return $this->hasMany('App\User', 'club_id', 'id');
     }
     
     /**
@@ -53,10 +85,20 @@ class Club extends Model {
         
         $templateProcessor->saveAs(public_path('FMOutput/' . $fileName . '.docx'));
         
+        // @todo Security Vulnerability: Expose sensitive information to public access
         return public_path('FMOutput/' . $fileName . '.docx');
     }
     
     private function getAdviserName() {
         return $this->adviser_title . $this->adviser_fname . ' ' . $this->adviser_lname;
+    }
+    
+    public function countMember():int {
+        return $this->members()->count();
+    }
+    
+    public function isAvailable():bool {
+        // @todo
+        return true;
     }
 }

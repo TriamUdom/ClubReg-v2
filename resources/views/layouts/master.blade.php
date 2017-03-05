@@ -18,7 +18,7 @@
 @section('nav')
     <nav class="teal" role="navigation">
         <div class="nav-wrapper container">
-            <a id="logo-container" href="/" class="brand-logo th"><img src="/phrakiao.png" style="height:1.8rem"/> ระเบียนสะสม</a>
+            <a id="logo-container" href="/" class="brand-logo th"><img src="/phrakiao.png" style="height:1.8rem"/> ระบบทะเบียนชมรม</a>
             <ul class="right hide-on-med-and-down">
                 <li <?= Request::is('/') ? 'class="active"' : '' ?>><a href="/">หน้าหลัก</a></li>
                 {!! session()->has('userid') ? '<li><a href="/logout">ออกจากระบบ</a></li>' : '' !!}
@@ -42,7 +42,7 @@
     <footer class="page-footer teal">
         <div class="footer-copyright">
             <div class="container">
-                <span class="hide-on-print">งานกิจกรรมพัฒนาผู้เรียน โรงเรียนเตรียมอุดมศึกษา {!! session()->has('userid') ? '| เข้าสู่ระบบในชื่อ '.session('username') : '' !!}</span>
+                <span class="hide-on-print"><a href="https://clubs.triamudom.ac.th">งานกิจกรรมพัฒนาผู้เรียน โรงเรียนเตรียมอุดมศึกษา</a> {!! session()->has('userid') ? '| เข้าสู่ระบบในชื่อ '.session('username') : '' !!}</span>
                 <div class="hide-on-screen row">
                     <div class="col s7">ระบบทะเบียนชมรม โรงเรียนเตรียมอุดมศึกษา</div>
                     <div class="col s5 right-align">{!! session()->has('userid') ? 'พิมพ์โดย '.session('username') : '' !!}</div>

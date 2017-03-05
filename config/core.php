@@ -22,5 +22,8 @@ return [
 	),
 	
 	'current_year' => '2559',
+    
+    'round' => 'CONFIRM', // Enumerated types: WAITING, CONFIRM, CONFIRM&AUDITION, AUDITION, WAR, CLOSED (must be uppercase)
 
+    'captcha_enable' => false
 ];

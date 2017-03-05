@@ -3,18 +3,7 @@
 Route::group(['middleware' => ['web']], function () {
     
     Route::get('/', function () {
-        /*if (session()->has('userid')) {
-            if (session()->has('student')) {
-                return view('account');
-            } elseif (session('usertype') == 'staff') {
-                return view('admin-menu');
-            } else {
-                return response('Error in user session');
-            }
-        } else {
-            return view('index');
-        }*/
-        return view('welcome');
+        return view('login');
     });
     
     Route::get('login', 'UserController@redirectOpenID');
@@ -29,7 +18,7 @@ Route::group(['middleware' => ['web']], function () {
             dump(session()->all());
         });
         Route::get('ip', function (\Illuminate\Http\Request $request) {
-            return response(\App\Helper::getIPAddress($request) . ' (' . (\App\Helper::isIntranet($request, false) ? 'INTRA' : 'EXTERNAL') . ')');
+            return response(\App\Helper::getIPAddress($request));
         });
         Route::get('/view/{id}', function ($id) {
             if (!empty($id) && view()->exists($id)) {

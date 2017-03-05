@@ -10,6 +10,24 @@ use Illuminate\Http\Request;
  * Helper functions
  */
 class Helper {
+    
+    const Round_Waiting = 'WAITING';
+    const Round_Confirm = 'CONFIRM';
+    const Round_Audition = 'AUDITION';
+    const Round_War = 'WAR';
+    const Round_Closed = 'CLOSED';
+    
+    /**
+     * Is currently in supplied round?
+     *
+     * @param string $round
+     * @return bool
+     */
+    public static function isRound (string $round) {
+        return in_array(strtoupper($round), explode('&', config('core.round')));
+    }
+    
+    
 	/**
 	 * Generate html <option> from array.
 	 *
@@ -61,10 +79,6 @@ class Helper {
 		return false;
 	}
 	
-	public static function getFileFromURI(string $uriencoded) {
-		return base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $uriencoded));
-	}
-	
 	/**
 	 * Roughly check if array is multidimensional (['example'=>'ตัวอย่าง']) array or not (['1','4']).
 	 *
@@ -89,11 +103,7 @@ class Helper {
 		
 		return date('j', $time) . ' ' . config('static.months')[date('n', $time)] . ' ' . (date('Y', $time) + 543);
 	}
-	
-	public static function generateCheck(bool $status) {
-		return $status ? '<i class="material-icons green-text" title="มีข้อมูลเรียบร้อยแล้ว">check</i>' : '<i class="material-icons red-text" title="ไม่มีข้อมูลหรือไม่ครบถ้วน">clear</i>';
-	}
-	
+    
 	public static function dateToAcademicYear($date) {
 		$time = strtotime($date);
 		if (is_numeric($date) && (strlen($date) == 10)) {
@@ -112,25 +122,7 @@ class Helper {
 	public static function objectToArray($object) {
 		return json_decode(json_encode($object), true);
 	}
-	
-	/**
-	 * Check if the given request came from inside the school's network
-	 *
-	 * Check if the given request came from 172.17.x.x (Ethernet), 192.168.x.x (Computer Lab), 10.100.100.x. (Some Server), 10.0.x.x (Wifi)
-	 * 10.100.101.x is not permitted, as misconfiguration may cause REMOTE_ADDR to be its own ip.
-	 * This method also return true if running in local environment and the request came from ::1 (localhost).
-	 *
-	 * @param Request $request
-	 * @param bool    $checkSession
-	 * @return bool
-	 */
-	public static function isIntranet(Request $request, bool $checkSession = true) {
-		$ip = self::getIPAddress($request);
-		
-		return starts_with($ip, '172.17.') || starts_with($ip, '192.168.') || starts_with($ip, '10.100.100.') || starts_with($ip,
-			'10.0.') || ($request->session()->has('local') && $checkSession) || ($ip == '::1' && config('app.env') == 'local');
-	}
-	
+    
 	/**
 	 * Get the IP address from request, use X-Real-IP if available.
 	 *
@@ -146,22 +138,5 @@ class Helper {
 		
 		return $ip;
 	}
-	
-	/**
-	 * Compress the given object, json encode if not string.
-	 *
-	 * @param $input String, array, integer, float, collection and model are allowed.
-	 * @return string
-	 */
-	public static function compress($input) {
-		if ($input instanceof Jsonable) {
-			$input = $input->toJson();
-		} elseif ($input instanceof Arrayable) {
-			$input = json_encode($input->toArray());
-		} elseif ($input instanceof \JsonSerializable || is_array($input) || is_bool($input)) {
-			$input = json_encode($input);
-		}
-		
-		return base64_encode(gzcompress($input));
-	}
+    
 }
