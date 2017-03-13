@@ -3,6 +3,7 @@
 namespace App;
 
 
+use App\Exceptions\UserFriendlyException;
 use Illuminate\Database\Eloquent\Model;
 use PhpOffice\PhpWord\TemplateProcessor;
 
@@ -11,19 +12,19 @@ use PhpOffice\PhpWord\TemplateProcessor;
  *
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\User[] $members
  * @mixin \Eloquent
- * @property string $id
- * @property string $name
- * @property string $english_name
- * @property bool $is_audition
- * @property bool $is_active
- * @property bool $subject_code
- * @property int $fix_teacher
- * @property string $president_title
- * @property string $president_fname
- * @property string $president_lname
- * @property string $adviser_title
- * @property string $adviser_fname
- * @property string $adviser_lname
+ * @property string                                                    $id
+ * @property string                                                    $name
+ * @property string                                                    $english_name
+ * @property bool                                                      $is_audition
+ * @property bool                                                      $is_active
+ * @property int                                                       $subject_code
+ * @property int                                                       $fix_teacher
+ * @property string                                                    $president_title
+ * @property string                                                    $president_fname
+ * @property string                                                    $president_lname
+ * @property string                                                    $adviser_title
+ * @property string                                                    $adviser_fname
+ * @property string                                                    $adviser_lname
  * @method static \Illuminate\Database\Query\Builder|\App\Club whereAdviserFname($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Club whereAdviserLname($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Club whereAdviserTitle($value)
@@ -42,8 +43,28 @@ class Club extends Model {
     public $incrementing = false;
     public $timestamps = false;
     
+    /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'is_audition' => 'boolean',
+        'is_active' => 'boolean'
+    ];
+    
     public function members() {
         return $this->hasMany('App\User', 'club_id', 'id');
+    }
+    
+    public static function currentPresident() {
+        if ($user = self::find(session('president'))) {
+            return $user;
+        } else {
+            $e = new UserFriendlyException('President not logged in');
+            $e->setDescription('ประธานชมรมยังไม่ได้เข้าสู่ระบบ');
+            throw $e;
+        }
     }
     
     /**
@@ -92,12 +113,36 @@ class Club extends Model {
         return $this->adviser_title . $this->adviser_fname . ' ' . $this->adviser_lname;
     }
     
-    public function countMember():int {
+    public function countMember(): int {
         return $this->members()->count();
     }
     
-    public function isAvailable():bool {
+    public function isAvailable(): bool {
         // @todo
         return $this->countMember() < 200;
+    }
+    
+    /**
+     * Get all club open for audition
+     *
+     * @return array
+     */
+    public static function fetchAuditionClubs(): array {
+        return self::where('is_audition', true)->where('is_active', true)->get()->reject(function (Club $item) {
+            return !$item->isAvailable();
+        })->map(function (Club $item) {
+            return $item->name;
+        })->all();
+    }
+    
+    /**
+     * Get all club available in war
+     *
+     * @return array
+     */
+    public static function fetchWarClub(): array {
+        return self::where('is_audition', false)->where('is_active', true)->get()->reject(function (Club $item) {
+            return !$item->isAvailable();
+        })->all();
     }
 }

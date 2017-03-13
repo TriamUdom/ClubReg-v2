@@ -5,7 +5,7 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="theme-color" content="#009688"/>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css" rel="stylesheet"/>
     <link rel="shortcut icon" href="/favicon.png" />
     <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet" />
     <style>
@@ -93,7 +93,7 @@
         </div>
     </div>
 </footer>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script>
     if ($('h1')[0].scrollWidth > $('h1').innerWidth()) {
         var fs = 85;

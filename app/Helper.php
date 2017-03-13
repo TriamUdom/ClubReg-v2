@@ -24,7 +24,15 @@ class Helper {
      * @return bool
      */
     public static function isRound (string $round) {
+        if (self::shouldCountdown()) {
+            // Force round WAITING
+            return $round == self::Round_Waiting;
+        }
         return in_array(strtoupper($round), explode('&', config('core.round')));
+    }
+    
+    public static function shouldCountdown():bool {
+        return !empty(config('core.allow_register_time')) AND config('core.allow_register_time') > time();
     }
     
     

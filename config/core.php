@@ -10,20 +10,10 @@ return [
 	'redirect_uri' => env('APP_URL', 'http://localhost') . '/openid_login',
 	'url' => env('APP_URL', 'http://localhost'),
 	
-	
-	'admin' => array(
-		'tuadmin', // Universal Admin Password
-		's53783', // Siwat Techavoranant
-		'songkiat.th',
-		'poramest.mo',
-		'manop_penrasamee',
-		'yongyuth.ro',
-		'sunan.pr',
-	),
-	
-	'current_year' => '2559',
+	'current_year' => '2560',
+    'allow_register_time' => 1489318125, // Timestamp to start registering club, 0 if force allow, overriding "round" value. (used to show countdown)
     
-    'round' => 'CONFIRM', // Enumerated types: WAITING, CONFIRM, CONFIRM&AUDITION, AUDITION, WAR, CLOSED (must be uppercase)
+    'round' => 'CONFIRM&AUDITION', // Enumerated types: WAITING, CONFIRM, CONFIRM&AUDITION, AUDITION, WAR, CLOSED (must be uppercase)
 
     'captcha_enable' => false
 ];

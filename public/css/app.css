@@ -84,7 +84,3 @@ p.th {
     padding: 15px 25px 15px 15px;
     width: 100%
 }
-
-body:not(img) {
-    filter: grayscale(0.85);
-}

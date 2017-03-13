@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="theme-color" content="#009688"/>
     <meta name="google" content="notranslate"/>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet" />
     <link href="/css/app.css" rel="stylesheet"/>
@@ -42,19 +42,15 @@
     <footer class="page-footer teal">
         <div class="footer-copyright">
             <div class="container">
-                <span class="hide-on-print"><a href="https://clubs.triamudom.ac.th">งานกิจกรรมพัฒนาผู้เรียน โรงเรียนเตรียมอุดมศึกษา</a> {!! session()->has('userid') ? '| เข้าสู่ระบบในชื่อ '.session('username') : '' !!}</span>
-                <div class="hide-on-screen row">
-                    <div class="col s7">ระบบทะเบียนชมรม โรงเรียนเตรียมอุดมศึกษา</div>
-                    <div class="col s5 right-align">{!! session()->has('userid') ? 'พิมพ์โดย '.session('username') : '' !!}</div>
-                </div>
+                <a href="https://clubs.triamudom.ac.th">งานกิจกรรมพัฒนาผู้เรียน โรงเรียนเตรียมอุดมศึกษา</a> {!! session()->has('userid') ? '| เข้าสู่ระบบในชื่อ '.session('username') : '' !!}
             </div>
         </div>
     </footer>
 @show
 
 @section('script')
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
     <script>
         $(function () {
             $(".button-collapse").sideNav();

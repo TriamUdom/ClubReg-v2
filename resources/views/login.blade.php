@@ -23,16 +23,13 @@
 
 @section('main')
     <div class="z-depth-1 card-panel" style="max-width:550px;margin:auto">
-        <form class="login-form" method="POST" action="/login">
+        <form class="login-form" method="POST" action="/login/student">
             {{ csrf_field() }}
             <div class="row">
                 <div class="input-field col s12 center">
                     <h4 class="center login-form-text">ลงทะเบียนเข้าร่วมชมรม</h4>
                 </div>
             </div>
-            <ul class="collection">
-                <li class="collection-item amber lighten-3">เข้าสู่ระบบเพื่อดำเนินการต่อ</li>
-            </ul>
             @if (count($errors) > 0)
                 <ul class="collection white-text">
                     <li class="collection-item red darken-1">เกิดข้อผิดพลาดในข้อมูล
@@ -44,28 +41,28 @@
                 style="margin:0;{{ session()->has('error_message') ? '' : 'display:none' }}" id="error-message">
                 <li class="collection-item red darken-1">{{ session('error_message') }}</li>
             </ul>
-            <div class="row margin">
+            <div class="row">
                 <div class="input-field col s12">
-                    <input id="username" type="number" name="username" class="validate" required min="1100000000000" max="9000000000000" />
+                    <input id="username" type="number" name="citizen_id" class="validate" required min="1100000000000" max="9000000000000" />
                     <label for="username">รหัสประจำตัวประชาชน</label>
                 </div>
             </div>
-            <div class="row margin">
+            <div class="row">
                 <div class="input-field col s12">
-                    <input id="password" type="password" name="password" class="validate" required/>
-                    <label for="password">วัน/เดือน/ปีเกิด (DD/MM/YYYY)</label>
+                    <input id="password" type="number" name="student_id" class="validate" required min="11111" max="99999"/>
+                    <label for="password">รหัสประจำตัวนักเรียน (ไม่มี ใส่ 11111)</label>
                 </div>
             </div>
             @if (config('core.captcha_enable'))
                 <div class="row">
                     <div class="col s12">
-                        {!! Recaptcha::render([ 'lang' => App::getLocale() ]) !!}
+                        {!! Recaptcha::render([ 'lang' => 'th' ]) !!}
                     </div>
                 </div>
             @endif
             <div class="row">
                 <div class="input-field col s12">
-                    <button class="btn waves-effect waves-light red" type="submit" name="action" style="width:100%">
+                    <button class="btn waves-effect waves-light orange" type="submit" name="action" style="width:100%">
                         เข้าสู่ระบบ
                     </button>
                 </div>

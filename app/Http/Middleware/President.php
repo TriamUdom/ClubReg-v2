@@ -15,13 +15,11 @@ class President {
      * @return mixed
      */
     public function handle($request, Closure $next, $guard = NULL) {
-        if (!($request->session()->has('userid') && ($request->session()->get('usertype') == 'admin' || $request->session()->has('president')))) {
+        if (!$request->session()->has('president')) {
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);
             } else {
-                $request->session()->set('redirect_queue', $request->fullUrl());
-                
-                return redirect()->guest('login');
+                return response()->view('errors.403');
             }
         }
         
