@@ -32,8 +32,7 @@
             </div>
             @if (count($errors) > 0)
                 <ul class="collection white-text">
-                    <li class="collection-item red darken-1">เกิดข้อผิดพลาดในข้อมูล
-                        ({{ implode(', ', $errors->all()) }})
+                    <li class="collection-item red darken-1">{{ implode(', ', $errors->all()) }}
                     </li>
                 </ul>
             @endif

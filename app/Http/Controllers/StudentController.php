@@ -27,7 +27,7 @@ class StudentController extends Controller {
             if ($claimedUser->student_id == $request->input('student_id') OR (empty($claimedUser->student_id) AND $request->input('student_id') == '11111')) {
                 // Authenticated
                 $request->session()->put('student', $claimedUser->citizen_id);
-    
+                
                 return redirect()->intended('/');
             } else {
                 return back()->withErrors('รหัสประจำตัวประชาชนหรือรหัสนักเรียนไม่ถูกต้อง');
@@ -96,7 +96,7 @@ class StudentController extends Controller {
     }
     
     /**
-     * (Round AUDITION) Confirm to join club which has passed audition
+     * (Round AUDITION) Confirm/Reject to join club which has passed audition
      *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
@@ -104,7 +104,8 @@ class StudentController extends Controller {
      */
     public function confirmAudition(Request $request) {
         $this->validate($request, [
-            'audition' => 'required|exists:auditions,id' // Audition Request ID
+            'audition' => 'required|exists:auditions,id', // Audition Request ID
+            'action' => 'required|in:join,reject'
         ]);
         
         if (!Helper::isRound(Helper::Round_Audition)) {
@@ -118,55 +119,37 @@ class StudentController extends Controller {
         } elseif ($audition = Audition::find($request->input('audition'))) {
             /** @var Audition $audition */
             if ($audition->citizen_id == $student->citizen_id) {
-                if ($audition->club->isAvailable()) {
-                    try {
-                        DB::transaction(function () use ($student, $audition) {
-                            $audition->updateStatus(Audition::Status_Joined);
-                            $student->registerClub($audition->club_id, User::RegisterType_Audition);
-                        });
-            
-                        return redirect('/')->with('notify', 'เข้าร่วมชมรมแล้ว');
-                    } catch (Throwable $e) {
-                        throw new TransactionException('Unable to join club (Audition)');
+                if ($request->input('action') == 'cancel' AND $audition->status == Audition::Status_Awaiting) {
+                    $audition->updateStatus(Audition::Status_Canceled);
+    
+                    return redirect('/')->with('notify', 'ยกเลิกการสมัครเข้าชมรมแล้ว');
+                } elseif ($request->input('action') == 'reject' AND $audition->status == Audition::Status_Passed) {
+                    $audition->updateStatus(Audition::Status_Rejected);
+                    
+                    return redirect('/')->with('notify', 'ปฏิเสธการเข้าชมรมแล้ว');
+                } elseif ($request->input('action') == 'join' AND $audition->status == Audition::Status_Passed) {
+                    if ($audition->club->isAvailable()) {
+                        try {
+                            DB::transaction(function () use ($student, $audition) {
+                                $audition->updateStatus(Audition::Status_Joined);
+                                $student->registerClub($audition->club_id, User::RegisterType_Audition);
+                            });
+                            
+                            return redirect('/')->with('notify', 'เข้าร่วมชมรมแล้ว');
+                        } catch (Throwable $e) {
+                            throw new TransactionException('Unable to join club (Audition)');
+                        }
+                    } else {
+                        return response()->view('errors.exception', ['title' => 'ไม่สามารถยืนยันการเข้าชมรม', 'description' => 'ชมรมเต็มแล้ว']);
                     }
                 } else {
-                    return response()->view('errors.exception', ['title' => 'ไม่สามารถยืนยันการเข้าชมรม', 'description' => 'ชมรมเต็มแล้ว']);
+                    return response()->view('errors.exception', ['title' => 'ไม่สามารถยืนยันการเข้าชมรม', 'description' => 'คำสั่งไม่ถูกต้อง']);
                 }
             } else {
                 return response()->view('errors.exception', ['title' => 'ไม่สามารถยืนยันการเข้าชมรม', 'description' => 'รหัสการออดิชั่นไม่ถูกต้อง']);
             }
         } else {
             return response()->view('errors.exception', ['title' => 'ไม่สามารถยืนยันการเข้าชมรม', 'description' => 'ไม่พบการออดิชั่น']);
-        }
-    }
-    
-    /**
-     * (Round AUDITION) Reject to join club which has passed audition
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
-     */
-    public function rejectAudition(Request $request) {
-        $this->validate($request, [
-            'audition' => 'required|exists:auditions,id' // Audition Request ID
-        ]);
-        
-        if (!Helper::isRound(Helper::Round_Audition)) {
-            return response()->view('errors.exception', ['title' => 'ไม่อนุญาต', 'description' => 'ขณะนี้ไม่อนุญาตให้ลงทะเบียน']);
-        }
-        
-        $student = User::current();
-        
-        if ($audition = Audition::find($request->input('audition'))) {
-            /** @var Audition $audition */
-            if ($student->citizen_id == $audition->citizen_id) {
-                $audition->updateStatus(Audition::Status_Rejected);
-                return redirect('/')->with('notify', 'ปฏิเสธการเข้าชมรมแล้ว');
-            } else {
-                return response()->view('errors.exception', ['title' => 'ไม่สามารถปฏิเสธการเข้าชมรม', 'description' => 'รหัสการออดิชั่นไม่ถูกต้อง']);
-            }
-        } else {
-            return response()->view('errors.exception', ['title' => 'ไม่สามารถปฏิเสธการเข้าชมรม', 'description' => 'ไม่พบการออดิชั่น']);
         }
     }
     

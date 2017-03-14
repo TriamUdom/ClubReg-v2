@@ -21,11 +21,11 @@
             <a id="logo-container" href="/" class="brand-logo th"><img src="/phrakiao.png" style="height:1.8rem"/> ระบบทะเบียนชมรม</a>
             <ul class="right hide-on-med-and-down">
                 <li <?= Request::is('/') ? 'class="active"' : '' ?>><a href="/">หน้าหลัก</a></li>
-                {!! session()->has('userid') ? '<li><a href="/logout">ออกจากระบบ</a></li>' : '' !!}
+                {!! session()->has('student') ? '<li><a href="/logout">ออกจากระบบ</a></li>' : '' !!}
             </ul>
             <ul id="nav-mobile" class="side-nav">
                 <li <?= Request::is('/') ? 'class="active"' : '' ?>><a href="/">หน้าหลัก</a></li>
-                {!! session()->has('userid') ? '<li><a href="/logout">ออกจากระบบ</a></li>' : '' !!}
+                {!! session()->has('student') ? '<li><a href="/logout">ออกจากระบบ</a></li>' : '' !!}
             </ul>
             <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
         </div>
@@ -42,7 +42,8 @@
     <footer class="page-footer teal">
         <div class="footer-copyright">
             <div class="container">
-                <a href="https://clubs.triamudom.ac.th">งานกิจกรรมพัฒนาผู้เรียน โรงเรียนเตรียมอุดมศึกษา</a> {!! session()->has('userid') ? '| เข้าสู่ระบบในชื่อ '.session('username') : '' !!}
+                <span class="hide-on-screen">ระบบทะเบียนชมรม </span><a href="https://clubs.triamudom.ac.th">งานกิจกรรมพัฒนาผู้เรียน โรงเรียนเตรียมอุดมศึกษา</a>
+                {!! session()->has('userid') ? '| เข้าสู่ระบบในชื่อ '.session('username') : '' !!}
             </div>
         </div>
     </footer>

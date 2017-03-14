@@ -22,11 +22,15 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property-read \App\Club $club
  * @method static \Illuminate\Database\Query\Builder|\App\Audition whereClubId($value)
+ * @property string $comment
+ * @property-read \App\User $user
+ * @method static \Illuminate\Database\Query\Builder|\App\Audition whereComment($value)
  */
 class Audition extends Model {
     
     const Status_Awaiting = 'AWAITING'; // Beginning status (Step 1)
     const Status_Failed = 'FAILED'; // Audition failed
+    const Status_Canceled = 'CANCELED'; // User cancel the audition request (in step 1)
     const Status_Passed = 'PASSED'; // Student is permited to join the club, but has not confirmed. (Step 2)
     const Status_Rejected = 'REJECTED'; // Student rejected
     const Status_Joined = 'JOINED'; // Student joined the club (Step 3)
@@ -40,6 +44,15 @@ class Audition extends Model {
      */
     public function club() {
         return $this->belongsTo('App\Club', 'club_id');
+    }
+    
+    /**
+     * Define many-to-one relationship
+     *
+     * @return mixed
+     */
+    public function user() {
+        return $this->belongsTo('App\User', 'citizen_id');
     }
     
     /**
@@ -82,4 +95,20 @@ class Audition extends Model {
         $this->save();
     }
     
+    public function getStatus() {
+        switch ($this->status) {
+            case self::Status_Awaiting:
+                return 'รอออดิชั่น/การตอบรับจากชมรม';
+            case self::Status_Failed:
+                return 'ถูกชมรมปฏิเสธ';
+            case self::Status_Joined:
+                return 'เข้าร่วมชมรมแล้ว';
+            case self::Status_Passed:
+                return 'ผ่านการคัดเลือก โปรดยืนยันหรือปฏิเสธ';
+            case self::Status_Rejected:
+                return 'ปฏิเสธการเข้าชมรม';
+            default:
+                return $this->status;
+        }
+    }
 }

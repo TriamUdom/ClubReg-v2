@@ -39,6 +39,7 @@ use Log;
  * @property \Carbon\Carbon $updated_at
  * @method static \Illuminate\Database\Query\Builder|\App\User whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\User whereUpdatedAt($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Audition[] $auditions
  */
 class User extends Model {
     
@@ -65,6 +66,14 @@ class User extends Model {
      */
     public function club() {
         return $this->belongsTo('App\Club', 'club_id');
+    }
+    
+    /**
+     * Get the audition records of this user.
+     */
+    public function auditions()
+    {
+        return $this->hasMany('App\Audition', 'citizen_id', 'citizen_id');
     }
     
     /**

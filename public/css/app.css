@@ -84,3 +84,35 @@ p.th {
     padding: 15px 25px 15px 15px;
     width: 100%
 }
+
+@media print {
+    html, body, main {
+        font-size: 16px !important;
+    }
+
+    .hide-on-print {
+        display: none;
+    }
+
+    .footer-copyright .container {
+        font-size: 0.7rem;
+    }
+
+    nav, .button-collapse, .side-nav {
+        display: none;
+    }
+
+    .container {
+        width: 100%;
+    }
+
+    td, th {
+        padding: 1px 5px;
+    }
+}
+
+@media screen {
+    .hide-on-screen {
+        display: none;
+    }
+}

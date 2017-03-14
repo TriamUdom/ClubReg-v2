@@ -11,9 +11,9 @@ return [
 	'url' => env('APP_URL', 'http://localhost'),
 	
 	'current_year' => '2560',
-    'allow_register_time' => 1489318125, // Timestamp to start registering club, 0 if force allow, overriding "round" value. (used to show countdown)
+    'allow_register_time' => 1480000000, // Timestamp to start registering club, 0 if force allow, overriding "round" value. (used to show countdown)
     
-    'round' => 'CONFIRM&AUDITION', // Enumerated types: WAITING, CONFIRM, CONFIRM&AUDITION, AUDITION, WAR, CLOSED (must be uppercase)
+    'round' => 'WAR', // Enumerated types: WAITING, CONFIRM, CONFIRM&AUDITION, AUDITION, WAR, CLOSED (must be uppercase)
 
     'captcha_enable' => false
 ];

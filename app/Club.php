@@ -18,13 +18,14 @@ use PhpOffice\PhpWord\TemplateProcessor;
  * @property bool                                                      $is_audition
  * @property bool                                                      $is_active
  * @property int                                                       $subject_code
- * @property int                                                       $fix_teacher
  * @property string                                                    $president_title
  * @property string                                                    $president_fname
  * @property string                                                    $president_lname
  * @property string                                                    $adviser_title
  * @property string                                                    $adviser_fname
  * @property string                                                    $adviser_lname
+ * @property int                                                       $max_member
+ * @property string                                                    $description
  * @method static \Illuminate\Database\Query\Builder|\App\Club whereAdviserFname($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Club whereAdviserLname($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Club whereAdviserTitle($value)
@@ -38,6 +39,8 @@ use PhpOffice\PhpWord\TemplateProcessor;
  * @method static \Illuminate\Database\Query\Builder|\App\Club wherePresidentLname($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Club wherePresidentTitle($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Club whereSubjectCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Club whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Club whereMaxTeacher($value)
  */
 class Club extends Model {
     public $incrementing = false;
@@ -117,9 +120,23 @@ class Club extends Model {
         return $this->members()->count();
     }
     
-    public function isAvailable(): bool {
+    public function isAvailable(bool $asLevel = false) {
         // @todo
-        return $this->countMember() < 200;
+        $memberNumber = $this->countMember();
+        if (!$this->is_active) {
+            return false;
+        } elseif ($asLevel) {
+            // 0: Full, 1: Almost, 2: Available
+            if ($memberNumber >= $this->max_member) {
+                return 0;
+            } elseif ($memberNumber > $this->max_member * 0.9) {
+                return 1;
+            } else {
+                return 2;
+            }
+        } else {
+            return $memberNumber < $this->max_member;
+        }
     }
     
     /**
@@ -128,11 +145,15 @@ class Club extends Model {
      * @return array
      */
     public static function fetchAuditionClubs(): array {
-        return self::where('is_audition', true)->where('is_active', true)->get()->reject(function (Club $item) {
+        $clubs = self::where('is_audition', true)->where('is_active', true)->get()->reject(function (Club $item) {
             return !$item->isAvailable();
-        })->map(function (Club $item) {
-            return $item->name;
         })->all();
+        $list = array();
+        foreach ($clubs as $club) {
+            $list [$club->name] = $club->id;
+        }
+        
+        return $list;
     }
     
     /**
@@ -140,9 +161,15 @@ class Club extends Model {
      *
      * @return array
      */
-    public static function fetchWarClub(): array {
-        return self::where('is_audition', false)->where('is_active', true)->get()->reject(function (Club $item) {
+    public static function fetchWarClubs(): array {
+        $clubs = self::where('is_audition', false)->where('is_active', true)->get()->reject(function (Club $item) {
             return !$item->isAvailable();
         })->all();
+        $list = array();
+        foreach ($clubs as $club) {
+            $list [$club->name] = $club->id;
+        }
+        
+        return $list;
     }
 }

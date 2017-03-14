@@ -36,17 +36,20 @@
 @endsection
 
 @section('main')
-    <div class="z-depth-1 card-panel" style="max-width:700px;margin:auto">
+    <div class="z-depth-1 card-panel grey lighten-5" style="max-width:700px;margin:auto">
         @php
             $user = \App\User::current();
         @endphp
         <h4 class="center-align">การลงทะเบียนชมรม</h4>
-        <div class="row">
+        <div class="row" style="margin-bottom: 0.8rem;">
             <div class="col s1 center-align">
                 <i class="material-icons small">person</i>
             </div>
             <div class="col s11">
                 {{ $user->getName() }} ห้อง {{ $user->room }}
+                @if (!$user->hasClub())
+                    <p style="margin:0;font-size: 0.9rem">ยังไม่ได้ลงทะเบียนเรียนกิจกรรมชมรม</p>
+                @endif
             </div>
         </div>
         <div class="divider"></div>
@@ -55,10 +58,13 @@
             <p class="center-align">นักเรียนลงทะเบียนเรียนกิจกรรมชมรมในปีการศึกษา {{ config('core.current_year') }} แล้ว คือ</p>
             <h4>{{ $user->club->name }} ({{ $user->club_id }})</h4>
             <p class="center-align">หากนักเรียนประสบปัญหาหรือมีข้อสงสัย โปรดติดต่องานกิจกรรมพัฒนาผู้เรียน ตึก 50 ปี</p>
+        @elseif (\App\Helper::isRound(\App\Helper::Round_Closed))
+            <h5 class="center-align" style="margin-top:2rem">หมดเวลาลงทะเบียนชมรมแล้ว</h5>
+            <p class="center-align">โปรดติดต่องานกิจกรรมพัฒนาผู้เรียน ตึก 50 ปี</p>
         @elseif (\App\Helper::isRound(\App\Helper::Round_Waiting))
-            <h5 class="center-align">ไม่อนุญาตให้นักเรียนลงทะเบียนในขณะนี้</h5>
-            <p class="center-align">โปรดรอประมาณ</p>
+            <h5 class="center-align" style="margin-top:2rem">ไม่อนุญาตให้นักเรียนลงทะเบียนในขณะนี้</h5>
             @if (\App\Helper::shouldCountdown())
+                <p class="center-align">โปรดรอประมาณ</p>
                 <div class="row">
                     <div class="col s4 center">
                         <h4 class="center countdownText" id="tHour">--</h4>ชั่วโมง
@@ -123,12 +129,13 @@
                         });
                     }, 500);
                 </script>
+            @else
+                <p class="center-align">กรุณาลองใหม่ภายหลัง</p>
             @endif
         @else
-            <p>นักเรียนยังไม่ได้ลงทะเบียนเรียนกิจกรรมชมรม</p>
             @if (\App\Helper::isRound(\App\Helper::Round_Confirm) AND $user->getPreviousClub())
                 <div class="sector">
-                    <form method="POST" action="/club-register/old" onsubmit="return confirm('แน่ใจหรือไม่ที่จะลงทะเบียนชมรมเดิม')">
+                    <form method="POST" action="/club-register/old" onsubmit="return confirm('แน่ใจหรือไม่ที่จะลงทะเบียนชมรมเดิม? เมื่อเลือกแล้วไม่สามารถเปลี่ยนได้')">
                         {{ csrf_field() }}
                         <h5>ลงทะเบียนเข้าชมรมเดิม</h5>
                         <p>ปีการศึกษาที่ผ่านมา นักเรียนอยู่ชมรม <b>{{ ($oldClub = $user->getPreviousClub(true))->name }} ({{ $oldClub->id }})</b></p>
@@ -141,19 +148,64 @@
             @endif
             @if (\App\Helper::isRound(\App\Helper::Round_Audition))
                 <div class="sector">
-                    <form method="POST" action="/club-register/old">
+                    <form method="POST" action="/club-register" class="select-append">
                         {{ csrf_field() }}
                         <h5>สมัครคัดเลือกเข้าชมรม (ออดิชั่น)</h5>
-                        <div class="row">
+                        <div class="row" style="margin-bottom:0">
                             <div class="input-field col s12">
-                                <select name="club">
+                                <select name="club" required>
                                     <option value="" disabled selected>เลือกชมรมที่ต้องการ</option>
                                     {!! \App\Helper::createOption(\App\Club::fetchAuditionClubs()) !!}
                                 </select>
                                 <label>ชมรมที่ต้องการสมัคร</label>
                             </div>
                         </div>
-                        <button class="btn waves-effect waves-light fullwidth purple" type="submit" name="club" value="{{ $oldClub->id }}">
+                        <button class="btn waves-effect waves-light fullwidth purple" type="submit">
+                            ดูข้อมูลเพิ่มเติม
+                            <i class="material-icons left">info_outline</i>
+                        </button>
+                    </form>
+                    @unless (empty($user->auditions))
+                        <br/>
+                        <p><span style="font-size:1.3rem">สถานะคำขอออดิชั่น</span> <span style="font-size:0.9rem">(หากชมรมรับนักเรียน นักเรียนจะต้องกดยืนยันหรือปฏิเสธภายในเวลาที่กำหนด มิฉะนั้นระบบอาจเลือกให้โดยอัตโนมัติ)</span>
+                        </p>
+                        <ul class="collection">
+                            @foreach($user->auditions as $audition)
+                                <li class="collection-item">
+                                    <b class="title">{{ $audition->club->name }}</b> {{ $audition->getStatus() }}
+                                    @if ($audition->status == \App\Audition::Status_Passed)
+                                        <form method="POST" action="/club-register/confirm-audition">
+                                            {{ csrf_field() }}
+                                            <input type="hidden" name="audition" value="{{ $audition->id }}"/>
+                                            <button class="btn waves-effect waves-light green" type="submit" name="action" value="join">
+                                                ยืนยันเข้าชมรม
+                                            </button>
+                                            <button class="btn waves-effect waves-light red" type="submit" name="action" value="reject">
+                                                ปฏิเสธ
+                                            </button>
+                                        </form>
+                                    @endif
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endunless
+                </div>
+            @endif
+            @if (\App\Helper::isRound(\App\Helper::Round_War))
+                <div class="sector">
+                    <form method="POST" action="/club-register" class="select-append">
+                        {{ csrf_field() }}
+                        <h5>ลงทะเบียนเข้าชมรม</h5>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <select name="club" required>
+                                    <option value="" disabled selected>เลือกชมรมที่ต้องการ</option>
+                                    {!! \App\Helper::createOption(\App\Club::fetchWarClubs()) !!}
+                                </select>
+                                <label>ชมรมที่ต้องการลงทะเบียน</label>
+                            </div>
+                        </div>
+                        <button class="btn waves-effect waves-light fullwidth indigo" type="submit">
                             ดูข้อมูลเพิ่มเติม
                             <i class="material-icons left">info_outline</i>
                         </button>
@@ -169,6 +221,10 @@
     <script>
         $(document).ready(function () {
             $('select').material_select();
+            $('form.select-append').submit(function () {
+                window.location.href = $(this).prop('action') + '/' + $(this).find('select').val();
+                return false;
+            });
         });
     </script>
 @endsection
