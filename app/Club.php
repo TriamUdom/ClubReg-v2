@@ -121,7 +121,6 @@ class Club extends Model {
     }
     
     public function isAvailable(bool $asLevel = false) {
-        // @todo
         $memberNumber = $this->countMember();
         if (!$this->is_active) {
             return false;
@@ -136,6 +135,22 @@ class Club extends Model {
             }
         } else {
             return $memberNumber < $this->max_member;
+        }
+    }
+    
+    public function isAvailableForConfirm() {
+        // 65% Available for existing member
+        return $this->members()->where('reason', User::RegisterType_ExistingMember)->count() < ($this->max_member * 0.65) AND $this->isAvailable();
+    }
+    
+    public function isAvailableForLevel($level) {
+        if (!$this->is_active) {
+            return false;
+        } elseif ($level == 4) {
+            return $this->isAvailable();
+        } else {
+            // Reserve 20% for M4
+            return $this->members()->where('level', '!=', 4)->count() < $this->max_member * 0.8 AND $this->isAvailable();
         }
     }
     

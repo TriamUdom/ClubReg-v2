@@ -100,7 +100,7 @@ class User extends Model {
      * @return bool
      */
     public function registerClub(string $clubId, string $registerType): bool {
-        if ($club = Club::find($clubId) AND $club->isAvailable() AND !$this->hasClub()) {
+        if ($club = Club::find($clubId) AND $club->isAvailableForLevel($this->level) AND !$this->hasClub()) {
             $this->club_id = $club->id;
             $this->reason = $registerType;
             if ($this->save()) {

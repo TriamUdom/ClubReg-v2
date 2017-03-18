@@ -9,7 +9,7 @@
     <meta name="google" content="notranslate"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet"/>
     <link href="/css/app.css" rel="stylesheet"/>
     <link rel="shortcut icon" href="/favicon.png"/>
     @yield('style')
@@ -18,13 +18,27 @@
 @section('nav')
     <nav class="teal" role="navigation">
         <div class="nav-wrapper container">
-            <a id="logo-container" href="/" class="brand-logo th"><img src="/phrakiao.png" style="height:1.8rem"/> ระบบทะเบียนชมรม</a>
+            <a id="logo-container" href="/" class="brand-logo th">
+                <img src="/phrakiao.png" style="height:1.8rem"/>
+                ระบบทะเบียนชมรม
+                <span class="hide-on-med-and-down">โรงเรียนเตรียมอุดมศึกษา</span>
+            </a>
             <ul class="right hide-on-med-and-down">
                 <li <?= Request::is('/') ? 'class="active"' : '' ?>><a href="/">หน้าหลัก</a></li>
-                {!! session()->has('student') ? '<li><a href="/logout">ออกจากระบบ</a></li>' : '' !!}
+                <li><a class="dropdown-button" href="#!" data-activates="dropdown1">เพิ่มเติม <i class="material-icons right">arrow_drop_down</i></a></li>
+            </ul>
+            <!-- Dropdown Structure -->
+            <ul id="dropdown1" class="dropdown-content">
+                <li <?= Request::is('info') ? 'class="active"' : '' ?>><a href="/info">รายละเอียด</a></li>
+                <li <?= Request::is('contact') ? 'class="active"' : '' ?>><a href="/contact">ติดต่อ</a></li>
+                @if (session()->has('student'))
+                    <li><a href="/logout">ออกจากระบบ</a></li>
+                @endif
             </ul>
             <ul id="nav-mobile" class="side-nav">
                 <li <?= Request::is('/') ? 'class="active"' : '' ?>><a href="/">หน้าหลัก</a></li>
+                <li <?= Request::is('info') ? 'class="active"' : '' ?>><a href="/info">รายละเอียด</a></li>
+                <li <?= Request::is('contact') ? 'class="active"' : '' ?>><a href="/contact">ติดต่อ</a></li>
                 {!! session()->has('student') ? '<li><a href="/logout">ออกจากระบบ</a></li>' : '' !!}
             </ul>
             <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
@@ -55,6 +69,7 @@
     <script>
         $(function () {
             $(".button-collapse").sideNav();
+            $(".dropdown-button").dropdown();
 
             @if (session('notify'))
                 Materialize.toast("{{session('notify')}}", 4000);

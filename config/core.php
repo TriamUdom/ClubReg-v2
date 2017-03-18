@@ -13,7 +13,7 @@ return [
 	'current_year' => '2560',
     'allow_register_time' => 1480000000, // Timestamp to start registering club, 0 if force allow, overriding "round" value. (used to show countdown)
     
-    'round' => 'WAR', // Enumerated types: WAITING, CONFIRM, CONFIRM&AUDITION, AUDITION, WAR, CLOSED (must be uppercase)
+    'round' => 'CONFIRM', // Enumerated types: WAITING, CONFIRM, CONFIRM&AUDITION, AUDITION, WAR, CLOSED (must be uppercase)
 
     'captcha_enable' => false
 ];

@@ -13,11 +13,12 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('logout', 'UIController@logout');
     
     // TUSSO integration
-    //Route::get('login', 'UserController@redirectOpenID');
-    //Route::post('openid_login', 'UserController@openidLogin');
-    //Route::get('logout', 'UserController@logout');
+    Route::get('president', 'UserController@redirectOpenID');
+    Route::post('openid_login', 'UserController@openidLogin');
+    Route::get('president/logout', 'UserController@logout');
     
-    Route::get('club-list', function () { return view('clubs-status'); });
+    Route::get('info', function () { return view('info'); });
+    Route::get('contact', function () { return view('contact'); });
     
     if (config('app.debug')) {
         Route::get('phpinfo', function () {
@@ -38,7 +39,7 @@ Route::group(['middleware' => ['web']], function () {
                 return 'Not Found';
             }
         });
-        Route::get('temp', 'UIController@temporary');
+        //Route::get('temp', 'UIController@tempFilter');
     }
 });
 

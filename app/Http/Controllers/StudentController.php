@@ -57,7 +57,7 @@ class StudentController extends Controller {
         if ($student->getPreviousClub() == $request->input('club') AND !$student->hasClub()) {
             /** @var Club $club */
             $club = Club::find($student->getPreviousClub());
-            if ($club->isAvailable()) {
+            if ($club->isAvailableForConfirm() AND $club->isAvailableForLevel($student->level)) {
                 if ($student->registerClub($club->id, User::RegisterType_ExistingMember)) {
                     return redirect('/')->with('notify', 'ลงทะเบียนชมรมแล้ว');
                 } else {
@@ -88,7 +88,9 @@ class StudentController extends Controller {
         
         $student = User::current();
         
-        if (Audition::apply($student->citizen_id, $request->input('club'))) {
+        if (!Club::find($request->input('club'))->isAvailableForLevel($student->level)) {
+            return response()->view('errors.exception', ['title' => 'ไม่สามารถลงทะเบียนออดิชั่น', 'description' => 'ชมรมรับนักเรียนเต็มแล้ว']);
+        } elseif (Audition::apply($student->citizen_id, $request->input('club'))) {
             return redirect('/')->with('notify', 'ลงทะเบียนออดิชั่นชมรมแล้ว');
         } else {
             return response()->view('errors.exception', ['title' => 'ไม่สามารถลงทะเบียนออดิชั่น', 'description' => 'มีการออดิชั่นชมรมนี้อยู่แล้ว']);
@@ -121,14 +123,14 @@ class StudentController extends Controller {
             if ($audition->citizen_id == $student->citizen_id) {
                 if ($request->input('action') == 'cancel' AND $audition->status == Audition::Status_Awaiting) {
                     $audition->updateStatus(Audition::Status_Canceled);
-    
+                    
                     return redirect('/')->with('notify', 'ยกเลิกการสมัครเข้าชมรมแล้ว');
                 } elseif ($request->input('action') == 'reject' AND $audition->status == Audition::Status_Passed) {
                     $audition->updateStatus(Audition::Status_Rejected);
                     
                     return redirect('/')->with('notify', 'ปฏิเสธการเข้าชมรมแล้ว');
                 } elseif ($request->input('action') == 'join' AND $audition->status == Audition::Status_Passed) {
-                    if ($audition->club->isAvailable()) {
+                    if ($audition->club->isAvailableForLevel($student->level)) {
                         try {
                             DB::transaction(function () use ($student, $audition) {
                                 $audition->updateStatus(Audition::Status_Joined);
@@ -172,7 +174,7 @@ class StudentController extends Controller {
         
         if ($student->hasClub()) {
             return response()->view('errors.exception', ['title' => 'นักเรียนลงทะเบียนชมรมแล้ว', 'description' => 'ไม่สามารถเข้าชมรมได้']);
-        } elseif (!Club::find($request->input('club'))->isAvailable()) {
+        } elseif (!Club::find($request->input('club'))->isAvailableForLevel($student->level)) {
             return response()->view('errors.exception', ['title' => 'ชมรมเต็มแล้ว', 'description' => 'ไม่สามารถเข้าชมรมได้']);
         } else {
             $student->registerClub($request->input('club'), User::RegisterType_War);

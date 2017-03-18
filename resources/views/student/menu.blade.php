@@ -135,15 +135,19 @@
         @else
             @if (\App\Helper::isRound(\App\Helper::Round_Confirm) AND $user->getPreviousClub())
                 <div class="sector">
+                    <h5>ลงทะเบียนเข้าชมรมเดิม</h5>
+                    <p>ปีการศึกษาที่ผ่านมา นักเรียนอยู่ชมรม <b>{{ ($oldClub = $user->getPreviousClub(true))->name }} ({{ $oldClub->id }})</b></p>
+                    @if ($user->getPreviousClub(true)->isAvailableForConfirm())
                     <form method="POST" action="/club-register/old" onsubmit="return confirm('แน่ใจหรือไม่ที่จะลงทะเบียนชมรมเดิม? เมื่อเลือกแล้วไม่สามารถเปลี่ยนได้')">
                         {{ csrf_field() }}
-                        <h5>ลงทะเบียนเข้าชมรมเดิม</h5>
-                        <p>ปีการศึกษาที่ผ่านมา นักเรียนอยู่ชมรม <b>{{ ($oldClub = $user->getPreviousClub(true))->name }} ({{ $oldClub->id }})</b></p>
                         <button class="btn waves-effect waves-light fullwidth blue" type="submit" name="club" value="{{ $oldClub->id }}">
                             ใช้สิทธิเข้าชมรมเดิม
                             <i class="material-icons left">check</i>
                         </button>
                     </form>
+                        @else
+                        <p class="red-text"><span style="font-size: 1.3rem">ชมรมรับนักเรียนเดิมเต็มอัตราส่วนแล้ว</span> (นักเรียนสามารถลงทะเบียนใหม่เสมือนไม่ได้อยู่ชมรมนี้อยู่ก่อน)</p>
+                    @endif
                 </div>
             @endif
             @if (\App\Helper::isRound(\App\Helper::Round_Audition))

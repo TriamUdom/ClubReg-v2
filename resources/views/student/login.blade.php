@@ -2,17 +2,27 @@
 
 @section('style')
     <style>
-    h4 {text-align:center}
-    h1 {text-align: center;font-size:4rem;}
-    body {background-color: #009688}
-    input[type='number'] {
-        -moz-appearance: textfield;
-    }
+        h4 {
+            text-align: center
+        }
 
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-    }
+        h1 {
+            text-align: center;
+            font-size: 4rem;
+        }
+
+        body {
+            background-color: #009688
+        }
+
+        input[type='number'] {
+            -moz-appearance: textfield;
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
     </style>
 @endsection
 
@@ -31,10 +41,13 @@
                 </div>
             </div>
             @if (count($errors) > 0)
-                <ul class="collection white-text">
-                    <li class="collection-item red darken-1">{{ implode(', ', $errors->all()) }}
-                    </li>
-                </ul>
+                <div class="sector red white-text">
+                    {{ implode(', ', $errors->all()) }}
+                </div>
+            @else
+                <div class="sector grey lighten-4 red-text" style="font-size: 1.5rem;line-height: 1.8rem">
+                    นักเรียนจะต้องดำเนินการด้วยความระมัดระวัง หากลงทะเบียนแล้วไม่สามารถยกเลิกได้
+                </div>
             @endif
             <ul class="collection white-text"
                 style="margin:0;{{ session()->has('error_message') ? '' : 'display:none' }}" id="error-message">
@@ -42,7 +55,7 @@
             </ul>
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="username" type="number" name="citizen_id" class="validate" required min="1100000000000" max="9000000000000" />
+                    <input id="username" type="number" name="citizen_id" class="validate" required min="1100000000000" max="9000000000000"/>
                     <label for="username">รหัสประจำตัวประชาชน</label>
                 </div>
             </div>
@@ -54,7 +67,7 @@
             </div>
             @if (config('core.captcha_enable'))
                 <div class="row">
-                    <div class="col s12">
+                    <div class="col s12 center-align">
                         {!! Recaptcha::render([ 'lang' => 'th' ]) !!}
                     </div>
                 </div>
