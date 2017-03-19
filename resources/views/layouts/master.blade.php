@@ -53,6 +53,9 @@
 </main>
 
 @section('footer')
+    @if (session()->has('student') OR session()->has('president'))
+        <div id="bottomstick">#RegClubsTriam</div>
+        @endif
     <footer class="page-footer teal">
         <div class="footer-copyright">
             <div class="container">

@@ -5,6 +5,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/', function () {
         if (session()->has('student')) {
             return view('student.menu');
+        } elseif (session()->has('student')) {
+            return view('president.menu');
         }
         return view('student.login');
     });

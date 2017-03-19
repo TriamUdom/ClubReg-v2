@@ -85,6 +85,16 @@ p.th {
     width: 100%
 }
 
+#bottomstick {
+    position: fixed;
+    bottom: 2.7rem;
+    right: 1rem;
+    font-family: "Roboto", sans-serif;
+    font-size: 1.7rem;
+    font-weight: bold;
+    color: #aaaaaa;
+}
+
 @media print {
     html, body, main {
         font-size: 16px !important;

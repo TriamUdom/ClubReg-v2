@@ -36,7 +36,7 @@
 @endsection
 
 @section('main')
-    <div class="z-depth-1 card-panel grey lighten-5" style="max-width:700px;margin:auto">
+    <div class="z-depth-1 card-panel grey lighten-5" style="max-width:900px;margin:auto">
         @php
             $user = \App\User::current();
         @endphp
@@ -66,13 +66,16 @@
             @if (\App\Helper::shouldCountdown())
                 <p class="center-align">โปรดรอประมาณ</p>
                 <div class="row">
-                    <div class="col s4 center">
+                    <div class="col s3 center">
+                        <h4 class="center countdownText" id="tDay">--</h4>วัน
+                    </div>
+                    <div class="col s3 center">
                         <h4 class="center countdownText" id="tHour">--</h4>ชั่วโมง
                     </div>
-                    <div class="col s4 center">
+                    <div class="col s3 center">
                         <h4 class="center countdownText" id="tMinute">--</h4>นาที
                     </div>
-                    <div class="col s4 center">
+                    <div class="col s3 center">
                         <h4 class="center countdownText" id="tSecond">--</h4>วินาที
                     </div>
                 </div>
@@ -89,36 +92,33 @@
 
                         var data = cTime;
 
-                        if (data <= 0) {
-                            $('#countcard').slideUp();
-                            $('#authbtn').removeClass('disabled').text('ค้นหา');
-                            if (data == 0) {
-                                $('#authcard').slideDown();
-                                $("#qform").submit();
-                            }
-                        } else {
-                            if (data <= 600) {
-                                $('#authcard').slideDown();
-                                $('#authbtn').addClass('disabled').text('ยังไม่ถึงเวลาประกาศผล');
-                            }
-
-                            var hour = 0;
-                            var minute = 0;
-
-                            while (data >= 3600) {
-                                hour++;
-                                data -= 3600;
-                            }
-                            while (data >= 60) {
-                                minute++;
-                                data -= 60;
-                            }
-
-                            $('#tHour').text(hour);
-                            $('#tMinute').text(minute);
-                            $('#tSecond').text(data);
-
+                        if (data <= 600) {
+                            $('#authcard').slideDown();
+                            $('#authbtn').addClass('disabled').text('ยังไม่ถึงเวลาประกาศผล');
                         }
+
+                        var day = 0;
+                        var hour = 0;
+                        var minute = 0;
+
+                        while (data >= 86400) {
+                            day++;
+                            data -= 86400;
+                        }
+                        while (data >= 3600) {
+                            hour++;
+                            data -= 3600;
+                        }
+                        while (data >= 60) {
+                            minute++;
+                            data -= 60;
+                        }
+
+                        $('#tDay').text(day);
+                        $('#tHour').text(hour);
+                        $('#tMinute').text(minute);
+                        $('#tSecond').text(data);
+
                         cTime--;
                         lastUpdated = Date.now();
                     }
@@ -138,14 +138,15 @@
                     <h5>ลงทะเบียนเข้าชมรมเดิม</h5>
                     <p>ปีการศึกษาที่ผ่านมา นักเรียนอยู่ชมรม <b>{{ ($oldClub = $user->getPreviousClub(true))->name }} ({{ $oldClub->id }})</b></p>
                     @if ($user->getPreviousClub(true)->isAvailableForConfirm())
-                    <form method="POST" action="/club-register/old" onsubmit="return confirm('แน่ใจหรือไม่ที่จะลงทะเบียนชมรมเดิม? เมื่อเลือกแล้วไม่สามารถเปลี่ยนได้')">
-                        {{ csrf_field() }}
-                        <button class="btn waves-effect waves-light fullwidth blue" type="submit" name="club" value="{{ $oldClub->id }}">
-                            ใช้สิทธิเข้าชมรมเดิม
-                            <i class="material-icons left">check</i>
-                        </button>
-                    </form>
-                        @else
+                        <p>นักเรียนมีสิทธิเข้าชมรมเดิมได้ทันที โดยไม่ต้องคัดเลือกหรือลงทะเบียนร่วมกับนักเรียนใหม่หรือนักเรียนชมรมอื่น</p>
+                        <form method="POST" action="/club-register/old" onsubmit="return confirm('แน่ใจหรือไม่ที่จะลงทะเบียนชมรมเดิม? เมื่อเลือกแล้วไม่สามารถเปลี่ยนได้')">
+                            {{ csrf_field() }}
+                            <button class="btn waves-effect waves-light fullwidth blue" type="submit" name="club" value="{{ $oldClub->id }}">
+                                ใช้สิทธิเข้าชมรมเดิม
+                                <i class="material-icons left">check</i>
+                            </button>
+                        </form>
+                    @else
                         <p class="red-text"><span style="font-size: 1.3rem">ชมรมรับนักเรียนเดิมเต็มอัตราส่วนแล้ว</span> (นักเรียนสามารถลงทะเบียนใหม่เสมือนไม่ได้อยู่ชมรมนี้อยู่ก่อน)</p>
                     @endif
                 </div>
@@ -171,23 +172,27 @@
                     </form>
                     @unless (empty($user->auditions))
                         <br/>
-                        <p><span style="font-size:1.3rem">สถานะคำขอออดิชั่น</span> <span style="font-size:0.9rem">(หากชมรมรับนักเรียน นักเรียนจะต้องกดยืนยันหรือปฏิเสธภายในเวลาที่กำหนด มิฉะนั้นระบบอาจเลือกให้โดยอัตโนมัติ)</span>
+                        <p><span style="font-size:1.3rem">สถานะการคัดเลือก</span> <span style="font-size:1rem">(ให้นักเรียนไปรับการคัดเลือกตามชมรมที่นักเรียนสมัคร หากชมรมรับนักเรียน นักเรียนจะต้องกดยืนยันหรือปฏิเสธภายในเวลาที่กำหนด มิฉะนั้นระบบอาจเลือกให้โดยอัตโนมัติ)</span>
                         </p>
                         <ul class="collection">
                             @foreach($user->auditions as $audition)
                                 <li class="collection-item">
                                     <b class="title">{{ $audition->club->name }}</b> {{ $audition->getStatus() }}
                                     @if ($audition->status == \App\Audition::Status_Passed)
-                                        <form method="POST" action="/club-register/confirm-audition">
-                                            {{ csrf_field() }}
-                                            <input type="hidden" name="audition" value="{{ $audition->id }}"/>
-                                            <button class="btn waves-effect waves-light green" type="submit" name="action" value="join">
-                                                ยืนยันเข้าชมรม
-                                            </button>
-                                            <button class="btn waves-effect waves-light red" type="submit" name="action" value="reject">
-                                                ปฏิเสธ
-                                            </button>
-                                        </form>
+                                        @if ($audition->club->isAvailableForLevel($user->level))
+                                            <form method="POST" action="/club-register/confirm-audition">
+                                                {{ csrf_field() }}
+                                                <input type="hidden" name="audition" value="{{ $audition->id }}"/>
+                                                <button class="btn waves-effect waves-light green" type="submit" name="action" value="join">
+                                                    ยืนยันเข้าชมรม
+                                                </button>
+                                                <button class="btn waves-effect waves-light red" type="submit" name="action" value="reject">
+                                                    ปฏิเสธ
+                                                </button>
+                                            </form>
+                                        @else
+                                            <b class="red-text">ชมรมเต็มแล้ว</b>
+                                        @endif
                                     @endif
                                 </li>
                             @endforeach
