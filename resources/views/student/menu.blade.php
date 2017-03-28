@@ -183,10 +183,10 @@
                                             <form method="POST" action="/club-register/confirm-audition">
                                                 {{ csrf_field() }}
                                                 <input type="hidden" name="audition" value="{{ $audition->id }}"/>
-                                                <button class="btn waves-effect waves-light green" type="submit" name="action" value="join">
+                                                <button class="btn waves-effect waves-light green" type="submit" name="action" value="join" onclick="return confirm('แน่ใจหรือไม่ที่จะเข้า{{ $audition->club->name }}? เมื่อเลือกแล้วไม่สามารถเปลี่ยนได้')">
                                                     ยืนยันเข้าชมรม
                                                 </button>
-                                                <button class="btn waves-effect waves-light red" type="submit" name="action" value="reject">
+                                                <button class="btn waves-effect waves-light red" type="submit" name="action" value="reject" onclick="return confirm('แน่ใจหรือไม่ที่จะปฏิเสธ{{ $audition->club->name }}?')">
                                                     ปฏิเสธ
                                                 </button>
                                             </form>

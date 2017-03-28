@@ -26,6 +26,7 @@ use PhpOffice\PhpWord\TemplateProcessor;
  * @property string                                                    $adviser_lname
  * @property int                                                       $max_member
  * @property string                                                    $description
+ * @property array $user_id List of admin usernames, separated by comma
  * @method static \Illuminate\Database\Query\Builder|\App\Club whereAdviserFname($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Club whereAdviserLname($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Club whereAdviserTitle($value)
@@ -41,10 +42,23 @@ use PhpOffice\PhpWord\TemplateProcessor;
  * @method static \Illuminate\Database\Query\Builder|\App\Club whereSubjectCode($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Club whereDescription($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Club whereMaxTeacher($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Club whereMaxMember($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Club whereUserId($value)
+ * @property string $audition_location
+ * @property string $location
+ * @property string $president_phone
+ * @property string $adviser_phone
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Audition[] $auditions
+ * @method static \Illuminate\Database\Query\Builder|\App\Club whereAdviserPhone($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Club whereAuditionLocation($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Club whereLocation($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Club wherePresidentPhone($value)
  */
 class Club extends Model {
     public $incrementing = false;
     public $timestamps = false;
+    
+    protected $fillable = ['president_title', 'president_fname', 'president_lname', 'adviser_title', 'adviser_fname', 'adviser_lname', 'president_phone', 'adviser_phone', 'description', 'audition_location', 'location'];
     
     /**
      * The attributes that should be casted to native types.
@@ -53,15 +67,21 @@ class Club extends Model {
      */
     protected $casts = [
         'is_audition' => 'boolean',
-        'is_active' => 'boolean'
+        'is_active' => 'boolean',
+        'user_id' => 'array'
     ];
     
     public function members() {
         return $this->hasMany('App\User', 'club_id', 'id');
     }
     
+    public function auditions() {
+        return $this->hasMany('App\Audition', 'club_id', 'id');
+    }
+    
     public static function currentPresident() {
         if ($user = self::find(session('president'))) {
+            /** @var $user Club */
             return $user;
         } else {
             $e = new UserFriendlyException('President not logged in');
@@ -112,8 +132,12 @@ class Club extends Model {
         return storage_path('app/FMOutput/' . $fileName . '.docx');
     }
     
-    private function getAdviserName() {
+    public function getAdviserName() {
         return $this->adviser_title . $this->adviser_fname . ' ' . $this->adviser_lname;
+    }
+    
+    public function getPresidentName() {
+        return $this->president_title . $this->president_fname . ' ' . $this->president_lname;
     }
     
     public function countMember(): int {

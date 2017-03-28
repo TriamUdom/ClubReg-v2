@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    <!-- Created by Siwat Techavoranant in 2016 -->
+    <!-- Created by Siwat Techavoranant in 2017 -->
     <title>@yield('title', 'ระบบทะเบียนชมรม โรงเรียนเตรียมอุดมศึกษา')</title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -31,7 +31,9 @@
             <ul id="dropdown1" class="dropdown-content">
                 <li <?= Request::is('info') ? 'class="active"' : '' ?>><a href="/info">รายละเอียด</a></li>
                 <li <?= Request::is('contact') ? 'class="active"' : '' ?>><a href="/contact">ติดต่อ</a></li>
-                @if (session()->has('student'))
+                @if (session()->has('president'))
+                    <li><a href="/president/logout">ออกจากระบบ</a></li>
+                @elseif (session()->has('student'))
                     <li><a href="/logout">ออกจากระบบ</a></li>
                 @endif
             </ul>
@@ -39,7 +41,11 @@
                 <li <?= Request::is('/') ? 'class="active"' : '' ?>><a href="/">หน้าหลัก</a></li>
                 <li <?= Request::is('info') ? 'class="active"' : '' ?>><a href="/info">รายละเอียด</a></li>
                 <li <?= Request::is('contact') ? 'class="active"' : '' ?>><a href="/contact">ติดต่อ</a></li>
-                {!! session()->has('student') ? '<li><a href="/logout">ออกจากระบบ</a></li>' : '' !!}
+                @if (session()->has('president'))
+                    <li><a href="/president/logout">ออกจากระบบ</a></li>
+                @elseif (session()->has('student'))
+                    <li><a href="/logout">ออกจากระบบ</a></li>
+                @endif
             </ul>
             <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
         </div>
@@ -55,7 +61,7 @@
 @section('footer')
     @if (session()->has('student') OR session()->has('president'))
         <div id="bottomstick">#RegClubsTriam</div>
-        @endif
+    @endif
     <footer class="page-footer teal">
         <div class="footer-copyright">
             <div class="container">

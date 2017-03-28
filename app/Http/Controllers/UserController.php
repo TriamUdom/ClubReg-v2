@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Club;
 use Illuminate\Http\Request;
 use Log;
 use Lcobucci\JWT\Parser;
@@ -14,7 +15,6 @@ class UserController extends Controller {
         $nonce = substr(sha1(microtime() . rand()), 0, 10);
         $request->session()->put('openid_state', $state);
         $request->session()->put('openid_nonce', $nonce);
-        $request->session()->put('login_as_admin', $request->has('admin'));
         
         return redirect(config('core.authorization_endpoint') . '/?scope=openid&response_type=id_token&client_id=' . config('core.client_id') . '&redirect_uri=' . urlencode(config('core.redirect_uri')) . '&nonce=' . $nonce . '&state=' . $state);
     }
@@ -41,36 +41,26 @@ class UserController extends Controller {
         }
         
         // Check if user is president
-        if (in_array($token->getClaim('id'), config('core.admin'))) {
-            $request->session()->put('usertype', 'admin');
-            $ispresident = file_get_contents('https://clubs.triamudom.ac.th/api/president?id=' . $token->getClaim('id'));
-            if ($ispresident != 'NOT_FOUND' && starts_with($ispresident, 'ก')) {
-                $request->session()->put('president', $ispresident);
-            }
-        } else {
-            $ispresident = file_get_contents('https://clubs.triamudom.ac.th/api/president?id=' . $token->getClaim('id'));
-            if ($ispresident != 'NOT_FOUND' && starts_with($ispresident, 'ก')) {
-                $request->session()->put('usertype', 'president');
-                $request->session()->put('president', $ispresident);
-            } else {
-                return view('errors.custom', ['title' => 'Access Denied', 'description' => 'ไม่อนุญาตให้เข้าใช้งาน']);
+        $clubs = Club::where('user_id', 'LIKE', '%' . $token->getClaim('id') . '%')->get();
+        foreach ($clubs as $club) {
+            if (in_array($token->getClaim('id'), $club->user_id)) {
+                $president = $club->id;
+                break;
             }
         }
+        if (empty($president)) {
+            return view('errors.custom', ['title' => 'Access Denied', 'description' => 'ไม่อนุญาตให้เข้าใช้งาน']);
+        }
+    
+        $request->session()->put('president', $president);
         $request->session()->put('username', $token->getClaim('name'));
         $request->session()->put('userid', $token->getClaim('id'));
-        $request->session()->put('usergroup', $token->getClaim('group'));
         $request->session()->put('login_time', time());
+        $request->session()->put('id_token', (string)$request->input('id_token'));
         
-        Log::info('User logged in: ' . $token->getClaim('id'), ['ip' => $request->ip()]);
+        Log::info('President logged in: ' . $token->getClaim('id'), ['ip' => $request->ip(), 'name' => $token->getClaim('name'), 'club' => $president]);
         
-        if ($request->session()->has('redirect_queue')) {
-            $redirect = $request->session()->get('redirect_queue');
-            $request->session()->forget('redirect_queue');
-            
-            return redirect($redirect);
-        }
-        
-        return redirect('/president')->with('notify', 'เข้าสู่ระบบเรียบร้อย');
+        return redirect('/')->with('notify', 'เข้าสู่ระบบประธานชมรมเรียบร้อย');
     }
     
     public function logout(Request $request) {

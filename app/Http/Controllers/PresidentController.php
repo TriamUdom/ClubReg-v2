@@ -8,16 +8,14 @@ use App\Club;
 use Illuminate\Http\Request;
 
 class PresidentController extends Controller {
-    public function downloadFM3304 (Request $request) {
-        if ($request->session()->has('president') || $request->session()->get('usertype') == 'admin') {
-            $club = $request->session()->get('president');
-            return response()->download(Club::find($club)->createFM3304(2))->deleteFileAfterSend(true);
-        } else {
-            return response('NO_PRESIDENT_CLUB');
-        }
+    public function downloadFM3304(Request $request) {
+        /** @var $club Club */
+        $club = Club::find($request->session()->get('president'));
+        
+        return response()->download($club->createFM3304(config('core.current_semesters')))->deleteFileAfterSend(true);
     }
     
-    public function manageAudition (Request $request) {
+    public function manageAudition(Request $request) {
         $this->validate($request, [
             'audition' => 'required|exists:auditions,id', // Audition Request ID
             'action' => 'required|in:pass,fail'
@@ -29,6 +27,8 @@ class PresidentController extends Controller {
         
         if ($club->id != $audition->club_id) {
             return response()->view('errors.exception', ['title' => 'Bad Request', 'description' => 'รหัสการออดิชั่นไม่สัมพันธ์กับชมรม']);
+        } elseif ($audition->status == Audition::Status_Canceled OR $audition->status == Audition::Status_Joined OR $audition->status == Audition::Status_Rejected) {
+            return response()->view('errors.exception', ['title' => 'Bad Request', 'description' => 'คำขอคัดเลือกอยู่ในสถานะที่ไม่สามารถแก้ไขได้โดยชมรม']);
         } else {
             switch (strtolower($request->input('action'))) {
                 case 'pass':
@@ -40,7 +40,17 @@ class PresidentController extends Controller {
                 default:
                     return response()->view('errors.exception', ['title' => 'Bad Request', 'description' => 'คำสั่งไม่ถูกต้อง']);
             }
-            // @todo Return to previous page
+            
+            return redirect('/president/audition')->with('notfiy', 'แก้ไขสถานะคำขอแล้ว');
         }
+    }
+    
+    public function saveSettings(Request $request) {
+        $club = Club::currentPresident();
+        if ($club->update($request->all())) {
+            return redirect('/')->with('notify', 'บันทึกแล้ว');
+        }
+        
+        return response()->view('errors.exception', ['title' => 'Unexpected Error', 'description' => 'ผิดพลาด! โปรดลองใหม่หรือติดต่อผู้ดูแลระบบ']);
     }
 }

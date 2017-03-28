@@ -3,10 +3,10 @@
 Route::group(['middleware' => ['web']], function () {
     
     Route::get('/', function () {
-        if (session()->has('student')) {
-            return view('student.menu');
-        } elseif (session()->has('student')) {
+        if (session()->has('president')) {
             return view('president.menu');
+        } elseif (session()->has('student')) {
+            return view('student.menu');
         }
         return view('student.login');
     });
@@ -41,7 +41,7 @@ Route::group(['middleware' => ['web']], function () {
                 return 'Not Found';
             }
         });
-        //Route::get('temp', 'UIController@tempFilter');
+        Route::get('temp', 'UIController@temporary');
     }
 });
 
@@ -55,6 +55,18 @@ Route::group(['middleware' => ['web', 'student']], function () {
     });
 });
 
-Route::group(['middleware' => ['web', 'president']], function () {
-    Route::get('fm', 'PresidentController@downloadFM3304');
+Route::group(['middleware' => ['web', 'president'], 'prefix' => 'president'], function () {
+    Route::get('members', function () {
+        return view('president.members');
+    });
+    Route::get('fm3304', 'PresidentController@downloadFM3304');
+    Route::get('audition', function () {
+        return view('president.audition');
+    });
+    Route::post('audition', 'PresidentController@manageAudition');
+    
+    Route::get('settings', function () {
+        return view('president.settings');
+    });
+    Route::post('settings', 'PresidentController@saveSettings');
 });

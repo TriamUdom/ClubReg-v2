@@ -8,6 +8,12 @@ use App\User;
 use Illuminate\Http\Request;
 
 class UIController extends Controller {
+    
+    const DENT = 'คณะทันตแพทยศาสตร์';
+    const MED = 'คณะแพทยศาสตร์';
+    const PHAR = 'คณะเภสัชศาสตร์';
+    const VET = 'คณะสัตวแพทยศาสตร์';
+    
     /*public function getCountdownTime() {
         if (Helper::shouldCountdown()) {
             return config('core.allow_register_time') - time();
@@ -17,13 +23,18 @@ class UIController extends Controller {
     }*/
     
     public function temporary() {
-        $file = file_get_contents('D:\Keen\Onedrive\Work2559 (M5)\TUCC\M.D. Prelist\Textified.txt');
+        $filePath = 'D:\Keen\Onedrive\Work2559 (M5)\TUCC\M.D. Prelist\vet-techmahanakorn.txt';
+        $fac = ['faculty' => self::VET, 'university' => 'มหาวิทยาลัยมหิดล'];
+        echo "Loading $filePath<br />\n";
+        $file = file_get_contents($filePath);
+        echo '<b>'.$fac['faculty'].', '.$fac['university'].'</b><br />';
         $artRoom = ['048', '049', '058', '059', '080', '081', '125', '126', '143', '144', '222', '223', '224'];
         $names = User::where('level', 6)->orderBy('room')->orderBy('firstname')->orderBy('lastname')->get();
         $foundCount = 0;
         foreach ($names as $user) {
             if (str_contains($file, $user->firstname . " \r\n " . $user->lastname)) {
                 $foundCount++;
+                \DB::table('temp_m6')->where('student_id', $user->student_id)->update($fac);
                 if (in_array($user->room, $artRoom)) {
                     echo '<span style="color:red">' . $user->firstname . ' ' . $user->lastname . ' (' . $user->room . "; ART)</span>\n<br />";
                 } else {
