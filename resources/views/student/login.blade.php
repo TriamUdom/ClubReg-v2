@@ -81,4 +81,34 @@
             </div>
         </form>
     </div>
+
+    <div class="center-align minibox" id="mini-def" style="display: none">ใช้งานได้ดีที่สุดบน Mozilla Firefox หรือ Google Chrome รุ่นล่าสุดบนอุปกรณ์ที่ไม่ใช่ iOS</div>
+    <div class="center-align minibox sector red darken-1 white-text" id="mini-al" style="font-size:1.3rem;line-height: 2rem;">
+        <h4>ระบบอาจทำงานไม่ปกติ</h4>
+        คุณกำลังใช้งานบนอุปกรณ์ที่ไม่เหมาะสม<br/>
+        ใช้งานได้ดีที่สุดบน Mozilla Firefox หรือ Google Chrome รุ่นล่าสุดบนอุปกรณ์ที่ไม่ใช่ iOS
+    </div>
+@endsection
+
+@section('script')
+    @parent
+    <script>
+        if (!self.fetch) {
+            // Check for old browser by checking Fetch API support, which is not present in old browsers.
+            // Visit http://caniuse.com for more information
+            $('#mini-def').hide();
+            $('#mini-al').show();
+
+            if (!(typeof Promise !== "undefined" && Promise.toString().indexOf("[native code]") !== -1)) {
+                // If Promise API not supported ::: super old browser
+                setTimeout(function () {
+                    $('body').css('background-color', '#f44336');
+                }, 2000);
+                $('.btn-large').removeClass('orange').addClass('grey');
+            }
+        } else {
+            $('#mini-def').show();
+            $('#mini-al').hide();
+        }
+    </script>
 @endsection
