@@ -82,10 +82,12 @@
         </form>
     </div>
 
-    <div class="center-align minibox" id="mini-def" style="display: none">ใช้งานได้ดีที่สุดบน Mozilla Firefox หรือ Google Chrome รุ่นล่าสุดบนอุปกรณ์ที่ไม่ใช่ iOS</div>
+    <br />
+    <div class="center-align minibox white-text" id="mini-def" style="display: none;font-size: 0.9rem">ใช้งานได้ดีที่สุดบน Mozilla Firefox หรือ Google Chrome รุ่นล่าสุดบนอุปกรณ์ที่ไม่ใช่ iOS</div>
     <div class="center-align minibox sector red darken-1 white-text" id="mini-al" style="font-size:1.3rem;line-height: 2rem;">
         <h4>ระบบอาจทำงานไม่ปกติ</h4>
         คุณกำลังใช้งานบนอุปกรณ์ที่ไม่เหมาะสม<br/>
+        งานกิจกรรมฯจะไม่รับผิดชอบหากเกิดข้อผิดพลาด<br />
         ใช้งานได้ดีที่สุดบน Mozilla Firefox หรือ Google Chrome รุ่นล่าสุดบนอุปกรณ์ที่ไม่ใช่ iOS
     </div>
 @endsection
@@ -103,8 +105,9 @@
                 // If Promise API not supported ::: super old browser
                 setTimeout(function () {
                     $('body').css('background-color', '#f44336');
-                }, 2000);
-                $('.btn-large').removeClass('orange').addClass('grey');
+                    $('.teal').removeClass('teal').addClass('red');
+                }, 1000);
+                $('.btn').removeClass('orange').addClass('grey');
             }
         } else {
             $('#mini-def').show();
