@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="theme-color" content="#009688"/>
     <meta name="google" content="notranslate"/>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet"/>
     <link href="/css/app.css" rel="stylesheet"/>
@@ -73,8 +73,8 @@
 @show
 
 @section('script')
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
     <script>
         $(function () {
             $(".button-collapse").sideNav();
@@ -85,6 +85,10 @@
             @endif
         });
     </script>
+    @if (isset($_SERVER["REQUEST_TIME_FLOAT"]))
+    <!-- It took {{ LARAVEL_START-$_SERVER["REQUEST_TIME_FLOAT"] }} milliseconds to start the framework -->
+    @endif
+    <!-- It took {{ (microtime(true)-LARAVEL_START)*1000 }} milliseconds (since the framework started) to process this page --->
 @show
 </body>
 </html>
