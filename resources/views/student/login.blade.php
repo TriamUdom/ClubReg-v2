@@ -23,6 +23,10 @@
         input::-webkit-inner-spin-button {
             -webkit-appearance: none;
         }
+
+        .g-recaptcha div {
+            margin: auto;
+        }
     </style>
 @endsection
 
@@ -82,12 +86,12 @@
         </form>
     </div>
 
-    <br />
+    <br/>
     <div class="center-align minibox white-text" id="mini-def" style="display: none;font-size: 0.9rem">ใช้งานได้ดีที่สุดบน Mozilla Firefox หรือ Google Chrome รุ่นล่าสุดบนอุปกรณ์ที่ไม่ใช่ iOS</div>
     <div class="center-align minibox sector red darken-1 white-text" id="mini-al" style="font-size:1.3rem;line-height: 2rem;">
         <h4>ระบบอาจทำงานไม่ปกติ</h4>
         คุณกำลังใช้งานบนอุปกรณ์ที่ไม่เหมาะสม<br/>
-        งานกิจกรรมฯจะไม่รับผิดชอบหากเกิดข้อผิดพลาด<br />
+        งานกิจกรรมฯจะไม่รับผิดชอบหากเกิดข้อผิดพลาด<br/>
         ใช้งานได้ดีที่สุดบน Mozilla Firefox หรือ Google Chrome รุ่นล่าสุดบนอุปกรณ์ที่ไม่ใช่ iOS
     </div>
 @endsection
@@ -95,23 +99,33 @@
 @section('script')
     @parent
     <script>
-        if (!self.fetch) {
-            // Check for old browser by checking Fetch API support, which is not present in old browsers.
-            // Visit http://caniuse.com for more information
-            $('#mini-def').hide();
-            $('#mini-al').show();
+        $(function () {
+            if (!self.fetch) {
+                // Check for old browser by checking Fetch API support, which is not present in old browsers.
+                // Visit http://caniuse.com for more information
+                $('#mini-def').hide();
+                $('#mini-al').show();
 
-            if (!(typeof Promise !== "undefined" && Promise.toString().indexOf("[native code]") !== -1)) {
-                // If Promise API not supported ::: super old browser
-                setTimeout(function () {
-                    $('body').css('background-color', '#f44336');
-                    $('.teal').removeClass('teal').addClass('red');
-                }, 1000);
-                $('.btn').removeClass('orange').addClass('grey');
+                if (!(typeof Promise !== "undefined" && Promise.toString().indexOf("[native code]") !== -1)) {
+                    // If Promise API not supported ::: super old browser
+                    setTimeout(function () {
+                        $('body').css('background-color', '#f44336');
+                        $('.teal').removeClass('teal').addClass('red');
+                    }, 1000);
+                    $('.btn').removeClass('orange').addClass('grey');
+                }
+            } else {
+                $('#mini-def').show();
+                $('#mini-al').hide();
             }
-        } else {
-            $('#mini-def').show();
-            $('#mini-al').hide();
-        }
+
+            $('.login-form').submit(function (event) {
+                if (grecaptcha.getResponse().length == 0) {
+                    // ReCAPTCHA validation failed
+                    Materialize.toast("กรุณากด \"ฉันไม่ใช่โปรแกรมอัตโนมัติ\"", 4000);
+                    event.preventDefault();
+                }
+            });
+        });
     </script>
 @endsection
