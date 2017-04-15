@@ -1,0 +1,31 @@
+# Google App Engine Configuration
+# for Project Codex, by Siwat Techavoranant
+
+# Use PHP flexible environment, which will deploy Docker-like environment based on composer.json
+runtime: php
+env: flex
+
+runtime_config:
+  document_root: public
+
+# required on some platforms so ".env" is not skipped
+skip_files: false
+
+automatic_scaling:
+  min_num_instances: 1
+
+beta_settings:
+  cloud_sql_instances: "triamudom-clubreg:asia-northeast1:projectdata"
+
+env_variables:
+  # The values here will override those in ".env". This is useful for
+  # production-specific configuration. However, feel free to set these
+  # values in ".env" instead if you prefer.
+  APP_ENV: production
+  APP_LOG: errorlog
+  #APP_LOG_LEVEL: info
+  DB_SOCKET: /cloudsql/triamudom-clubreg:asia-northeast1:projectdata
+  DB_DATABASE: clubreg
+  DB_USERNAME: clubreg
+  DB_PASSWORD: alphabravodelta
+  ENABLE_CAPTCHA: true

@@ -20,9 +20,9 @@ return [
         }
     }),
     
-    'allow_register_time' => 1484835200, // Timestamp to start registering club, 0 if force allow, overriding "round" value. (used to show countdown)
+    'allow_register_time' => env('ALLOW_REGISTER_TIME', 0), // Timestamp to start registering club, 0 if force allow, overriding "round" value. (used to show countdown)
     
-    'round' => 'CONFIRM&AUDITION&WAR', // Enumerated types: WAITING, CONFIRM, CONFIRM&AUDITION, AUDITION, WAR, CLOSED (must be uppercase)
+    'round' => env('ROUND', 'CONFIRM&AUDITION&WAR'), // Enumerated types: WAITING, CONFIRM, CONFIRM&AUDITION, AUDITION, WAR, CLOSED (must be uppercase)
 
-    'captcha_enable' => false
+    'captcha_enable' => env('ENABLE_CAPTCHA', false),
 ];

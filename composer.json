@@ -49,6 +49,11 @@
             "php artisan ide-helper:generate",
             "php artisan ide-helper:meta",
             "php artisan optimize"
+        ],
+        "post-deploy-cmd": [
+            "chmod -R 777 bootstrap\/cache",
+            "chmod -R 777 storage",
+            "php artisan cache:clear"
         ]
     },
     "config": {
