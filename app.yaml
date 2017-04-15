@@ -22,8 +22,10 @@ env_variables:
   # production-specific configuration. However, feel free to set these
   # values in ".env" instead if you prefer.
   APP_ENV: production
+  APP_DEBUG: false
   APP_LOG: errorlog
-  #APP_LOG_LEVEL: info
+  APP_URL: https://triamudom-clubreg.appspot.com
+  DB_CONNECTION: mysql
   DB_SOCKET: /cloudsql/triamudom-clubreg:asia-northeast1:projectdata
   DB_DATABASE: clubreg
   DB_USERNAME: clubreg

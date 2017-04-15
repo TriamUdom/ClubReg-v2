@@ -22,7 +22,7 @@
         <b style="font-size: 1.3rem">
             @php
                 $status = array();
-                foreach (explode('&', config('core.round')) as $round) {
+                foreach (explode('&', \App\Setting::getValue('round')) as $round) {
                     $status []= config('static.round')[$round];
                 }
             @endphp

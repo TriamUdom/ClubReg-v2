@@ -80,7 +80,7 @@
                     </div>
                 </div>
                 <script>
-                    var cTime = {{ config('core.allow_register_time')-time() }};
+                    var cTime = {{ \App\Setting::getValue('allow_register_time')-time() }};
                     var lastUpdated = Date.now();
                     function showTime() {
                         //Convert seconds to human-friendly time

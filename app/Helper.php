@@ -28,11 +28,12 @@ class Helper {
             // Force round WAITING
             return $round == self::Round_Waiting;
         }
-        return in_array(strtoupper($round), explode('&', config('core.round')));
+        return in_array(strtoupper($round), explode('&', Setting::getValue('round')));
     }
     
     public static function shouldCountdown():bool {
-        return !empty(config('core.allow_register_time')) AND config('core.allow_register_time') > time();
+        $registerTime = Setting::getValue('allow_register_time');
+        return !empty($registerTime) AND $registerTime > time();
     }
     
     

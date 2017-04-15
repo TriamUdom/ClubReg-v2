@@ -19,10 +19,6 @@ return [
             return 2;
         }
     }),
-    
-    'allow_register_time' => env('ALLOW_REGISTER_TIME', 0), // Timestamp to start registering club, 0 if force allow, overriding "round" value. (used to show countdown)
-    
-    'round' => env('ROUND', 'CONFIRM&AUDITION&WAR'), // Enumerated types: WAITING, CONFIRM, CONFIRM&AUDITION, AUDITION, WAR, CLOSED (must be uppercase)
 
     'captcha_enable' => env('ENABLE_CAPTCHA', false),
 ];
