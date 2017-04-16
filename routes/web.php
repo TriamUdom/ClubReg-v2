@@ -6,7 +6,12 @@ Route::group(['middleware' => ['web']], function () {
         if (session()->has('president')) {
             return view('president.menu');
         } elseif (session()->has('student')) {
-            return view('student.menu');
+            $user = \App\User::current();
+            if ($user->hasClub()) {
+                return view('student.finished', ['user' => $user]);
+            } else {
+                return view('student.menu', ['user' => $user]);
+            }
         }
         return view('student.login');
     });

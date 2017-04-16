@@ -38,7 +38,7 @@
 @section('main')
     <div class="z-depth-1 card-panel grey lighten-5" style="max-width:900px;margin:auto">
         @php
-            $user = \App\User::current();
+            /** @var $user \App\User */
         @endphp
         <h4 class="center-align">การลงทะเบียนชมรม</h4>
         <div class="row" style="margin-bottom: 0.8rem;">
