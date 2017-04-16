@@ -177,8 +177,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        
-        // @todo Install Sentry and ReCaptcha
+    
+        Sentry\SentryLaravel\SentryLaravelServiceProvider::class,
         Greggilbert\Recaptcha\RecaptchaServiceProvider::class,
 
     ],
@@ -231,6 +231,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
     
         'Recaptcha' => Greggilbert\Recaptcha\Facades\Recaptcha::class,
+        'Sentry' => Sentry\SentryLaravel\SentryFacade::class,
 
     ],
 
