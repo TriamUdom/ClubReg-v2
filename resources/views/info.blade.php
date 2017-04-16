@@ -78,11 +78,9 @@
             <th>รหัสวิชา</th>
             <th>ชื่อ</th>
             <th>ประเภท</th>
-            @if (Request::has('count'))
-                <th>
-                    จำนวนสมาชิก / จำนวนรับ (ม.4+5+6)
-                </th>
-            @endif
+            <th>
+                จำนวนสมาชิก / จำนวนรับ
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -99,21 +97,20 @@
                         <span class="light-green-text">ไม่คัดเลือก</span>
                     @endif
                 </td>
-                @if (Request::has('count'))
-                    <td>
-                        @if ($club->is_audition)
-                            <b>
-                                {{ $club->countMember() }}
-                            </b>
-                        @else
-                            <b class="@if ($club->isAvailable(true) == 2) green-text @elseif(empty($club->isAvailable(true))) red-text @else amber-text @endif">
-                                {{ $club->countMember() }}
-                            </b>
-                        @endif
-                        / {{ $club->max_member }}
-                        ({{ $club->members()->where('level', 4)->count() }} + {{ $club->members()->where('level', 5)->count() }} + {{ $club->members()->where('level', 6)->count() }})
-                    </td>
-                @endif
+                <td>
+                    @if ($club->is_audition)
+                        <b class="@if ($club->isAvailable()) green-text @else red-text @endif">
+                            @else
+                                <b class="@if ($club->isAvailable(true) == 2) green-text @elseif(empty($club->isAvailable(true))) red-text @else amber-text @endif">
+                                    @endif
+                                    {{ $club->countMember() }}
+                                </b>
+
+                                / {{ $club->max_member }}
+                                @if (Request::has('count'))
+                                    ({{ $club->members()->where('level', 4)->count() }} + {{ $club->members()->where('level', 5)->count() }} + {{ $club->members()->where('level', 6)->count() }})
+                    @endif
+                </td>
             </tr>
         @endforeach
         </tbody>
