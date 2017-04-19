@@ -12,7 +12,7 @@ class PresidentController extends Controller {
         /** @var $club Club */
         $club = Club::find($request->session()->get('president'));
         
-        return response()->download($club->createFM3304(config('core.current_semesters')))->deleteFileAfterSend(true);
+        return response()->download($club->createFM3304(config('core.current_semester')))->deleteFileAfterSend(true);
     }
     
     public function manageAudition(Request $request) {

@@ -67,7 +67,7 @@
         <div class="row">
             <div class="input-field col s12">
                 <input id="iLocation" name="location" type="text" class="validate" required length="150" value="{{ $club->location }}"/>
-                <label for="iLocation">สถานที่การเรียนการสอน</label>
+                <label for="iLocation">สถานที่จัดการเรียนการสอน</label>
             </div>
         </div>
 
@@ -82,7 +82,7 @@
         @endif
 
         <button type="submit" class="btn waves-effect blue fullwidth" style="margin-left:10px">บันทึก</button>
-        <br/>
+        <br/><br />
     </form>
 
 @endsection

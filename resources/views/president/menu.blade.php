@@ -49,10 +49,19 @@
                 <span style="font-size: 1.5rem">{{ $club->name }} ({{ $club->english_name }})</span><br/>
                 <span style="font-size: 1rem">
                     ประธานครูที่ปรึกษา: {{ $club->getAdviserName() }} | ประธานชมรม: {{ $club->getPresidentName() }}
+                    <br />
+                    ประเภทการรับสมัคร:
+                    @if (!$club->is_active)
+                        <span class="red-text">ไม่เปิดรับ</span>
+                    @elseif ($club->is_audition)
+                        <span class="cyan-text">คัดเลือก</span>
+                    @else
+                        <span class="light-green-text">ไม่คัดเลือก</span>
+                    @endif
                     @if (!\App\Helper::isRound(\App\Helper::Round_Closed) AND (!\App\Helper::isRound(\App\Helper::Round_War) OR \App\Helper::isRound(\App\Helper::Round_Audition)) AND $club->is_audition)
                     <br />สถานที่คัดเลือก: {{ $club->audition_location ?? '???' }}
                     @endif
-                    <br />สถานที่ทำการเรียนการสอน: {{ $club->location ?? '???' }} (<a href="/president/settings">แก้ไข</a>)
+                    <br />สถานที่ทำการเรียนการสอน: {{ $club->location ?? '???' }} (<a href="/president/settings">ดูเพิ่มเติม/แก้ไข</a>)
                 </span>
             </div>
         </div>
@@ -66,10 +75,10 @@
             </p>
             @if ($club->countMember() > 0)
                 <div class="row" style="margin-bottom:0">
-                    <div class="col s12 m8">
+                    <div class="col s12 m7">
                         <a class="btn waves-effect fullwidth cyan" href="/president/members">ดูรายชื่อสมาชิก</a>
                     </div>
-                    <div class="col s12 m4">
+                    <div class="col s12 m5">
                         <a class="btn waves-effect fullwidth amber" href="/president/fm3304">ดาวน์โหลด FM33-04</a>
                     </div>
                 </div>
