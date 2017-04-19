@@ -20,7 +20,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach(($club = \App\Club::currentPresident())->members()->orderBy('_id', 'ASC')->get() as $member)
+        @foreach(($club = \App\Club::currentPresident())->members()->orderBy('student_id', 'ASC')->orderBy('room', 'ASC')->get() as $member)
             <tr>
                 <td>{{ $member->student_id ?? '-' }}</td>
                 <td>{{ $member->getName() }}</td>

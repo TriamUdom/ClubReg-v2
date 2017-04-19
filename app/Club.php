@@ -97,7 +97,7 @@ class Club extends Model {
      * @return  string  path to generated FM3304 file
      */
     public function createFM3304($semester) {
-        $studentData = $this->members()->orderBy('_id', 'ASC')->get();
+        $studentData = $this->members()->orderBy('student_id', 'ASC')->orderBy('room', 'ASC')->get();
         
         $fileName = '[FM 33-04] ' . substr($this->id, -2) . '_' . $this->name;
         if (file_exists(storage_path('app/FMOutput/' . $fileName . '.docx'))) {
