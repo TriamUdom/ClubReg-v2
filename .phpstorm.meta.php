@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2017-04-15.
+    * Generated on 2017-04-19.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -43,9 +43,11 @@ namespace PHPSTORM_META {
             'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
             'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,
             'command.tinker' instanceof \Laravel\Tinker\Console\TinkerCommand,
+            'sentry' instanceof \Raven_Client,
             'recaptcha.service' instanceof \Greggilbert\Recaptcha\Service\CheckRecaptchaV2,
             'recaptcha' instanceof \Greggilbert\Recaptcha\Recaptcha,
             'blade.compiler' instanceof \Illuminate\View\Compilers\BladeCompiler,
+            'hash' instanceof \Illuminate\Hashing\BcryptHasher,
             'validation.presence' instanceof \Illuminate\Validation\DatabasePresenceVerifier,
             'translation.loader' instanceof \Illuminate\Translation\FileLoader,
             'translator' instanceof \Illuminate\Translation\Translator,
@@ -116,7 +118,6 @@ namespace PHPSTORM_META {
             'migrator' instanceof \Illuminate\Database\Migrations\Migrator,
             'migration.creator' instanceof \Illuminate\Database\Migrations\MigrationCreator,
             'composer' instanceof \Illuminate\Support\Composer,
-            'hash' instanceof \Illuminate\Hashing\BcryptHasher,
             'swift.transport' instanceof \Illuminate\Mail\TransportManager,
             'swift.mailer' instanceof \Swift_Mailer,
             'mailer' instanceof \Illuminate\Mail\Mailer,
@@ -165,9 +166,11 @@ namespace PHPSTORM_META {
             'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
             'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,
             'command.tinker' instanceof \Laravel\Tinker\Console\TinkerCommand,
+            'sentry' instanceof \Raven_Client,
             'recaptcha.service' instanceof \Greggilbert\Recaptcha\Service\CheckRecaptchaV2,
             'recaptcha' instanceof \Greggilbert\Recaptcha\Recaptcha,
             'blade.compiler' instanceof \Illuminate\View\Compilers\BladeCompiler,
+            'hash' instanceof \Illuminate\Hashing\BcryptHasher,
             'validation.presence' instanceof \Illuminate\Validation\DatabasePresenceVerifier,
             'translation.loader' instanceof \Illuminate\Translation\FileLoader,
             'translator' instanceof \Illuminate\Translation\Translator,
@@ -238,7 +241,6 @@ namespace PHPSTORM_META {
             'migrator' instanceof \Illuminate\Database\Migrations\Migrator,
             'migration.creator' instanceof \Illuminate\Database\Migrations\MigrationCreator,
             'composer' instanceof \Illuminate\Support\Composer,
-            'hash' instanceof \Illuminate\Hashing\BcryptHasher,
             'swift.transport' instanceof \Illuminate\Mail\TransportManager,
             'swift.mailer' instanceof \Swift_Mailer,
             'mailer' instanceof \Illuminate\Mail\Mailer,
@@ -287,9 +289,11 @@ namespace PHPSTORM_META {
             'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
             'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,
             'command.tinker' instanceof \Laravel\Tinker\Console\TinkerCommand,
+            'sentry' instanceof \Raven_Client,
             'recaptcha.service' instanceof \Greggilbert\Recaptcha\Service\CheckRecaptchaV2,
             'recaptcha' instanceof \Greggilbert\Recaptcha\Recaptcha,
             'blade.compiler' instanceof \Illuminate\View\Compilers\BladeCompiler,
+            'hash' instanceof \Illuminate\Hashing\BcryptHasher,
             'validation.presence' instanceof \Illuminate\Validation\DatabasePresenceVerifier,
             'translation.loader' instanceof \Illuminate\Translation\FileLoader,
             'translator' instanceof \Illuminate\Translation\Translator,
@@ -360,7 +364,6 @@ namespace PHPSTORM_META {
             'migrator' instanceof \Illuminate\Database\Migrations\Migrator,
             'migration.creator' instanceof \Illuminate\Database\Migrations\MigrationCreator,
             'composer' instanceof \Illuminate\Support\Composer,
-            'hash' instanceof \Illuminate\Hashing\BcryptHasher,
             'swift.transport' instanceof \Illuminate\Mail\TransportManager,
             'swift.mailer' instanceof \Swift_Mailer,
             'mailer' instanceof \Illuminate\Mail\Mailer,
@@ -409,9 +412,11 @@ namespace PHPSTORM_META {
             'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
             'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,
             'command.tinker' instanceof \Laravel\Tinker\Console\TinkerCommand,
+            'sentry' instanceof \Raven_Client,
             'recaptcha.service' instanceof \Greggilbert\Recaptcha\Service\CheckRecaptchaV2,
             'recaptcha' instanceof \Greggilbert\Recaptcha\Recaptcha,
             'blade.compiler' instanceof \Illuminate\View\Compilers\BladeCompiler,
+            'hash' instanceof \Illuminate\Hashing\BcryptHasher,
             'validation.presence' instanceof \Illuminate\Validation\DatabasePresenceVerifier,
             'translation.loader' instanceof \Illuminate\Translation\FileLoader,
             'translator' instanceof \Illuminate\Translation\Translator,
@@ -482,7 +487,6 @@ namespace PHPSTORM_META {
             'migrator' instanceof \Illuminate\Database\Migrations\Migrator,
             'migration.creator' instanceof \Illuminate\Database\Migrations\MigrationCreator,
             'composer' instanceof \Illuminate\Support\Composer,
-            'hash' instanceof \Illuminate\Hashing\BcryptHasher,
             'swift.transport' instanceof \Illuminate\Mail\TransportManager,
             'swift.mailer' instanceof \Swift_Mailer,
             'mailer' instanceof \Illuminate\Mail\Mailer,
