@@ -23,8 +23,8 @@ class Helper {
      * @param string $round
      * @return bool
      */
-    public static function isRound (string $round) {
-        if (self::shouldCountdown()) {
+    public static function isRound (string $round, bool $ignoreCountdown = false) {
+        if (self::shouldCountdown() AND !$ignoreCountdown) {
             // Force round WAITING
             return $round == self::Round_Waiting;
         }

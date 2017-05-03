@@ -220,6 +220,8 @@
                         </button>
                     </form>
                 </div>
+            @elseif (!\App\Helper::isRound(\App\Helper::Round_Confirm) AND !\App\Helper::isRound(\App\Helper::Round_Audition))
+                <h5>นักเรียนไม่สามารถลงทะเบียนในห้วงเวลานี้ได้</h5>
             @endif
         @endif
     </div>
