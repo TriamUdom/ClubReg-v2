@@ -89,6 +89,23 @@
     <!-- It took {{ LARAVEL_START-$_SERVER["REQUEST_TIME_FLOAT"] }} milliseconds to start the framework -->
     @endif
     <!-- It took {{ (microtime(true)-LARAVEL_START)*1000 }} milliseconds (since the framework started) to process this page --->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-88470919-6', 'auto');
+
+        @if (session()->has('president'))
+            ga('set', 'userId', '{{ sha1('PRESIDENT'.session('president')) }}');
+        @elseif (session()->has('student'))
+            ga('set', 'userId', '{{ sha1('STUDENT'.session('student')) }}');
+        @endif
+
+        ga('send', 'pageview');
+
+    </script>
 @show
 </body>
 </html>
