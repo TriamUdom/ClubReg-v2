@@ -56,7 +56,6 @@ use PhpOffice\PhpWord\TemplateProcessor;
  */
 class Club extends Model {
     public $incrementing = false;
-    public $timestamps = false;
     
     protected $fillable = ['president_title', 'president_fname', 'president_lname', 'adviser_title', 'adviser_fname', 'adviser_lname', 'president_phone', 'adviser_phone', 'description', 'audition_location', 'location'];
     

@@ -2,9 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Setting;
 use Closure;
 
-class President {
+class DBMaintenance {
     /**
      * Handle an incoming request.
      *
@@ -14,12 +15,8 @@ class President {
      * @return mixed
      */
     public function handle($request, Closure $next, $guard = NULL) {
-        if (!$request->session()->has('president')) {
-            if ($request->ajax() || $request->wantsJson()) {
-                return response('Unauthorized.', 401);
-            } else {
-                return response()->view('errors.403');
-            }
+        if (Setting::isUnderMaintenance()) {
+            return response()->view('errors.503');
         }
         
         return $next($request);

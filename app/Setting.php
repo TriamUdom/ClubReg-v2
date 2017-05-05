@@ -3,6 +3,7 @@
 namespace App;
 
 
+use Cache;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -25,6 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  *  - allow_register_time: Timestamp to start registering club, 0 for no countdown, overriding "round" value. (used to show countdown)
  *  - round: Enumerated types: WAITING, CONFIRM, CONFIRM&AUDITION, AUDITION, WAR, CLOSED (must be uppercase)
  */
+
 class Setting extends Model {
     public $incrementing = false;
     
@@ -48,7 +50,17 @@ class Setting extends Model {
         $this->attributes['value'] = json_encode($value);
     }
     
-    public static function getValue(string $id) {
-        return self::find($id)->value;
+    public static function getValue(string $id, $default = NULL) {
+        if ($item = self::find($id)) {
+            return $item->value ?? $default;
+        }
+        
+        return $default;
+    }
+    
+    public static function isUnderMaintenance(): bool {
+        return Cache::remember('maintenance', 2, function () {
+            return self::getValue('maintenance', false);
+        });
     }
 }

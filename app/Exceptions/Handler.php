@@ -32,9 +32,10 @@ class Handler extends ExceptionHandler {
      * @return void
      */
     public function report(Exception $exception) {
-        if ($this->shouldReport($exception)) {
+        if (app()->bound('sentry') && $this->shouldReport($exception)) {
             app('sentry')->captureException($exception);
         }
+        
         parent::report($exception);
     }
     
@@ -43,7 +44,7 @@ class Handler extends ExceptionHandler {
      *
      * @param  \Illuminate\Http\Request $request
      * @param  \Exception               $exception
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|Response
      */
     public function render($request, Exception $exception) {
         if ($exception instanceof TokenMismatchException) {
@@ -66,6 +67,8 @@ class Handler extends ExceptionHandler {
                         }
                         
                         return response()->view('errors.exception', ['title' => $exception->getMessage(), 'code' => date(\DateTime::ISO8601)]);
+                    } elseif ($exception instanceof \PDOException) {
+                        return response()->view('errors.exception', ['title' => 'Database Failure', 'description' => 'ประสบปัญหาในการติดต่อฐานข้อมูล โปรดรอแล้วลองใหม่']);
                     }
                     
                     return response()->view('errors.exception', ['title' => get_class($exception), 'code' => date(\DateTime::ISO8601)]);
