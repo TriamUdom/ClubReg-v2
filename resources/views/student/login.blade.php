@@ -37,125 +37,98 @@
 
 @section('main')
     <div class="z-depth-1 card-panel" style="max-width:550px;margin:auto">
-        <form class="login-form" method="POST" action="/login/student">
-            {{ csrf_field() }}
+        <div class="row">
+            <div class="input-field col s12 center">
+                <h4 class="center login-form-text">ลงทะเบียนเข้าร่วมชมรม</h4>
+            </div>
+        </div>
+        @if (count($errors) > 0)
+            <div class="sector red white-text">
+                {{ implode(', ', $errors->all()) }}
+            </div>
+        @endif
+        @if (\App\Helper::isRound(\App\Helper::Round_Waiting, true))
+            <div class="sector amber darken-3 white-text">
+                ยังไม่เปิดให้ลงทะเบียน
+                @if (\App\Helper::shouldCountdown())
+                    โปรดรอประมาณ
+                    <div class="row">
+                        <div class="col s3 center">
+                            <h4 class="center countdownText" id="tDay">--</h4>วัน
+                        </div>
+                        <div class="col s3 center">
+                            <h4 class="center countdownText" id="tHour">--</h4>ชั่วโมง
+                        </div>
+                        <div class="col s3 center">
+                            <h4 class="center countdownText" id="tMinute">--</h4>นาที
+                        </div>
+                        <div class="col s3 center">
+                            <h4 class="center countdownText" id="tSecond">--</h4>วินาที
+                        </div>
+                    </div>
+                    <script>
+                        var cTime = {{ \App\Setting::getValue('allow_register_time')-time() }};
+                        var lastUpdated = Date.now();
+                        function showTime() {
+                            //Convert seconds to human-friendly time
+
+                            if (Date.now() - lastUpdated > 10000 || cTime <= 1) {
+                                // setInterval skipped or time out, refresh
+                                location.reload();
+                            }
+
+                            var data = cTime;
+
+                            if (data <= 600) {
+                                $('#authcard').slideDown();
+                                $('#authbtn').addClass('disabled').text('ยังไม่ถึงเวลาประกาศผล');
+                            }
+
+                            var day = 0;
+                            var hour = 0;
+                            var minute = 0;
+
+                            while (data >= 86400) {
+                                day++;
+                                data -= 86400;
+                            }
+                            while (data >= 3600) {
+                                hour++;
+                                data -= 3600;
+                            }
+                            while (data >= 60) {
+                                minute++;
+                                data -= 60;
+                            }
+
+                            $('#tDay').text(day);
+                            $('#tHour').text(hour);
+                            $('#tMinute').text(minute);
+                            $('#tSecond').text(data);
+
+                            cTime--;
+                            lastUpdated = Date.now();
+                        }
+                        setTimeout(function () {
+                            $(function () {
+                                showTime();
+                                setInterval('showTime()', 1000);
+                            });
+                        }, 500);
+                    </script>
+                @endif
+            </div>
+        @else
+            <div class="sector grey lighten-4 red-text" style="font-size: 1.5rem;line-height: 1.8rem">
+                นักเรียนจะต้องดำเนินการด้วยความระมัดระวัง หากลงทะเบียนแล้วไม่สามารถยกเลิกได้
+            </div>
+            <p>โปรดเข้าสู่ระบบเพื่อดำเนินการต่อ</p>
             <div class="row">
-                <div class="input-field col s12 center">
-                    <h4 class="center login-form-text">ลงทะเบียนเข้าร่วมชมรม</h4>
+                <div class="col s12">
+                    <a class="waves-effect waves-light btn-large orange fullwidth" href="/login"><i class="material-icons left">fingerprint</i>เข้าสู่ระบบด้วยรหัส Wifi</a>
                 </div>
             </div>
-            @if (count($errors) > 0)
-                <div class="sector red white-text">
-                    {{ implode(', ', $errors->all()) }}
-                </div>
-            @endif
-            @if (\App\Helper::isRound(\App\Helper::Round_Waiting, true))
-                <div class="sector amber darken-3 white-text">
-                    ยังไม่เปิดให้ลงทะเบียน
-                    @if (\App\Helper::shouldCountdown())
-                        โปรดรอประมาณ
-                        <div class="row">
-                            <div class="col s3 center">
-                                <h4 class="center countdownText" id="tDay">--</h4>วัน
-                            </div>
-                            <div class="col s3 center">
-                                <h4 class="center countdownText" id="tHour">--</h4>ชั่วโมง
-                            </div>
-                            <div class="col s3 center">
-                                <h4 class="center countdownText" id="tMinute">--</h4>นาที
-                            </div>
-                            <div class="col s3 center">
-                                <h4 class="center countdownText" id="tSecond">--</h4>วินาที
-                            </div>
-                        </div>
-                        <script>
-                            var cTime = {{ \App\Setting::getValue('allow_register_time')-time() }};
-                            var lastUpdated = Date.now();
-                            function showTime() {
-                                //Convert seconds to human-friendly time
-
-                                if (Date.now() - lastUpdated > 10000 || cTime <= 1) {
-                                    // setInterval skipped or time out, refresh
-                                    location.reload();
-                                }
-
-                                var data = cTime;
-
-                                if (data <= 600) {
-                                    $('#authcard').slideDown();
-                                    $('#authbtn').addClass('disabled').text('ยังไม่ถึงเวลาประกาศผล');
-                                }
-
-                                var day = 0;
-                                var hour = 0;
-                                var minute = 0;
-
-                                while (data >= 86400) {
-                                    day++;
-                                    data -= 86400;
-                                }
-                                while (data >= 3600) {
-                                    hour++;
-                                    data -= 3600;
-                                }
-                                while (data >= 60) {
-                                    minute++;
-                                    data -= 60;
-                                }
-
-                                $('#tDay').text(day);
-                                $('#tHour').text(hour);
-                                $('#tMinute').text(minute);
-                                $('#tSecond').text(data);
-
-                                cTime--;
-                                lastUpdated = Date.now();
-                            }
-                            setTimeout(function () {
-                                $(function () {
-                                    showTime();
-                                    setInterval('showTime()', 1000);
-                                });
-                            }, 500);
-                        </script>
-                    @endif
-                </div>
-            @else
-                <div class="sector grey lighten-4 red-text" style="font-size: 1.5rem;line-height: 1.8rem">
-                    นักเรียนจะต้องดำเนินการด้วยความระมัดระวัง หากลงทะเบียนแล้วไม่สามารถยกเลิกได้
-                </div>
-                <ul class="collection white-text"
-                    style="margin:0;{{ session()->has('error_message') ? '' : 'display:none' }}" id="error-message">
-                    <li class="collection-item red darken-1">{{ session('error_message') }}</li>
-                </ul>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input id="username" type="number" name="citizen_id" class="validate" required min="1100000000000" max="9000000000000"/>
-                        <label for="username">รหัสประจำตัวประชาชน</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input id="password" type="number" name="student_id" class="validate" required min="11111" max="99999"/>
-                        <label for="password">รหัสประจำตัวนักเรียน (ไม่มี ใส่ 11111)</label>
-                    </div>
-                </div>
-                @if (config('core.captcha_enable'))
-                    <div class="row">
-                        <div class="col s12 center-align">
-                            {!! Recaptcha::render([ 'lang' => 'th' ]) !!}
-                        </div>
-                    </div>
-                @endif
-                <div class="row">
-                    <div class="input-field col s12">
-                        <button class="btn waves-effect waves-light orange" type="submit" name="action" style="width:100%">
-                            เข้าสู่ระบบ
-                        </button>
-                    </div>
-                </div>
-            @endif
-        </form>
+        @endif
     </div>
 
     <br/>

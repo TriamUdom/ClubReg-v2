@@ -15,6 +15,8 @@ class President {
      */
     public function handle($request, Closure $next, $guard = NULL) {
         if (!$request->session()->has('president')) {
+            return redirect()->guest('login');
+        } elseif (!$request->session()->has('president')) {
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);
             } else {

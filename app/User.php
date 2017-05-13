@@ -43,7 +43,7 @@ use Log;
  */
 class User extends Model {
     
-    protected $primaryKey = 'citizen_id';
+    protected $primaryKey = 'student_id';
     
     const RegisterType_ExistingMember = 'EXISTING';
     const RegisterType_Audition = 'AUDITION';
@@ -146,5 +146,14 @@ class User extends Model {
     
     public function getName() {
         return $this->title.$this->firstname.' '.$this->lastname;
+    }
+    
+    /**
+     * Get primary key value
+     *
+     * @return string|int
+     */
+    public function getId() {
+        return $this->{$this->primaryKey};
     }
 }

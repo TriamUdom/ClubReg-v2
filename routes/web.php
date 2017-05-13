@@ -3,7 +3,7 @@
 Route::group(['middleware' => ['web']], function () {
     
     Route::get('/', function () {
-        if (session()->has('president')) {
+        if (session()->has('president') AND !session()->has('student')) {
             return view('president.menu');
         } elseif (session()->has('student')) {
             $user = \App\User::current();
@@ -16,13 +16,10 @@ Route::group(['middleware' => ['web']], function () {
         return view('student.login');
     });
     
-    Route::post('login/student', 'StudentController@login');
-    Route::get('logout', 'UIController@logout');
-    
     // TUSSO integration
-    Route::get('president', 'UserController@redirectOpenID');
+    Route::get('login', 'UserController@redirectOpenID');
     Route::post('openid_login', 'UserController@openidLogin');
-    Route::get('president/logout', 'UserController@logout');
+    Route::get('logout', 'UserController@logout');
     
     Route::get('info', function () { return view('info'); });
     Route::get('contact', function () { return view('contact'); });
@@ -61,6 +58,9 @@ Route::group(['middleware' => ['web', 'student']], function () {
 });
 
 Route::group(['middleware' => ['web', 'president'], 'prefix' => 'president'], function () {
+    Route::get('president', function() {
+        return view('president.menu');
+    });
     Route::get('members', function () {
         return view('president.members');
     });
