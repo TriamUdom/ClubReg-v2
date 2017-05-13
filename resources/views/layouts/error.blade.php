@@ -5,7 +5,7 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="theme-color" content="#009688"/>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css" rel="stylesheet"/>
     <link rel="shortcut icon" href="/favicon.png" />
     <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet" />
     <style>
@@ -89,7 +89,7 @@
 <footer class="page-footer teal">
     <div class="footer-copyright">
         <div class="container th">
-            งานกิจกรรมพัฒนาผู้เรียน โรงเรียนเตรียมอุดมศึกษา | พัฒนาโดย ศิวัช เตชวรนันท์
+            งานกิจกรรมพัฒนาผู้เรียน โรงเรียนเตรียมอุดมศึกษา
         </div>
     </div>
 </footer>
