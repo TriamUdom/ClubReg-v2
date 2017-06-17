@@ -22,6 +22,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('logout', 'UserController@logout');
     
     Route::get('info', function () { return view('info'); });
+    Route::get('clubinfo', function () { return view('detail'); });
     Route::get('contact', function () { return view('contact'); });
     
     if (config('app.debug')) {

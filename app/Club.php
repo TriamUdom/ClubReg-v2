@@ -5,6 +5,7 @@ namespace App;
 
 use App\Exceptions\UserFriendlyException;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use PhpOffice\PhpWord\TemplateProcessor;
 
 /**
@@ -96,8 +97,11 @@ class Club extends Model {
      * @return  string  path to generated FM3304 file
      */
     public function createFM3304($semester) {
-        $studentData = $this->members()->orderBy('student_id', 'ASC')->orderBy('room', 'ASC')->get();
-        
+        return self::generateFM3304($this->members()->orderBy('student_id', 'ASC')->orderBy('room', 'ASC')->get(), $semester);
+    }
+    
+    public function generateFM3304 (Collection $studentData, $semester) {
+        // StudentData: title firstname lastname level room
         $fileName = '[FM 33-04] ' . substr($this->id, -2) . '_' . $this->name;
         if (file_exists(storage_path('app/FMOutput/' . $fileName . '.docx'))) {
             unlink(storage_path('app/FMOutput/' . $fileName . '.docx'));
@@ -128,6 +132,82 @@ class Club extends Model {
         
         $templateProcessor->saveAs(storage_path('app/FMOutput/' . $fileName . '.docx'));
         
+        return storage_path('app/FMOutput/' . $fileName . '.docx');
+    }
+    
+    public function generateFM3301(Collection $studentData, int $adviserCount){
+        $criterionCount = $adviserCount*30;
+        
+        $fileName = '[FM 33-01] '.substr($this->id, -2).'_'.$this->name;
+        if(file_exists(public_path('FMOutput/'.$fileName.'.docx'))){
+            unlink(public_path('FMOutput/'.$fileName.'.docx'));
+        }
+        
+        $templateProcessor = new TemplateProcessor(resource_path('FMtemplate/FM3301.docx'));
+        
+        $templateProcessor->setValue('clubName',            htmlspecialchars(str_replace('ชมรม', '', $this->name)));
+        $templateProcessor->setValue('clubCode',            htmlspecialchars($this->id));
+        $templateProcessor->setValue('adviserCount',        htmlspecialchars($adviserCount));
+        $templateProcessor->setValue('criterionCount',      htmlspecialchars($criterionCount));
+        
+        $class4StudentCount = 0;
+        $class5StudentCount = 0;
+        $class6StudentCount = 0;
+        $studentCount = count($studentData);
+        
+        for($i=0;$i<$studentCount;$i++){
+            switch($studentData[$i]->level){
+                case 4:
+                    $class4StudentCount += 1;
+                    break;
+                case 5:
+                    $class5StudentCount += 1;
+                    break;
+                case 6:
+                    $class6StudentCount += 1;
+                    break;
+                default:
+                    throw new UserFriendlyException("Class ".$studentData[$i]->level." does not exists.");
+                    break;
+            }
+        }
+        
+        $lessThanCriterion = 0;
+        $moreThanCriterion = 0;
+        
+        if($studentCount > $adviserCount*30){
+            $moreThanCriterion = $studentCount - $adviserCount*30;
+        }else if($studentCount < $adviserCount*30){
+            $lessThanCriterion = $adviserCount*30 - $studentCount;
+        }
+        
+        $templateProcessor->setValue('totalStudentCount',     htmlspecialchars($studentCount));
+        $templateProcessor->setValue('class4StudentCount',    htmlspecialchars($class4StudentCount));
+        $templateProcessor->setValue('class5StudentCount',    htmlspecialchars($class5StudentCount));
+        $templateProcessor->setValue('class6StudentCount',    htmlspecialchars($class6StudentCount));
+        $templateProcessor->setValue('lessThanCriterion',     htmlspecialchars($lessThanCriterion));
+        $templateProcessor->setValue('moreThanCriterion',     htmlspecialchars($moreThanCriterion));
+        
+        $templateProcessor->cloneRow('count', $studentCount);
+        
+        for($j=0;$j<$studentCount;$j++){
+            $k = $j+1;
+            $templateProcessor->setValue('count#'.$k, $k);
+            
+            $templateProcessor->setValue('tfname#'.$k,          htmlspecialchars($studentData[$j]->title.$studentData[$j]->firstname));
+            $templateProcessor->setValue('lname#'.$k,           htmlspecialchars($studentData[$j]->lastname));
+            
+            $templateProcessor->setValue('class#'.$k,           htmlspecialchars('ม.'.$studentData[$j]->level));
+            $templateProcessor->setValue('room#'.$k,            htmlspecialchars((int) $studentData[$j]->room));
+        }
+        
+        $templateProcessor->setValue('operation_year',        htmlspecialchars(config('core.current_year')));
+        
+        $templateProcessor->setValue('presidentName',         htmlspecialchars($this->getPresidentName()));
+        $templateProcessor->setValue('adviserName',           htmlspecialchars($this->getAdviserName()));
+        
+        $templateProcessor->saveAs(storage_path('app/FMOutput/' . $fileName . '.docx'));
+    
         return storage_path('app/FMOutput/' . $fileName . '.docx');
     }
     
