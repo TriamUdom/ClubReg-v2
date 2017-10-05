@@ -11,23 +11,23 @@ use PhpOffice\PhpWord\TemplateProcessor;
 /**
  * App\Club
  *
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\User[] $members
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\User[]     $members
  * @mixin \Eloquent
- * @property string                                                    $id
- * @property string                                                    $name
- * @property string                                                    $english_name
- * @property bool                                                      $is_audition
- * @property bool                                                      $is_active
- * @property int                                                       $subject_code
- * @property string                                                    $president_title
- * @property string                                                    $president_fname
- * @property string                                                    $president_lname
- * @property string                                                    $adviser_title
- * @property string                                                    $adviser_fname
- * @property string                                                    $adviser_lname
- * @property int                                                       $max_member
- * @property string                                                    $description
- * @property array $user_id List of admin usernames, separated by comma
+ * @property string                                                        $id
+ * @property string                                                        $name
+ * @property string                                                        $english_name
+ * @property bool                                                          $is_audition
+ * @property bool                                                          $is_active
+ * @property int                                                           $subject_code
+ * @property string                                                        $president_title
+ * @property string                                                        $president_fname
+ * @property string                                                        $president_lname
+ * @property string                                                        $adviser_title
+ * @property string                                                        $adviser_fname
+ * @property string                                                        $adviser_lname
+ * @property int                                                           $max_member
+ * @property string                                                        $description
+ * @property array                                                         $user_id List of admin usernames, separated by comma
  * @method static \Illuminate\Database\Query\Builder|\App\Club whereAdviserFname($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Club whereAdviserLname($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Club whereAdviserTitle($value)
@@ -45,10 +45,10 @@ use PhpOffice\PhpWord\TemplateProcessor;
  * @method static \Illuminate\Database\Query\Builder|\App\Club whereMaxTeacher($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Club whereMaxMember($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Club whereUserId($value)
- * @property string $audition_location
- * @property string $location
- * @property string $president_phone
- * @property string $adviser_phone
+ * @property string                                                        $audition_location
+ * @property string                                                        $location
+ * @property string                                                        $president_phone
+ * @property string                                                        $adviser_phone
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Audition[] $auditions
  * @method static \Illuminate\Database\Query\Builder|\App\Club whereAdviserPhone($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Club whereAuditionLocation($value)
@@ -58,7 +58,19 @@ use PhpOffice\PhpWord\TemplateProcessor;
 class Club extends Model {
     public $incrementing = false;
     
-    protected $fillable = ['president_title', 'president_fname', 'president_lname', 'adviser_title', 'adviser_fname', 'adviser_lname', 'president_phone', 'adviser_phone', 'description', 'audition_location', 'location'];
+    protected $fillable = [
+        'president_title',
+        'president_fname',
+        'president_lname',
+        'adviser_title',
+        'adviser_fname',
+        'adviser_lname',
+        'president_phone',
+        'adviser_phone',
+        'description',
+        'audition_location',
+        'location'
+    ];
     
     /**
      * The attributes that should be casted to native types.
@@ -70,14 +82,6 @@ class Club extends Model {
         'is_active' => 'boolean',
         'user_id' => 'array'
     ];
-    
-    public function members() {
-        return $this->hasMany('App\User', 'club_id', 'id');
-    }
-    
-    public function auditions() {
-        return $this->hasMany('App\Audition', 'club_id', 'id');
-    }
     
     public static function currentPresident() {
         if ($user = self::find(session('president'))) {
@@ -91,6 +95,48 @@ class Club extends Model {
     }
     
     /**
+     * Get all club open for audition
+     *
+     * @return array
+     */
+    public static function fetchAuditionClubs(): array {
+        $clubs = self::where('is_audition', true)->where('is_active', true)->get()->reject(function (Club $item) {
+            return !$item->isAvailable();
+        })->all();
+        $list = array();
+        foreach ($clubs as $club) {
+            $list [$club->name] = $club->id;
+        }
+        
+        return $list;
+    }
+    
+    /**
+     * Get all club available in war
+     *
+     * @return array
+     */
+    public static function fetchWarClubs(): array {
+        $clubs = self::where('is_audition', false)->where('is_active', true)->get()->reject(function (Club $item) {
+            return !$item->isAvailable();
+        })->all();
+        $list = array();
+        foreach ($clubs as $club) {
+            $list [$club->name] = $club->id;
+        }
+        
+        return $list;
+    }
+    
+    public function members() {
+        return $this->hasMany('App\User', 'club_id', 'id');
+    }
+    
+    public function auditions() {
+        return $this->hasMany('App\Audition', 'club_id', 'id');
+    }
+    
+    /**
      * Create FM3304
      *
      * @param   int     semester that this FM3304 assigned to
@@ -100,7 +146,7 @@ class Club extends Model {
         return self::generateFM3304($this->members()->orderBy('student_id', 'ASC')->orderBy('room', 'ASC')->get(), $semester);
     }
     
-    public function generateFM3304 (Collection $studentData, $semester) {
+    public function generateFM3304(Collection $studentData, $semester) {
         // StudentData: title firstname lastname level room
         $fileName = '[FM 33-04] ' . substr($this->id, -2) . '_' . $this->name;
         if (file_exists(storage_path('app/FMOutput/' . $fileName . '.docx'))) {
@@ -135,28 +181,28 @@ class Club extends Model {
         return storage_path('app/FMOutput/' . $fileName . '.docx');
     }
     
-    public function generateFM3301(Collection $studentData, int $adviserCount){
-        $criterionCount = $adviserCount*30;
+    public function generateFM3301(Collection $studentData, int $adviserCount) {
+        $criterionCount = $adviserCount * 30;
         
-        $fileName = '[FM 33-01] '.substr($this->id, -2).'_'.$this->name;
-        if(file_exists(public_path('FMOutput/'.$fileName.'.docx'))){
-            unlink(public_path('FMOutput/'.$fileName.'.docx'));
+        $fileName = '[FM 33-01] ' . substr($this->id, -2) . '_' . $this->name;
+        if (file_exists(public_path('FMOutput/' . $fileName . '.docx'))) {
+            unlink(public_path('FMOutput/' . $fileName . '.docx'));
         }
         
         $templateProcessor = new TemplateProcessor(resource_path('FMtemplate/FM3301.docx'));
         
-        $templateProcessor->setValue('clubName',            htmlspecialchars(str_replace('ชมรม', '', $this->name)));
-        $templateProcessor->setValue('clubCode',            htmlspecialchars($this->id));
-        $templateProcessor->setValue('adviserCount',        htmlspecialchars($adviserCount));
-        $templateProcessor->setValue('criterionCount',      htmlspecialchars($criterionCount));
+        $templateProcessor->setValue('clubName', htmlspecialchars(str_replace('ชมรม', '', $this->name)));
+        $templateProcessor->setValue('clubCode', htmlspecialchars($this->id));
+        $templateProcessor->setValue('adviserCount', htmlspecialchars($adviserCount));
+        $templateProcessor->setValue('criterionCount', htmlspecialchars($criterionCount));
         
         $class4StudentCount = 0;
         $class5StudentCount = 0;
         $class6StudentCount = 0;
         $studentCount = count($studentData);
         
-        for($i=0;$i<$studentCount;$i++){
-            switch($studentData[$i]->level){
+        for ($i = 0; $i < $studentCount; $i++) {
+            switch ($studentData[$i]->level) {
                 case 4:
                     $class4StudentCount += 1;
                     break;
@@ -167,7 +213,7 @@ class Club extends Model {
                     $class6StudentCount += 1;
                     break;
                 default:
-                    throw new UserFriendlyException("Class ".$studentData[$i]->level." does not exists.");
+                    throw new UserFriendlyException("Class " . $studentData[$i]->level . " does not exists.");
                     break;
             }
         }
@@ -175,39 +221,41 @@ class Club extends Model {
         $lessThanCriterion = 0;
         $moreThanCriterion = 0;
         
-        if($studentCount > $adviserCount*30){
-            $moreThanCriterion = $studentCount - $adviserCount*30;
-        }else if($studentCount < $adviserCount*30){
-            $lessThanCriterion = $adviserCount*30 - $studentCount;
+        if ($studentCount > $adviserCount * 30) {
+            $moreThanCriterion = $studentCount - $adviserCount * 30;
+        } else {
+            if ($studentCount < $adviserCount * 30) {
+                $lessThanCriterion = $adviserCount * 30 - $studentCount;
+            }
         }
         
-        $templateProcessor->setValue('totalStudentCount',     htmlspecialchars($studentCount));
-        $templateProcessor->setValue('class4StudentCount',    htmlspecialchars($class4StudentCount));
-        $templateProcessor->setValue('class5StudentCount',    htmlspecialchars($class5StudentCount));
-        $templateProcessor->setValue('class6StudentCount',    htmlspecialchars($class6StudentCount));
-        $templateProcessor->setValue('lessThanCriterion',     htmlspecialchars($lessThanCriterion));
-        $templateProcessor->setValue('moreThanCriterion',     htmlspecialchars($moreThanCriterion));
+        $templateProcessor->setValue('totalStudentCount', htmlspecialchars($studentCount));
+        $templateProcessor->setValue('class4StudentCount', htmlspecialchars($class4StudentCount));
+        $templateProcessor->setValue('class5StudentCount', htmlspecialchars($class5StudentCount));
+        $templateProcessor->setValue('class6StudentCount', htmlspecialchars($class6StudentCount));
+        $templateProcessor->setValue('lessThanCriterion', htmlspecialchars($lessThanCriterion));
+        $templateProcessor->setValue('moreThanCriterion', htmlspecialchars($moreThanCriterion));
         
         $templateProcessor->cloneRow('count', $studentCount);
         
-        for($j=0;$j<$studentCount;$j++){
-            $k = $j+1;
-            $templateProcessor->setValue('count#'.$k, $k);
+        for ($j = 0; $j < $studentCount; $j++) {
+            $k = $j + 1;
+            $templateProcessor->setValue('count#' . $k, $k);
             
-            $templateProcessor->setValue('tfname#'.$k,          htmlspecialchars($studentData[$j]->title.$studentData[$j]->firstname));
-            $templateProcessor->setValue('lname#'.$k,           htmlspecialchars($studentData[$j]->lastname));
+            $templateProcessor->setValue('tfname#' . $k, htmlspecialchars($studentData[$j]->title . $studentData[$j]->firstname));
+            $templateProcessor->setValue('lname#' . $k, htmlspecialchars($studentData[$j]->lastname));
             
-            $templateProcessor->setValue('class#'.$k,           htmlspecialchars('ม.'.$studentData[$j]->level));
-            $templateProcessor->setValue('room#'.$k,            htmlspecialchars((int) $studentData[$j]->room));
+            $templateProcessor->setValue('class#' . $k, htmlspecialchars('ม.' . $studentData[$j]->level));
+            $templateProcessor->setValue('room#' . $k, htmlspecialchars((int)$studentData[$j]->room));
         }
         
-        $templateProcessor->setValue('operation_year',        htmlspecialchars(config('core.current_year')));
+        $templateProcessor->setValue('operation_year', htmlspecialchars(config('core.current_year')));
         
-        $templateProcessor->setValue('presidentName',         htmlspecialchars($this->getPresidentName()));
-        $templateProcessor->setValue('adviserName',           htmlspecialchars($this->getAdviserName()));
+        $templateProcessor->setValue('presidentName', htmlspecialchars($this->getPresidentName()));
+        $templateProcessor->setValue('adviserName', htmlspecialchars($this->getAdviserName()));
         
         $templateProcessor->saveAs(storage_path('app/FMOutput/' . $fileName . '.docx'));
-    
+        
         return storage_path('app/FMOutput/' . $fileName . '.docx');
     }
     
@@ -255,39 +303,5 @@ class Club extends Model {
             // Reserve 20% for M4
             return $this->members()->where('level', '!=', 4)->count() < $this->max_member * 0.8 AND $this->isAvailable();
         }
-    }
-    
-    /**
-     * Get all club open for audition
-     *
-     * @return array
-     */
-    public static function fetchAuditionClubs(): array {
-        $clubs = self::where('is_audition', true)->where('is_active', true)->get()->reject(function (Club $item) {
-            return !$item->isAvailable();
-        })->all();
-        $list = array();
-        foreach ($clubs as $club) {
-            $list [$club->name] = $club->id;
-        }
-        
-        return $list;
-    }
-    
-    /**
-     * Get all club available in war
-     *
-     * @return array
-     */
-    public static function fetchWarClubs(): array {
-        $clubs = self::where('is_audition', false)->where('is_active', true)->get()->reject(function (Club $item) {
-            return !$item->isAvailable();
-        })->all();
-        $list = array();
-        foreach ($clubs as $club) {
-            $list [$club->name] = $club->id;
-        }
-        
-        return $list;
     }
 }

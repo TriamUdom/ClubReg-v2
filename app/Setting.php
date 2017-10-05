@@ -30,6 +30,20 @@ use Illuminate\Database\Eloquent\Model;
 class Setting extends Model {
     public $incrementing = false;
     
+    public static function getValue(string $id, $default = NULL) {
+        if ($item = self::find($id)) {
+            return $item->value ?? $default;
+        }
+        
+        return $default;
+    }
+    
+    public static function isUnderMaintenance(): bool {
+        return Cache::remember('maintenance', 2, function () {
+            return self::getValue('maintenance', false);
+        });
+    }
+    
     /**
      * Get the value
      *
@@ -48,19 +62,5 @@ class Setting extends Model {
      */
     public function setValueAttribute($value) {
         $this->attributes['value'] = json_encode($value);
-    }
-    
-    public static function getValue(string $id, $default = NULL) {
-        if ($item = self::find($id)) {
-            return $item->value ?? $default;
-        }
-        
-        return $default;
-    }
-    
-    public static function isUnderMaintenance(): bool {
-        return Cache::remember('maintenance', 2, function () {
-            return self::getValue('maintenance', false);
-        });
     }
 }

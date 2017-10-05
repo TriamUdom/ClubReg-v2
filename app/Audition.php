@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * App\Audition
+ * Copyright (c) 2017 Siwat Techavoranant
  *
  * @property int            $id
  * @property float          $citizen_id
@@ -13,18 +14,18 @@ use Illuminate\Database\Eloquent\Model;
  * @property string         $status
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @method static \Illuminate\Database\Query\Builder|\App\Audition whereCitizenId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Audition whereClub($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Audition whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Audition whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Audition whereStatus($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Audition whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|Audition whereCitizenId($value)
+ * @method static \Illuminate\Database\Query\Builder|Audition whereClub($value)
+ * @method static \Illuminate\Database\Query\Builder|Audition whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|Audition whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|Audition whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|Audition whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property-read \App\Club $club
- * @method static \Illuminate\Database\Query\Builder|\App\Audition whereClubId($value)
- * @property string $comment
+ * @method static \Illuminate\Database\Query\Builder|Audition whereClubId($value)
+ * @property string         $comment
  * @property-read \App\User $user
- * @method static \Illuminate\Database\Query\Builder|\App\Audition whereComment($value)
+ * @method static \Illuminate\Database\Query\Builder|Audition whereComment($value)
  */
 class Audition extends Model {
     
@@ -36,24 +37,6 @@ class Audition extends Model {
     const Status_Joined = 'JOINED'; // Student joined the club (Step 3)
     
     protected $fillable = ['citizen_id', 'club_id'];
-    
-    /**
-     * Define many-to-one relationship
-     *
-     * @return mixed
-     */
-    public function club() {
-        return $this->belongsTo('App\Club', 'club_id');
-    }
-    
-    /**
-     * Define many-to-one relationship
-     *
-     * @return mixed
-     */
-    public function user() {
-        return $this->belongsTo('App\User', 'citizen_id');
-    }
     
     /**
      * Apply for club audition
@@ -83,6 +66,24 @@ class Audition extends Model {
      */
     public static function findRequest($citizenId, $clubId) {
         return self::where('citizen_id', $citizenId)->where('club_id', $clubId)->first() ?? false;
+    }
+    
+    /**
+     * Define many-to-one relationship
+     *
+     * @return mixed
+     */
+    public function club() {
+        return $this->belongsTo('App\Club', 'club_id');
+    }
+    
+    /**
+     * Define many-to-one relationship
+     *
+     * @return mixed
+     */
+    public function user() {
+        return $this->belongsTo('App\User', 'citizen_id');
     }
     
     /**

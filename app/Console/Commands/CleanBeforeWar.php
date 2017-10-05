@@ -5,39 +5,36 @@ namespace App\Console\Commands;
 use DB;
 use Illuminate\Console\Command;
 
-class CleanBeforeWar extends Command
-{
+class CleanBeforeWar extends Command {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
     protected $signature = 'tool:cleanbfwar';
-
+    
     /**
      * The console command description.
      *
      * @var string
      */
     protected $description = 'Clean before war table';
-
+    
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
     }
-
+    
     /**
      * Execute the console command.
      *
      * @return mixed
      */
-    public function handle()
-    {
+    public function handle() {
         $db = DB::table('before_war')->get();
         foreach ($db as $row) {
             if (empty($row->student_id) OR trim($row->firstname) != $row->firstname OR empty($row->room) OR empty($row->level)) {
@@ -51,7 +48,7 @@ class CleanBeforeWar extends Command
                     'number' => empty(trim($row->number)) ? NULL : trim($row->number),
                     'club_id' => trim($row->club_id)
                 ]);
-                $this->info('Updated '.$row->student_id. ': '.$row->room);
+                $this->info('Updated ' . $row->student_id . ': ' . $row->room);
             }
         }
     }

@@ -10,17 +10,19 @@ use Log;
 /**
  * App\User
  *
- * @property int            $citizen_id
- * @property float          $student_id
- * @property bool           $level
- * @property string         $room
- * @property bool           $number
- * @property string         $title
- * @property string         $firstname
- * @property string         $lastname
- * @property string         $club_id
- * @property string         $reason
- * @property string         $comment
+ * Copyright (c) 2017 Siwat Techavoranant
+ *
+ * @property int                                                           $citizen_id
+ * @property float                                                         $student_id
+ * @property bool                                                          $level
+ * @property string                                                        $room
+ * @property bool                                                          $number
+ * @property string                                                        $title
+ * @property string                                                        $firstname
+ * @property string                                                        $lastname
+ * @property string                                                        $club_id
+ * @property string                                                        $reason
+ * @property string                                                        $comment
  * @method static Builder|User whereCitizenId($value)
  * @method static Builder|User whereClub($value)
  * @method static Builder|User whereComment($value)
@@ -33,23 +35,21 @@ use Log;
  * @method static Builder|User whereStudentId($value)
  * @method static Builder|User whereTitle($value)
  * @mixin \Eloquent
- * @property-read \App\Club $club
+ * @property-read \App\Club                                                $club
  * @method static Builder|User whereClubId($value)
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon                                                $created_at
+ * @property \Carbon\Carbon                                                $updated_at
  * @method static \Illuminate\Database\Query\Builder|\App\User whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\User whereUpdatedAt($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Audition[] $auditions
  */
 class User extends Model {
     
-    protected $primaryKey = 'student_id';
-    
     const RegisterType_ExistingMember = 'EXISTING';
     const RegisterType_Audition = 'AUDITION';
     const RegisterType_War = 'WAR';
     const RegisterType_Special = 'SPECIAL';
-    
+    protected $primaryKey = 'student_id';
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -58,23 +58,6 @@ class User extends Model {
     protected $hidden = [
         'citizen_id'
     ];
-    
-    /**
-     * Define many-to-one relationship
-     *
-     * @return mixed
-     */
-    public function club() {
-        return $this->belongsTo('App\Club', 'club_id');
-    }
-    
-    /**
-     * Get the audition records of this user.
-     */
-    public function auditions()
-    {
-        return $this->hasMany('App\Audition', 'citizen_id', 'citizen_id');
-    }
     
     /**
      * Get currently login user
@@ -90,6 +73,22 @@ class User extends Model {
             $e->setDescription('นักเรียนยังไม่ได้เข้าสู่ระบบ');
             throw $e;
         }
+    }
+    
+    /**
+     * Define many-to-one relationship
+     *
+     * @return mixed
+     */
+    public function club() {
+        return $this->belongsTo('App\Club', 'club_id');
+    }
+    
+    /**
+     * Get the audition records of this user.
+     */
+    public function auditions() {
+        return $this->hasMany('App\Audition', 'citizen_id', 'citizen_id');
     }
     
     /**
@@ -145,7 +144,7 @@ class User extends Model {
     }
     
     public function getName() {
-        return $this->title.$this->firstname.' '.$this->lastname;
+        return $this->title . $this->firstname . ' ' . $this->lastname;
     }
     
     /**

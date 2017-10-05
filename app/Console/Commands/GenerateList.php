@@ -35,7 +35,7 @@ class GenerateList extends Command {
      * @return mixed
      */
     public function handle() {
-        $clubId = 'ก'.$this->ask('What is your club id (5 digits)?');
+        $clubId = 'ก' . $this->ask('What is your club id (5 digits)?');
         $docType = $this->argument('doc') ?? $this->ask('Which document do you want? (3301 / 3304)');
         //$studentData = collect(\DB::table('before_war')->where('club_id', $clubId)->orderby('level')->orderBy('room')->orderBy('student_id')->get());
         $studentData = Club::find($clubId)->members()->orderBy('level')->orderBy('room')->orderBy('student_id')->get();

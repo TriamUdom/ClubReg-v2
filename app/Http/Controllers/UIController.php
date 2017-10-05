@@ -1,10 +1,11 @@
 <?php
+/*
+ * Copyright (c) 2017 Siwat Techavoranant
+ */
 
 namespace App\Http\Controllers;
 
 
-use App\Helper;
-use App\User;
 use Illuminate\Http\Request;
 
 class UIController extends Controller {

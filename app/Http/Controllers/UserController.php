@@ -1,15 +1,17 @@
 <?php
+/*
+ * Copyright (c) 2017 Siwat Techavoranant
+ */
 
 namespace App\Http\Controllers;
 
 use App\Club;
 use App\User;
-use Cookie;
 use Illuminate\Http\Request;
-use Log;
 use Lcobucci\JWT\Parser;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Lcobucci\JWT\ValidationData;
+use Log;
 
 class UserController extends Controller {
     public function redirectOpenID(Request $request) {

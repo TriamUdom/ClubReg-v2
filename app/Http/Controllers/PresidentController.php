@@ -1,4 +1,7 @@
 <?php
+/*
+ * Copyright (c) 2017 Siwat Techavoranant
+ */
 
 namespace App\Http\Controllers;
 
