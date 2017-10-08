@@ -1,5 +1,5 @@
 # Google App Engine Configuration
-# for Project Codex, by Siwat Techavoranant
+# for Project ClubReg, by Siwat Techavoranant
 
 # Use PHP flexible environment, which will deploy Docker-like environment based on composer.json
 runtime: php
