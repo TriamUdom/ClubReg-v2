@@ -16,14 +16,14 @@ class CreateUsersTable extends Migration {
             $table->decimal('student_id', 5, 0)->nullable();
             $table->tinyInteger('level')->nullable();
             $table->string('room', 5);
-            $table->integer('number');
-            $table->string('title');
+            $table->integer('number')->nullable();
+            $table->string('title')->nullable();
             $table->string('firstname', 75);
-            $table->string('lastname', 75);
-            $table->string('club_id', 6);
-            $table->string('reason');
-            $table->string('comment', 100);
-            
+            $table->string('lastname', 75)->nullable();
+            $table->string('club_id', 6)->nullable();
+            $table->string('reason')->nullable();
+            $table->string('comment', 100)->nullable();
+            $table->timestamps();
             $table->primary('citizen_id');
         });
     }

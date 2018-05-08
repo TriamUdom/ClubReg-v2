@@ -15,23 +15,23 @@ class CreateClubsTable extends Migration {
             $table->string('id', 6);
             $table->string('name', 75);
             $table->text('english_name');
-            $table->mediumText('user_id');
             $table->boolean('is_audition');
             $table->boolean('is_active');
+            $table->text('description')->nullable();
+            $table->tinyInteger('subject_code')->nullable(); // Deprecated
             $table->unsignedSmallInteger('max_member');
-            $table->tinyInteger('subject_code'); // Deprecated
-            $table->integer('fix_teacher'); // Deprecated
-            $table->text('president_title');
-            $table->text('president_fname');
-            $table->text('president_lname');
-            $table->text('adviser_title');
-            $table->text('adviser_fname');
-            $table->text('adviser_lname');
-            $table->text('president_phone');
-            $table->text('adviser_phone');
-            $table->text('description');
-            $table->text('audition_location');
-            $table->text('location');
+            $table->json('user_id');
+            $table->text('audition_location')->nullable();
+            $table->text('location')->nullable();
+            $table->text('president_title')->nullable();
+            $table->text('president_fname')->nullable();
+            $table->text('president_lname')->nullable();
+            $table->text('president_phone')->nullable();
+            $table->text('adviser_title')->nullable();
+            $table->text('adviser_fname')->nullable();
+            $table->text('adviser_lname')->nullable();
+            $table->text('adviser_phone')->nullable();
+            $table->timestamps();
             $table->primary('id');
         });
     }
