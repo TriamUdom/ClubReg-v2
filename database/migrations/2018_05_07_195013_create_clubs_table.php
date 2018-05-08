@@ -15,8 +15,10 @@ class CreateClubsTable extends Migration {
             $table->string('id', 6);
             $table->string('name', 75);
             $table->text('english_name');
+            $table->mediumText('user_id');
             $table->boolean('is_audition');
             $table->boolean('is_active');
+            $table->unsignedSmallInteger('max_member');
             $table->tinyInteger('subject_code'); // Deprecated
             $table->integer('fix_teacher'); // Deprecated
             $table->text('president_title');
@@ -25,6 +27,11 @@ class CreateClubsTable extends Migration {
             $table->text('adviser_title');
             $table->text('adviser_fname');
             $table->text('adviser_lname');
+            $table->text('president_phone');
+            $table->text('adviser_phone');
+            $table->text('description');
+            $table->text('audition_location');
+            $table->text('location');
             $table->primary('id');
         });
     }
