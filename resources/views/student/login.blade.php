@@ -125,7 +125,7 @@
             <p>โปรดเข้าสู่ระบบเพื่อดำเนินการต่อ</p>
             <div class="row">
                 <div class="col s12">
-                    <a class="waves-effect waves-light btn-large orange fullwidth" href="/login"><i class="material-icons left">fingerprint</i>เข้าสู่ระบบด้วยรหัส Wifi</a>
+                    <a class="waves-effect waves-light btn-large orange fullwidth" href="/login"><i class="material-icons left">fingerprint</i>เข้าสู่ระบบ</a>
                 </div>
             </div>
         @endif

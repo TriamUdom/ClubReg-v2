@@ -15,12 +15,20 @@ Route::group(['middleware' => ['web']], function () {
         }
         return view('student.login');
     });
-    
+
+    /*
     // TUSSO integration
     Route::get('login', 'UserController@redirectOpenID');
     Route::post('openid_login', 'UserController@openidLogin');
     Route::get('logout', 'UserController@logout');
-    
+    */
+
+    Route::get('login', function(){
+        return view('login');
+    });
+    Route::post('login', 'UserController@login');
+    Route::get('logout', 'UserController@logout');
+
     Route::get('info', function () { return view('info'); });
     Route::get('clubinfo', function () { return view('detail'); });
     Route::get('contact', function () { return view('contact'); });

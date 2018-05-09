@@ -90,7 +90,7 @@
                 <h5>คำขอคัดเลือก</h5>
                 มีคนรอการตอบรับ {{ $auditionCount = $club->auditions()->where('status', \App\Audition::Status_Awaiting)->count() }} คน
                 @if ($auditionCount)
-                    <a class="btn waves-effect fullwidth blue" href="/president/audition">ดูรายชื่อ</a>
+                    <a class="btn waves-effect fullwidth blue" href="/president/audition" style="margin-top: 8px;">ดูรายชื่อ</a>
                 @endif
             </div>
         @endif

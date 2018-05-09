@@ -12,8 +12,8 @@ class CreateUsersTable extends Migration {
      */
     public function up() {
         Schema::create('users', function (Blueprint $table) {
-            $table->decimal('citizen_id', 13, 0);
-            $table->decimal('student_id', 5, 0)->nullable();
+            $table->decimal('student_id', 5, 0);
+            $table->decimal('citizen_id', 13, 0)->nullable();
             $table->tinyInteger('level')->nullable();
             $table->string('room', 5);
             $table->integer('number');
@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration {
             $table->string('reason');
             $table->string('comment', 100);
             
-            $table->primary('citizen_id');
+            $table->primary('student_id');
         });
     }
     
