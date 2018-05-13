@@ -225,7 +225,8 @@
                     </form>
                 </div>
             @elseif (!\App\Helper::isRound(\App\Helper::Round_Confirm) AND !\App\Helper::isRound(\App\Helper::Round_Audition))
-                <h5>นักเรียนไม่สามารถลงทะเบียนในห้วงเวลานี้ได้</h5>
+                    <h5 class="center-align" style="margin-top:2rem">นักเรียนไม่สามารถลงทะเบียนในห้วงเวลานี้ได้</h5>
+                    <p class="center-align">หากนักเรียนประสบปัญหาหรือมีข้อสงสัย โปรดติดต่องานกิจกรรมพัฒนาผู้เรียน ตึก 50 ปี</p>
             @endif
         @endif
     </div>

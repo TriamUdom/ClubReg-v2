@@ -32,6 +32,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('info', function () { return view('info'); });
     Route::get('clubinfo', function () { return view('detail'); });
     Route::get('contact', function () { return view('contact'); });
+
+    Route::get('settings', 'SuperuserController@settingsPage');
+    Route::post('settings', 'SuperuserController@changeSettings');
     
     if (config('app.debug')) {
         Route::get('phpinfo', function () {
