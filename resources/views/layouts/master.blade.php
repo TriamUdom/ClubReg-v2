@@ -18,7 +18,7 @@
     <nav class="teal" role="navigation">
         <div class="nav-wrapper container">
             <a id="logo-container" href="/" class="brand-logo th">
-                <img src="/phrakiao.png" style="height:1.8rem"/>
+                <img src="/phrakiao.png" style="height:1.8rem; vertical-align: middle"/>
                 ระบบทะเบียนชมรม
                 <span class="hide-on-med-and-down">โรงเรียนเตรียมอุดมศึกษา</span>
             </a>
@@ -54,9 +54,11 @@
 </main>
 
 @section('footer')
+    <!--
     @if (session()->has('student') OR session()->has('president'))
         <div id="bottomstick">#RegClubsTriam</div>
     @endif
+    -->
     <footer class="page-footer teal">
         <div class="footer-copyright">
             <div class="container">

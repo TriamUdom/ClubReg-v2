@@ -121,6 +121,7 @@ class User extends Model {
      * @return bool|Club|string
      */
     public function getPreviousClub(bool $asModel = false) {
+        /*
         if ($old = \DB::table('old_users')->where('citizen_id', $this->citizen_id)->first()) {
             if (!empty($old->club_id)) {
                 if ($asModel) {
@@ -131,6 +132,17 @@ class User extends Model {
             }
         }
         
+        return false;
+        */
+
+        if (strlen($this->old_club_id) != 0) {
+            if ($asModel) {
+                return Club::find($this->old_club_id);
+            } else {
+                return $this->old_club_id;
+            }
+        }
+
         return false;
     }
     

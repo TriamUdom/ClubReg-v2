@@ -150,7 +150,11 @@
                         <p class="red-text"><span style="font-size: 1.3rem">ชมรมรับนักเรียนเดิมเต็มอัตราส่วนแล้ว</span> (นักเรียนสามารถลงทะเบียนใหม่เสมือนไม่ได้อยู่ชมรมนี้อยู่ก่อน)</p>
                     @endif
                 </div>
+            @elseif (\App\Helper::isRound(\App\Helper::Round_Confirm) AND !$user->getPreviousClub())
+                <h5 class="center-align" style="margin-top:2rem">การลงทะเบียนชมรมอยู่ในช่วงการยืนยันสิทธิ์ของสมาชิกเก่า</h5>
+                <p class="center-align">หากนักเรียนประสบปัญหาหรือมีข้อสงสัย โปรดติดต่องานกิจกรรมพัฒนาผู้เรียน ตึก 50 ปี</p>
             @endif
+
             @if (\App\Helper::isRound(\App\Helper::Round_Audition))
                 <div class="sector">
                     <form method="POST" action="/club-register" class="select-append">
@@ -221,7 +225,8 @@
                     </form>
                 </div>
             @elseif (!\App\Helper::isRound(\App\Helper::Round_Confirm) AND !\App\Helper::isRound(\App\Helper::Round_Audition))
-                <h5>นักเรียนไม่สามารถลงทะเบียนในห้วงเวลานี้ได้</h5>
+                    <h5 class="center-align" style="margin-top:2rem">นักเรียนไม่สามารถลงทะเบียนในห้วงเวลานี้ได้</h5>
+                    <p class="center-align">หากนักเรียนประสบปัญหาหรือมีข้อสงสัย โปรดติดต่องานกิจกรรมพัฒนาผู้เรียน ตึก 50 ปี</p>
             @endif
         @endif
     </div>

@@ -18,7 +18,7 @@
         $student = \App\User::current();
     @endphp
     <div class="z-depth-1 card-panel" style="max-width:700px;margin:auto">
-        <a href="/" class="blue-text"><i class="small material-icons">arrow_back</i> เมนู</a>
+        <a href="/" class="blue-text"><i class="small material-icons" style="vertical-align: middle">arrow_back</i> เมนู</a>
         <h4 class="center-align">{{ $club->name }}</h4>
         <h5 class="center-align">{{ $club->english_name }}</h5>
         <p>&ensp;{!! nl2br($club->description) !!}</p>

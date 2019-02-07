@@ -14,6 +14,8 @@ use Lcobucci\JWT\ValidationData;
 use Log;
 
 class UserController extends Controller {
+
+    /*
     public function redirectOpenID(Request $request) {
         $state = substr(sha1(microtime() . rand()), 0, 10);
         $nonce = substr(sha1(microtime() . rand()), 0, 10);
@@ -52,6 +54,7 @@ class UserController extends Controller {
             $request->session()->put('student', $student->getId());
         }
         if ($president = self::findClubIdOfPresident($userId)) {
+            Log::info($president);
             $request->session()->put('president', $president);
         } elseif (empty($student)) {
             return view('errors.custom', ['title' => 'Access Denied', 'description' => 'ไม่อนุญาตให้เข้าใช้งาน']);
@@ -66,20 +69,57 @@ class UserController extends Controller {
         
         return redirect()->intended()->with('notify', 'เข้าสู่ระบบแล้ว')->cookie('current', $userId, 60);
     }
+    */
+
+    public function login(Request $request){
+        $this->validate($request, [
+            'student_id' => 'required|numeric',
+            'citizen_id' => 'required|numeric'
+        ]);
+
+        $user = User::find($request->get('student_id'));
+
+        if (is_null($user) OR $user->citizen_id != $request->get('citizen_id')){
+            return redirect()->back()->withErrors(['citizen_id' => 'รหัสนักเรียนหรือรหัสประจำตัวประชาชนไม่ถูกต้อง']);
+        }
+
+        $userId = $user->student_id;
+        $userName = $user->title . $user->firstname . ' ' . $user->lastname;
+
+        if ($president = self::findClubIdOfPresident($userId)) {
+            $request->session()->put('president', $president);
+        } else {
+            $request->session()->put('student', $userId);
+        }
+
+        $request->session()->put('username', $userName);
+        $request->session()->put('userid', $userId);
+        $request->session()->put('login_time', time());
+        $request->session()->put('id_token', (string)$request->input('id_token'));
+
+        Log::info('Logged in: ' . $userId, ['ip' => $request->ip(), 'name' => $userName, 'club' => $president ?? '']);
+
+        return redirect()->intended()->with('notify', 'เข้าสู่ระบบแล้ว')->cookie('current', $userId, 60);
+    }
     
     public function logout(Request $request) {
-        $idtoken = $request->session()->get('id_token');
+        //$idtoken = $request->session()->get('id_token');
         $request->session()->flush();
-        
+
+        /*
         if (!$request->has('local')) {
             return redirect(config('core.logout_endpoint') . '?id_token_hint=' . $idtoken . '&post_logout_redirect_uri=' . config('core.url'))->cookie('current', false, 1);
         } else {
             return redirect('/')->with('notify', 'ออกจากระบบแล้ว!')->cookie('current', false, 1);
         }
+        */
+
+        return redirect('/')->with('notify', 'ออกจากระบบแล้ว!')->cookie('current', false, 1);
     }
     
     protected function findClubIdOfPresident(string $userid) {
         $clubs = Club::where('user_id', 'LIKE', '%' . $userid . '%')->get();
+
         foreach ($clubs as $club) {
             if (in_array($userid, $club->user_id)) {
                 return $club->id;
@@ -87,32 +127,5 @@ class UserController extends Controller {
         }
         
         return false;
-    }
-    
-    /**
-     * Get student model from wifi user data
-     *
-     * @param string $id
-     * @param string $name
-     * @return bool|User
-     */
-    protected function findStudentByUserId(string $id, string $name) {
-        if (strlen($id) == 6 AND is_numeric(substr($id, 1))) {
-            // TU79 or older generation : UserId is "s" followed by student id
-            return User::where('student_id', substr($id, 1))->first() ?? false;
-        } else {
-            // if (strlen($id) == 10 AND is_numeric($id)) {
-            // TU80 : UserId is TUID (something ICT department created)
-            // so find student using name
-            $namePart = explode(' ', $name);
-            $lastPartCount = count($namePart) - 1;
-            $user = User::where('firstname', $namePart[0])->where('lastname', $namePart[$lastPartCount])->first();
-            if (empty($user) AND count($namePart) == 3) {
-                // Support for middle name
-                $user = User::where('firstname', $namePart[0] . $namePart[1])->where('lastname', $namePart[2])->first();
-            }
-            
-            return $user ?? false;
-        }
     }
 }

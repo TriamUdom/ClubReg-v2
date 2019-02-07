@@ -1,11 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateAuditionsTable extends Migration
-{
+class CreateAuditionsTable extends Migration {
     /**
      * Run the migrations.
      *
@@ -17,6 +16,7 @@ class CreateAuditionsTable extends Migration
             $table->decimal('citizen_id', 13, 0)->unsigned()->index();
             $table->string('club_id', 6);
             $table->enum('status', ['AWAITING', 'FAILED', 'PASSED', 'REJECTED', 'JOINED'])->default('AWAITING');
+            $table->text('comment')->nullable();
             
             $table->timestamps();
         });

@@ -25,12 +25,12 @@
     </p>
     <div class="row" style="max-width:400px;margin:auto">
         <div class="col s3">
-            <img src="https://s14.postimg.org/6cu986ib5/image.jpg" class="fullwidth"/>
+            <img src="https://clubs.triamudom.ac.th/img/pethai.jpg" class="fullwidth"/>
         </div>
         <div class="col s9">
-            <span style="font-size: 1.8rem;font-weight: 600;">คุณครูดวงพร ใจเพิ่ม</span><br/>
+            <span style="font-size: 1.6rem;font-weight: 600;">คุณครูเพทาย บุณยรัตพันธุ์</span><br/>
             หัวหน้างานกิจกรรมพัฒนาผู้เรียน<br/>
-            <span style="font-size:1rem">ครูประธานที่ปรึกษาชมรมดุริยางค์<br/>หัวหน้าตึก 50 ปี</span>
+            <!--span style="font-size:1rem">ครูประธานที่ปรึกษาชมรมดุริยางค์<br/>หัวหน้าตึก 50 ปี</span-->
         </div>
     </div>
     <br />
