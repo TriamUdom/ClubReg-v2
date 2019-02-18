@@ -12,7 +12,8 @@
         }
 
         body {
-            background: gray url(https://c2.staticflickr.com/8/7608/16661753958_6f50cab743_h.jpg) no-repeat fixed center;
+            background-image: url(https://farm5.staticflickr.com/4891/39745614053_43855205bc_o_d.jpg);
+            background-size: cover;
         }
 
         #thebox {
@@ -40,7 +41,7 @@
     <br/>
     <div class="center-align grey-text text-lighten-3" style="font-size: 0.9rem">
         หากนักเรียนประสบปัญหาหรือมีข้อสงสัย โปรดติดต่องานกิจกรรมพัฒนาผู้เรียน ตึก 50 ปี<br />
-        ภาพการปล่อยจรวด โดย <a href="https://flic.kr/p/rokQXY">SpaceX</a>
+        ภาพการปล่อยจรวด โดย <a href="https://flic.kr/p/23ybEkP">SpaceX</a>
     </div>
 @endsection
 
