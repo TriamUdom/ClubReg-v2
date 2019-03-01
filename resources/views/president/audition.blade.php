@@ -13,7 +13,7 @@
     <table class="highlight">
         <thead>
         <tr>
-            <th>รหัส</th>
+            <th>รหัสนักเรียน</th>
             <th>นักเรียน</th>
             <th>ห้อง</th>
             <th>สถานะ</th>
@@ -23,8 +23,8 @@
         <tbody>
         @foreach(($club = \App\Club::currentPresident())->auditions()->orderBy('status')->get() as $audition)
             <tr>
-                <td>{{ $audition->id }}</td>
-                <td>{{ ($user = $audition->user)->getName() }}</td>
+                <td>{{ ($user = $audition->user)->student_id }}</td>
+                <td>{{ $user->getName() }}</td>
                 <td>ม.{{ $user->level }} / {{ $user->room }}</td>
                 <td>{{ $audition->getStatus() }}</td>
                 <td>

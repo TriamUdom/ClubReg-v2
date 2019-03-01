@@ -83,7 +83,7 @@ class Audition extends Model {
      * @return mixed
      */
     public function user() {
-        return $this->belongsTo('App\User', 'citizen_id');
+        return $this->belongsTo('App\User', 'citizen_id', 'citizen_id');
     }
     
     /**
