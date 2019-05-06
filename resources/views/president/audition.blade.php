@@ -43,7 +43,7 @@
                                 </button>
                             @elseif ($audition->status == \App\Audition::Status_Failed)
                                 <button class="btn waves-effect waves-light blue-grey" type="submit" name="action" value="pass">
-                                    เปลี่ยนเป็นให้ผ่าน
+                                    เปลี่ยนเป็นผ่าน
                                 </button>
                             @elseif ($audition->status == \App\Audition::Status_Passed)
                                 <button class="btn waves-effect waves-light blue-grey" type="submit" name="action" value="fail">

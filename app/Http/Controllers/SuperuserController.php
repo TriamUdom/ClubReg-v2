@@ -73,7 +73,7 @@ class SuperuserController extends Controller {
         }
 
         return view('errors.custom', ['title' => 'Invalid Setup', 'description' => 'การตั้งค่าของระบบไม่ถูกต้อง']);
-        */
-    }
+                    */
 
+    }
 }

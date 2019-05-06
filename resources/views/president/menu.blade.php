@@ -79,7 +79,7 @@
                         <a class="btn waves-effect fullwidth cyan" href="/president/members">ดูรายชื่อสมาชิก</a>
                     </div>
                     <div class="col s12 m5">
-                        <a class="btn waves-effect fullwidth amber" href="/president/fm3304">ดาวน์โหลด FM33-04</a>
+                        <a class="btn waves-effect fullwidth amber disabled" href="/president/fm3304">ดาวน์โหลด FM33-04</a>
                     </div>
                 </div>
             @endif
