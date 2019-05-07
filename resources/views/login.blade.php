@@ -56,13 +56,13 @@
             <div class="row">
                 <div class="input-field col s12">
                     <input id="username" name="student_id" class="validate " required="" type="text">
-                    <label for="username">รหัสนักเรียน</label>
+                    <label for="username">เลขประจำตัวนักเรียน</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
                     <input id="password" name="citizen_id" class="validate " required="" type="password">
-                    <label for="password">รหัสประจำตัวประชาชน</label>
+                    <label for="password">เลขประจำตัวประชาชน</label>
                 </div>
             </div>
             <div class="row">

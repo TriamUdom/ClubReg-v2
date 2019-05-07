@@ -13,7 +13,7 @@
     <table class="highlight">
         <thead>
         <tr>
-            <th>รหัสนักเรียน</th>
+            <th>เลขประจำตัวนักเรียน</th>
             <th>นักเรียน</th>
             <th>ห้อง</th>
             <th>สถานะ</th>
