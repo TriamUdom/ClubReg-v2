@@ -24,8 +24,10 @@
         <p>&ensp;{!! nl2br($club->description) !!}</p>
         <p>สถานะ:
             @if ($club->isAvailableForLevel($student->level))
-                @if ($club->isAvailable(true) == 2)
-                    <b class="green-text">มีที่นั่งว่าง (Available)</b>
+                @if ($club->isAvailable(true) == 2 && $club->is_audition)
+                    <b class="green-text">มีที่นั่งว่าง (Available)</b> <p>จำนวนที่เปิดรับ : {{ floor(0.35 * $club->max_member) }} คน</p>
+                @elseif ($club->isAvailable(true) == 2)
+                    <b class="green-text">มีที่นั่งว่าง (Available)</b> <p>มีที่นั่งว่าง : {{ $club->max_member - $club->countMember() }} คน</p>
                 @elseif (!$club->isAvailable())
                     <b class="red-text">เต็ม (Full)</b>
                 @else
