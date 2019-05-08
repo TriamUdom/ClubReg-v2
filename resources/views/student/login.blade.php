@@ -129,15 +129,18 @@
                 </div>
             </div>
         @endif
+        <p class="center-align">ดู<a href="/info">รายละเอียดการลงทะเบียน</a> | <a href="/contact">ติดต่อ</a></p>
     </div>
 
     <br/>
-    <div class="center-align minibox white-text" id="mini-def" style="display: none;font-size: 0.9rem">ใช้งานได้ดีที่สุดบน Mozilla Firefox หรือ Google Chrome รุ่นล่าสุด</div>
+    <div class="center-align minibox white-text" id="mini-def" style="display: none;font-size: 0.9rem">ใช้งานได้ดีที่สุดบน Mozilla Firefox หรือ Google Chrome รุ่นล่าสุดบน Windows/Linux/macOS/Android</div>
     <div class="center-align minibox sector red darken-1 white-text" id="mini-al" style="font-size:1.3rem;line-height: 2rem;">
         <h4>ระบบอาจทำงานไม่ปกติ</h4>
         คุณกำลังใช้งานบนอุปกรณ์ที่ไม่เหมาะสม<br/>
         งานกิจกรรม ฯ จะไม่รับผิดชอบหากเกิดข้อผิดพลาด<br/>
         ใช้งานได้ดีที่สุดบน Mozilla Firefox หรือ Google Chrome รุ่นล่าสุด
+        งานกิจกรรมฯจะไม่รับผิดชอบหากเกิดข้อผิดพลาด<br/>
+        ใช้งานได้ดีที่สุดบน Mozilla Firefox หรือ Google Chrome รุ่นล่าสุดบนอุปกรณ์ที่ไม่ใช่ iOS
     </div>
 @endsection
 

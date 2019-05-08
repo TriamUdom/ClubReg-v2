@@ -16,30 +16,6 @@ use Illuminate\Http\Request;
 use Throwable;
 
 class StudentController extends Controller {
-    /*public function login(Request $request) {
-        if (config('core.captcha_enable')) {
-            $this->validate($request, ['g-recaptcha-response' => 'required|recaptcha']);
-        }
-        $this->validate($request, [
-            'citizen_id' => 'required|digits:13', // Citizen Identification Number
-            'student_id' => 'nullable|digits:5' // Birthday (DD/MM/YYYY)
-        ]);
-        
-        if ($claimedUser = User::find($request->input('citizen_id'))) {
-            /** @var $claimedUser User //
-            if ($claimedUser->student_id == $request->input('student_id') OR (empty($claimedUser->student_id) AND $request->input('student_id') == '11111')) {
-                // Authenticated
-                $request->session()->put('student', $claimedUser->citizen_id);
-                
-                return redirect()->intended('/');
-            } else {
-                return back()->withErrors('รหัสประจำตัวประชาชนหรือรหัสนักเรียนไม่ถูกต้อง');
-            }
-        } else {
-            return back()->withErrors('รหัสประจำตัวประชาชนหรือรหัสนักเรียนไม่ถูกต้อง');
-        }
-    }*/
-    
     /**
      * (Round CONFIRM) Register for old club
      *
