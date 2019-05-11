@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * Copyright (c) 2017 Siwat Techavoranant
  *
  * @property int            $id
- * @property float          $citizen_id
+ * @property string         $student_id
  * @property string         $club_id
  * @property string         $status
  * @property \Carbon\Carbon $created_at
@@ -36,21 +36,21 @@ class Audition extends Model {
     const Status_Rejected = 'REJECTED'; // Student rejected
     const Status_Joined = 'JOINED'; // Student joined the club (Step 3)
     
-    protected $fillable = ['citizen_id', 'club_id'];
+    protected $fillable = ['student_id', 'club_id'];
     
     /**
      * Apply for club audition
      *
-     * @param $citizenId
+     * @param $student_id
      * @param $clubId
      * @return Audition|bool
      */
-    public static function apply($citizenId, $clubId) {
-        if (self::findRequest($citizenId, $clubId)) {
+    public static function apply($student_id, $clubId) {
+        if (self::findRequest($student_id, $clubId)) {
             // Already exist
             return false;
         }
-        $audition = new self (['citizen_id' => $citizenId, 'club_id' => $clubId]);
+        $audition = new self (['student_id' => $student_id, 'club_id' => $clubId]);
         $audition->status = self::Status_Awaiting;
         $audition->save();
         
@@ -60,12 +60,12 @@ class Audition extends Model {
     /**
      * Find audition request by citizen id and club id
      *
-     * @param $citizenId
+     * @param $student_id
      * @param $clubId
      * @return bool|Audition|null|static
      */
-    public static function findRequest($citizenId, $clubId) {
-        return self::where('citizen_id', $citizenId)->where('club_id', $clubId)->first() ?? false;
+    public static function findRequest($student_id, $clubId) {
+        return self::where('student_id', $student_id)->where('club_id', $clubId)->first() ?? false;
     }
     
     /**
@@ -83,7 +83,7 @@ class Audition extends Model {
      * @return mixed
      */
     public function user() {
-        return $this->belongsTo('App\User', 'citizen_id', 'citizen_id');
+        return $this->belongsTo('App\User', 'student_id', 'student_id');
     }
     
     /**

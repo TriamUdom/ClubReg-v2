@@ -58,7 +58,7 @@
                     @else
                         <span class="light-green-text">ไม่คัดเลือก</span>
                     @endif
-                    @if (!\App\Helper::isRound(\App\Helper::Round_Closed) AND (!\App\Helper::isRound(\App\Helper::Round_War) OR \App\Helper::isRound(\App\Helper::Round_Audition)) AND $club->is_audition)
+                    @if (!\App\Helper::isRound(\App\Helper::Round_Closed) AND \App\Helper::isRound(\App\Helper::Round_War) AND $club->is_audition)
                     <br />สถานที่คัดเลือก: {{ $club->audition_location ?? '???' }}
                     @endif
                     <br />สถานที่ทำการเรียนการสอน: {{ $club->location ?? '???' }} (<a href="/president/settings">ดูเพิ่มเติม/แก้ไข</a>)
@@ -85,7 +85,7 @@
             @endif
         </div>
 
-        @if ($club->is_audition AND \App\Helper::isRound(\App\Helper::Round_Audition))
+        @if ($club->is_audition AND \App\Helper::isRound(\App\Helper::Round_War))
             <div class="sector">
                 <h5>คำขอคัดเลือก</h5>
                 มีคนรอการตอบรับ {{ $auditionCount = $club->auditions()->where('status', \App\Audition::Status_Awaiting)->count() }} คน

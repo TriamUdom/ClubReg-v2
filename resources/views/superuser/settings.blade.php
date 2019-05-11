@@ -31,11 +31,11 @@
                 <label>Registration Phase</label>
             </div>
             <div class="input-field col s12">
-                <select class="browser-default">
+                <select class="browser-default" name="round">
                     <option value="WAITING" {{ \App\Helper::isRound(\App\Helper::Round_Waiting) ? 'selected' : '' }}>พัก/รอ</option>
                     <option value="CONFIRM" {{ \App\Helper::isRound(\App\Helper::Round_Confirm) ? 'selected' : '' }}>สมาชิกเก่ายืนยันสิทธิ์</option>
-                    <option value="AUDITION" {{ \App\Helper::isRound(\App\Helper::Round_Audition) ? 'selected' : '' }}>สมัครชมรมที่มีออดิชั่น</option>
-                    <option value="WAR" {{ \App\Helper::isRound(\App\Helper::Round_War) ? 'selected' : '' }}>สมัครชมรมที่ไม่มีออดิชั่น</option>
+                    <option value="WAR" {{ \App\Helper::isRound(\App\Helper::Round_War) ? 'selected' : '' }}>รอบ 1 (สมัครทุกชมรม)</option>
+                    <option value="GLEAN" {{ \App\Helper::isRound(\App\Helper::Round_Glean) ? 'selected' : '' }}>รอบ 2 (เก็บตก)</option>
                     <option value="CLOSED" {{ \App\Helper::isRound(\App\Helper::Round_Closed) ? 'selected' : '' }}>ปิด</option>
                 </select>
             </div>
@@ -43,7 +43,7 @@
 
         <br/>
 
-        <button type="submit" class="btn waves-effect blue fullwidth disabled" style="margin-left:10px">บันทึก (WIP)</button>
+        <button type="submit" class="btn waves-effect blue fullwidth" style="margin-left:10px">บันทึก</button>
         <br/><br />
     </form>
 

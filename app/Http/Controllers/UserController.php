@@ -16,14 +16,14 @@ use Log;
 class UserController extends Controller {
     public function login(Request $request){
         $this->validate($request, [
-            'student_id' => 'required|numeric',
-            'citizen_id' => 'required|numeric'
+            'student_id' => 'required',
+            'password' => 'required'
         ]);
 
         $user = User::find($request->get('student_id'));
 
-        if (is_null($user) OR $user->citizen_id != $request->get('citizen_id')){
-            return redirect()->back()->withErrors(['citizen_id' => 'เลขประจำตัวนักเรียนหรือเลขประจำตัวประชาชนไม่ถูกต้อง']);
+        if (is_null($user) OR $user->password != $request->get('password')){
+            return redirect()->back()->withErrors(['password' => 'เลขประจำตัวนักเรียนหรือรหัสผ่านไม่ถูกต้อง']);
         }
 
         $userId = $user->student_id;
