@@ -135,10 +135,11 @@
         @else
             @if (\App\Helper::isRound(\App\Helper::Round_Confirm) AND $user->getPreviousClub())
                 <div class="sector">
-                    <h5>ลงทะเบียนเข้าชมรมเดิม</h5>
+                    <h5>ต้องการลงทะเบียนเข้าชมรมเดิม</h5>
                     <p>ปีการศึกษาที่ผ่านมา นักเรียนอยู่ชมรม <b>{{ ($oldClub = $user->getPreviousClub(true))->name }} ({{ $oldClub->id }})</b></p>
                     @if ($user->getPreviousClub(true)->isAvailableForConfirm())
                         <p>นักเรียนมีสิทธิเข้าชมรมเดิมได้ทันที โดยไม่ต้องคัดเลือกหรือลงทะเบียนร่วมกับนักเรียนใหม่หรือนักเรียนชมรมอื่น</p>
+                        <p class="red-text">เมื่อใช้สิทธิ์ในการลงทะเบียนไปแล้ว จะไม่สามารถเข้าชมรมอื่นได้</p>
                         <form method="POST" action="/club-register/old" onsubmit="return confirm('แน่ใจหรือไม่ที่จะลงทะเบียนชมรมเดิม? เมื่อเลือกแล้วไม่สามารถเปลี่ยนได้')">
                             {{ csrf_field() }}
                             <button class="btn waves-effect waves-light fullwidth blue" type="submit" name="club" value="{{ $oldClub->id }}">
@@ -163,14 +164,14 @@
                         <div class="row" style="margin-bottom:0">
                             <div class="input-field col s12">
                                 <select name="club" required>
-                                    <option value="" disabled selected>เลือกชมรมที่ต้องการ</option>
+                                    <option value="" disabled selected>เลือกชมรมที่ต้องการออดิชั่น</option>
                                     {!! \App\Helper::createOption(\App\Club::fetchAuditionClubs()) !!}
                                 </select>
                                 <label>ชมรมที่ต้องการสมัคร</label>
                             </div>
                         </div>
-                        <button class="btn waves-effect waves-light fullwidth purple" type="submit">
-                            ดูข้อมูลเพิ่มเติม
+                        <button class="btn waves-effect waves-light purple fullwidth" type="submit">
+                            สมัครเข้ารับการออดิชั่น
                             <i class="material-icons left">info_outline</i>
                         </button>
                     </form>
@@ -209,6 +210,7 @@
                     <form method="POST" action="/club-register" class="select-append">
                         {{ csrf_field() }}
                         <h5>ลงทะเบียนเข้าชมรม</h5>
+                        <p class="red-text">เมื่อนักเรียนลงทะเบียนชมรมไปแล้ว จะไม่สามารถเข้ารับการออดิชั่นหรือแก้ไขการลงทะเบียนชมรมได้อีก</p>
                         <div class="row">
                             <div class="input-field col s12">
                                 <select name="club" required>
@@ -219,7 +221,7 @@
                             </div>
                         </div>
                         <button class="btn waves-effect waves-light fullwidth indigo" type="submit">
-                            ดูข้อมูลเพิ่มเติม
+                            ลงทะเบียนเข้าเรียนชมรม
                             <i class="material-icons left">info_outline</i>
                         </button>
                     </form>

@@ -38,24 +38,23 @@
             @endif
         </p>
         @if ($club->isAvailableForLevel($student->level))
-
             @if ($club->is_audition)
                 <p>สถานที่คัดเลือก: {{ $club->audition_location }}</p>
                 @if ($student->auditions()->where('club_id', $club->id)->count() <= 0)
                 <form method="POST" action="/club-register/audition">
                     {{ csrf_field() }}
                     <button class="btn waves-effect waves-light fullwidth cyan" type="submit" name="club" value="{{ $club->id }}">
-                        สมัครคัดเลือก (ออดิชั่น)
+                         ยืนยันการสมัครคัดเลือก (ออดิชั่น)
                     </button>
                 </form>
                     @else
                     <p class="red-text center-align">สมัครคัดเลือกไปแล้ว</p>
                     @endif
             @else
-                <form method="POST" action="/club-register/apply" onsubmit="return confirm('แน่ใจหรือไม่ที่จะลงทะเบียน{{ $club->name }}? เมื่อเลือกแล้วไม่สามารถเปลี่ยนได้')">
+                <form method="POST" action="/club-register/apply" onsubmit="return confirm('ยืนยันการลงทะเบียนชมรม {{ $club->name }}? เมื่อนักเรียนลงทะเบียนชมรมไปแล้ว จะไม่สามารถเข้ารับการออดิชั่นหรือแก้ไขการลงทะเบียนชมรมได้อีก')">
                     {{ csrf_field() }}
                     <button class="btn waves-effect waves-light fullwidth amber" type="submit" name="club" value="{{ $club->id }}">
-                        ลงทะเบียนเข้าชมรม
+                        ยืนยันลงทะเบียนเข้าเรียนชมรม
                     </button>
                 </form>
             @endif
