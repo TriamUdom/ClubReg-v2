@@ -80,7 +80,7 @@
                     </div>
                 </div>
                 <script>
-                    var cTime = {{ \App\Setting::getValue('allow_register_time')-time() }};
+                    var cTime = {{ \App\Setting::getValue('allow_register_time') - time() }};
                     var lastUpdated = Date.now();
                     function showTime() {
                         //Convert seconds to human-friendly time
@@ -137,7 +137,7 @@
                 <div class="sector">
                     <h5>ลงทะเบียนเข้าชมรมเดิม</h5>
                     <p>ปีการศึกษาที่ผ่านมา นักเรียนอยู่ชมรม <b>{{ ($oldClub = $user->getPreviousClub(true))->name }} ({{ $oldClub->id }})</b></p>
-                    @if ($user->getPreviousClub(true)->isAvailableForConfirm())
+                    @if ($oldClub->isAvailableForConfirm())
                         <p>นักเรียนมีสิทธิเข้าชมรมเดิมได้ทันที โดยไม่ต้องคัดเลือกหรือลงทะเบียนร่วมกับนักเรียนใหม่หรือนักเรียนชมรมอื่น</p>
                         <form method="POST" action="/club-register/old" onsubmit="return confirm('แน่ใจหรือไม่ที่จะลงทะเบียนชมรมเดิม? เมื่อเลือกแล้วไม่สามารถเปลี่ยนได้')">
                             {{ csrf_field() }}
@@ -153,18 +153,16 @@
             @elseif (\App\Helper::isRound(\App\Helper::Round_Confirm) AND !$user->getPreviousClub())
                 <h5 class="center-align" style="margin-top:2rem">การลงทะเบียนชมรมอยู่ในช่วงการยืนยันสิทธิ์ของสมาชิกเก่า</h5>
                 <p class="center-align">หากนักเรียนประสบปัญหาหรือมีข้อสงสัย โปรดติดต่องานกิจกรรมพัฒนาผู้เรียน ตึก 50 ปี</p>
-            @endif
-
-            @if (\App\Helper::isRound(\App\Helper::Round_Audition))
+            @elseif (\App\Helper::isRound(\App\Helper::Round_War))
                 <div class="sector">
                     <form method="POST" action="/club-register" class="select-append">
                         {{ csrf_field() }}
-                        <h5>สมัครคัดเลือกเข้าชมรม (ออดิชั่น)</h5>
+                        <h5>สมัครคัดเลือกเข้าชมรม รอบที่ 1</h5>
                         <div class="row" style="margin-bottom:0">
                             <div class="input-field col s12">
                                 <select name="club" required>
                                     <option value="" disabled selected>เลือกชมรมที่ต้องการ</option>
-                                    {!! \App\Helper::createOption(\App\Club::fetchAuditionClubs()) !!}
+                                    {!! \App\Helper::createOption(\App\Club::fetchAllClubs()) !!}
                                 </select>
                                 <label>ชมรมที่ต้องการสมัคร</label>
                             </div>
@@ -174,6 +172,7 @@
                             <i class="material-icons left">info_outline</i>
                         </button>
                     </form>
+
                     @unless (empty($user->auditions))
                         <br/>
                         <p><span style="font-size:1.3rem">สถานะการคัดเลือก</span> <span style="font-size:1rem">(ให้นักเรียนไปรับการคัดเลือกตามชมรมที่นักเรียนสมัคร หากชมรมรับนักเรียน นักเรียนจะต้องกดยืนยันหรือปฏิเสธภายในเวลาที่กำหนด มิฉะนั้นระบบอาจเลือกให้โดยอัตโนมัติ)</span>
@@ -195,7 +194,7 @@
                                                 </button>
                                             </form>
                                         @else
-                                            <b class="red-text">ชมรมเต็มแล้ว</b>
+                                            <b class="red-text">ชมรมเต็มแล้ว ไม่สามารถตอบรับเข้าชมรมได้</b>
                                         @endif
                                     @endif
                                 </li>
@@ -203,12 +202,11 @@
                         </ul>
                     @endunless
                 </div>
-            @endif
-            @if (\App\Helper::isRound(\App\Helper::Round_War))
+            @elseif (\App\Helper::isRound(\App\Helper::Round_Glean) AND $user->auditions()->count() > 0)
                 <div class="sector">
                     <form method="POST" action="/club-register" class="select-append">
                         {{ csrf_field() }}
-                        <h5>ลงทะเบียนเข้าชมรม</h5>
+                        <h5>ลงทะเบียนเข้าชมรม รอบที่ 2 (เก็บตกสำหรับผู้ไม่ผ่านออดิชั่น)</h5>
                         <div class="row">
                             <div class="input-field col s12">
                                 <select name="club" required>
@@ -224,7 +222,10 @@
                         </button>
                     </form>
                 </div>
-            @elseif (!\App\Helper::isRound(\App\Helper::Round_Confirm) AND !\App\Helper::isRound(\App\Helper::Round_Audition))
+            @elseif (\App\Helper::isRound(\App\Helper::Round_Glean))
+                    <h5 class="center-align" style="margin-top:2rem">นักเรียนไม่สามารถลงทะเบียนในรอบที่ 2 ได้เนื่องจากไม่เคยมีประวัติการไปออดิชั่น</h5>
+                    <p class="center-align">หากนักเรียนประสบปัญหาหรือมีข้อสงสัย โปรดติดต่องานกิจกรรมพัฒนาผู้เรียน ตึก 50 ปี</p>
+            @elseif (!\App\Helper::isRound(\App\Helper::Round_Confirm) AND !\App\Helper::isRound(\App\Helper::Round_War))
                     <h5 class="center-align" style="margin-top:2rem">นักเรียนไม่สามารถลงทะเบียนในช่วงเวลานี้ได้</h5>
                     <p class="center-align">หากนักเรียนประสบปัญหาหรือมีข้อสงสัย โปรดติดต่องานกิจกรรมพัฒนาผู้เรียน ตึก 50 ปี</p>
             @endif

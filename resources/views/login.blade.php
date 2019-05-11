@@ -61,8 +61,8 @@
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="password" name="citizen_id" class="validate " required="" type="password">
-                    <label for="password">เลขประจำตัวประชาชน</label>
+                    <input id="password" name="password" class="validate " required="" type="password">
+                    <label for="password">รหัสผ่าน</label>
                 </div>
             </div>
             <div class="row">

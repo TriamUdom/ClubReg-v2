@@ -93,6 +93,23 @@ class Club extends Model {
             throw $e;
         }
     }
+
+    /**
+     * Get all clubs
+     *
+     * @return array
+     */
+    public static function fetchAllClubs(): array {
+        $clubs = self::where('is_active', true)->get()->reject(function (Club $item) {
+            return !$item->isAvailable();
+        })->all();
+        $list = array();
+        foreach ($clubs as $club) {
+            $list [$club->name] = $club->id;
+        }
+
+        return $list;
+    }
     
     /**
      * Get all club open for audition
@@ -290,11 +307,12 @@ class Club extends Model {
     }
     
     public function isAvailableForConfirm() {
-        // 65% Available for existing member
-        return $this->members()->where('reason', User::RegisterType_ExistingMember)->count() < ($this->max_member * 0.65) AND $this->isAvailable();
+        // 65%/35% Available for existing member
+        return $this->members()->where('reason', User::RegisterType_ExistingMember)->count() < ($this->max_member * ($this->is_audition ? 0.65 : 0.35)) AND $this->isAvailable();
     }
     
     public function isAvailableForLevel($level) {
+        /*
         if (!$this->is_active) {
             return false;
         } elseif ($level == 4) {
@@ -302,6 +320,43 @@ class Club extends Model {
         } else {
             // Reserve 20% for M4
             return $this->members()->where('level', '!=', 4)->count() < $this->max_member * 0.8 AND $this->isAvailable();
+        }
+        */
+        if (!$this->is_active) {
+            return false;
+        }
+        elseif (!$this->is_audition && Helper::isRound(Helper::Round_War)){
+            switch($level){
+                case 4:
+                    return $this->members()->where('level', 4)->count() < $this->max_member * 0.35 AND $this->isAvailable();
+                case 5:
+                case 6:
+                    return $this->members()->where('level', '!=', 4)->count() < $this->max_member * 0.2 AND $this->isAvailable();
+            }
+        }
+        return $this->isAvailable();
+    }
+
+    public function seatsAvailable($level){
+        if (Helper::isRound(Helper::Round_War)){
+            if ($this->is_audition){
+                return $this->max_member - $this->countMember();
+            }
+            else {
+                switch($level){
+                    case 4:
+                        return floor($this->max_member * 0.35) - $this->members()->where('level', 4)->count();
+                    case 5:
+                    case 6:
+                        return floor($this->max_member * 0.2) - $this->members()->where('level', '!=', 4)->count();
+                }
+            }
+        }
+        elseif (Helper::isRound(Helper::Round_Confirm)){
+            return floor($this->max_member * ($this->is_audition ? 0.65 : 0.35)) - $this->members()->where('reason', User::RegisterType_ExistingMember)->count();
+        }
+        else { //Glean
+            return $this->max_member - $this->countMember();
         }
     }
 }

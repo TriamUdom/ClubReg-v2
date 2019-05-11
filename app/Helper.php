@@ -16,6 +16,7 @@ class Helper {
     const Round_Confirm = 'CONFIRM';
     const Round_Audition = 'AUDITION';
     const Round_War = 'WAR';
+    const Round_Glean = 'GLEAN';
     const Round_Closed = 'CLOSED';
     
     /**

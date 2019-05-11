@@ -12,7 +12,7 @@ use Log;
  *
  * Copyright (c) 2017 Siwat Techavoranant
  *
- * @property int                                                           $citizen_id
+ * @property string                                                        $password
  * @property float                                                         $student_id
  * @property bool                                                          $level
  * @property string                                                        $room
@@ -56,7 +56,7 @@ class User extends Model {
      * @var array
      */
     protected $hidden = [
-        'citizen_id'
+        'password'
     ];
     
     /**
@@ -88,7 +88,7 @@ class User extends Model {
      * Get the audition records of this user.
      */
     public function auditions() {
-        return $this->hasMany('App\Audition', 'citizen_id', 'citizen_id');
+        return $this->hasMany('App\Audition', 'student_id', 'student_id');
     }
     
     /**
@@ -103,11 +103,11 @@ class User extends Model {
             $this->club_id = $club->id;
             $this->reason = $registerType;
             if ($this->save()) {
-                Log::info('Student ' . $this->citizen_id . ' has registered for club ' . $club->id);
+                Log::info('Student ' . $this->student_id . ' has registered for club ' . $club->id);
                 
                 return true;
             } else {
-                Log::error('Student ' . $this->citizen_id . ' attempted to register for club ' . $club->id);
+                Log::error('Student ' . $this->student_id . ' attempted to register for club ' . $club->id);
             }
         }
         
@@ -167,4 +167,6 @@ class User extends Model {
     public function getId() {
         return $this->{$this->primaryKey};
     }
+
+
 }

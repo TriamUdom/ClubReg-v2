@@ -13,7 +13,7 @@ class CreateUsersTable extends Migration {
     public function up() {
         Schema::create('users', function (Blueprint $table) {
             $table->decimal('student_id', 5, 0);
-            $table->decimal('citizen_id', 13, 0);
+            $table->string('password', 6);
             $table->tinyInteger('level')->nullable();
             $table->string('room', 5)->nullable();
             $table->integer('number')->nullable();
@@ -25,7 +25,7 @@ class CreateUsersTable extends Migration {
             $table->string('comment', 100)->nullable();
             $table->string('old_club_id', 6)->nullable();
             
-            $table->primary('student_id');
+            $table->primary('password');
         });
     }
     

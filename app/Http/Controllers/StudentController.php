@@ -61,7 +61,7 @@ class StudentController extends Controller {
             'club' => 'required|size:6|exists:clubs,id' // Club ID
         ]);
         
-        if (!Helper::isRound(Helper::Round_Audition)) {
+        if (!Helper::isRound(Helper::Round_War)) { //Audition is only allowed during round 1
             return response()->view('errors.exception', ['title' => 'ไม่อนุญาต', 'description' => 'ขณะนี้ไม่อนุญาตให้ลงทะเบียน']);
         }
         
@@ -69,7 +69,7 @@ class StudentController extends Controller {
         
         if (!Club::find($request->input('club'))->isAvailableForLevel($student->level)) {
             return response()->view('errors.exception', ['title' => 'ไม่สามารถลงทะเบียนออดิชั่น', 'description' => 'ชมรมรับนักเรียนเต็มแล้ว']);
-        } elseif (Audition::apply($student->citizen_id, $request->input('club'))) {
+        } elseif (Audition::apply($student->student_id, $request->input('club'))) {
             return redirect('/')->with('notify', 'ลงทะเบียนออดิชั่นชมรมแล้ว');
         } else {
             return response()->view('errors.exception', ['title' => 'ไม่สามารถลงทะเบียนออดิชั่น', 'description' => 'มีการออดิชั่นชมรมนี้อยู่แล้ว']);
@@ -89,7 +89,7 @@ class StudentController extends Controller {
             'action' => 'required|in:join,reject'
         ]);
         
-        if (!Helper::isRound(Helper::Round_Audition)) {
+        if (!Helper::isRound(Helper::Round_War)) {
             return response()->view('errors.exception', ['title' => 'ไม่อนุญาต', 'description' => 'ขณะนี้ไม่อนุญาตให้ลงทะเบียน']);
         }
         
@@ -99,7 +99,7 @@ class StudentController extends Controller {
             return response()->view('errors.exception', ['title' => 'นักเรียนลงทะเบียนชมรมแล้ว', 'description' => 'ไม่สามารถเข้าชมรมได้']);
         } elseif ($audition = Audition::find($request->input('audition'))) {
             /** @var Audition $audition */
-            if ($audition->citizen_id == $student->citizen_id) {
+            if ($audition->student_id == $student->student_id) {
                 if ($request->input('action') == 'cancel' AND $audition->status == Audition::Status_Awaiting) {
                     $audition->updateStatus(Audition::Status_Canceled);
                     
@@ -141,7 +141,7 @@ class StudentController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function joinClub(Request $request) {
-        if (!Helper::isRound(Helper::Round_War)) {
+        if (!Helper::isRound(Helper::Round_War) AND !Helper::isRound(Helper::Round_Glean)) {
             return response()->view('errors.exception', ['title' => 'ไม่อนุญาต', 'description' => 'ขณะนี้ไม่อนุญาตให้ลงทะเบียน']);
         }
         
@@ -150,6 +150,10 @@ class StudentController extends Controller {
         ]);
         
         $student = User::current();
+
+        if (Helper::isRound(Helper::Round_Glean) && $student->auditions()->count() == 0){
+            return response()->view('errors.exception', ['title' => 'ไม่อนุญาต', 'description' => 'คุณไม่มีสิทธิ์ลงทะเบียนในรอบ 2']);
+        }
         
         if ($student->hasClub()) {
             return response()->view('errors.exception', ['title' => 'นักเรียนลงทะเบียนชมรมแล้ว', 'description' => 'ไม่สามารถเข้าชมรมได้']);
