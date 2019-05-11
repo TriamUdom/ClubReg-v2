@@ -61,6 +61,11 @@
                     <input id="iAuditionLoc" name="audition_location" type="text" class="validate" length="150" value="{{ $club->audition_location }}"/>
                     <label for="iAuditionLoc">สถานที่คัดเลือก</label>
                 </div>
+
+                <div class="input-field col s12">
+                    <input id="iAuditionTime" name="audition_time" type="text" class="validate" length="150" value="{{ $club->audition_time }}"/>
+                    <label for="iAuditionTime">เวลาคัดเลือก</label>
+                </div>
             </div>
         @endif
 

@@ -19,6 +19,10 @@ class PresidentController extends Controller {
     }
     
     public function manageAudition(Request $request) {
+        if(!\App\Helper::isRound(\App\Helper::Round_Audition)){
+            return response()->view('errors.exception', ['title' => 'Not Yet', 'description' => 'ไม่สามารถแก้ไขผลการออดิชั่นในขณะนี้']);
+        }
+
         $this->validate($request, [
             'audition' => 'required|exists:auditions,id', // Audition Request ID
             'action' => 'required|in:pass,fail'

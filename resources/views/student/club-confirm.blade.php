@@ -37,7 +37,8 @@
         </p>
         @if ($club->isAvailableForLevel($student->level))
             @if ($club->is_audition)
-                <p>สถานที่คัดเลือก: {{ $club->audition_location }}</p>
+                <p>สถานที่คัดเลือก: {{ $club->audition_location ?? '???' }}</p>
+                <p>เวลาคัดเลือก: {{ $club->audition_time ?? '???' }}</p>
                 @if ($student->auditions()->where('club_id', $club->id)->count() <= 0)
                 <form method="POST" action="/club-register/audition">
                     {{ csrf_field() }}

@@ -69,6 +69,7 @@ class Club extends Model {
         'adviser_phone',
         'description',
         'audition_location',
+        'audition_time',
         'location'
     ];
     
@@ -325,7 +326,7 @@ class Club extends Model {
         if (!$this->is_active) {
             return false;
         }
-        elseif (!$this->is_audition && Helper::isRound(Helper::Round_War)){
+        elseif (!$this->is_audition && Helper::isRound(Helper::Round_Register)){
             switch($level){
                 case 4:
                     return $this->members()->where('level', 4)->count() < $this->max_member * 0.35 AND $this->isAvailable();
@@ -338,7 +339,7 @@ class Club extends Model {
     }
 
     public function seatsAvailable($level){
-        if (Helper::isRound(Helper::Round_War)){
+        if (Helper::isRound(Helper::Round_Register)){
             if ($this->is_audition){
                 return $this->max_member - $this->countMember();
             }

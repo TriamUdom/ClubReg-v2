@@ -24,6 +24,9 @@
         @unless(empty($club->audition_location))
             <p><b>สถานที่คัดเลือก</b>: {{ $club->audition_location }}</p>
         @endunless
+        @unless(empty($club->audition_time))
+            <p><b>เวลาคัดเลือก</b>: {{ $club->audition_time }}</p>
+        @endunless
         <p><b>รับสมาชิกไม่เกิน</b>: {{ $club->max_member }} คน</p>
         <div class="divider"></div>
     @endforeach

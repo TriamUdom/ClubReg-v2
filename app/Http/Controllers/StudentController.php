@@ -61,7 +61,7 @@ class StudentController extends Controller {
             'club' => 'required|size:6|exists:clubs,id' // Club ID
         ]);
         
-        if (!Helper::isRound(Helper::Round_War)) { //Audition is only allowed during round 1
+        if (!Helper::isRound(Helper::Round_Register)) { //Audition is only allowed during round 1
             return response()->view('errors.exception', ['title' => 'ไม่อนุญาต', 'description' => 'ขณะนี้ไม่อนุญาตให้ลงทะเบียน']);
         }
         
@@ -77,7 +77,7 @@ class StudentController extends Controller {
     }
     
     /**
-     * (Round AUDITION) Confirm/Reject to join club which has passed audition
+     * Confirm/Reject to join club which has passed audition
      *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
@@ -89,7 +89,7 @@ class StudentController extends Controller {
             'action' => 'required|in:join,reject'
         ]);
         
-        if (!Helper::isRound(Helper::Round_War)) {
+        if (!Helper::isRound(Helper::Round_Audition)) { //Can only confirm during round 1.5
             return response()->view('errors.exception', ['title' => 'ไม่อนุญาต', 'description' => 'ขณะนี้ไม่อนุญาตให้ลงทะเบียน']);
         }
         
@@ -135,13 +135,13 @@ class StudentController extends Controller {
     }
     
     /**
-     * (Round WAR) Register for supplied club
+     * Register for supplied club instantly (For War or Glean)
      *
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function joinClub(Request $request) {
-        if (!Helper::isRound(Helper::Round_War) AND !Helper::isRound(Helper::Round_Glean)) {
+        if (!Helper::isRound(Helper::Round_Register) AND !Helper::isRound(Helper::Round_Glean)) {
             return response()->view('errors.exception', ['title' => 'ไม่อนุญาต', 'description' => 'ขณะนี้ไม่อนุญาตให้ลงทะเบียน']);
         }
         

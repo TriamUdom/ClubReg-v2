@@ -28,8 +28,9 @@
                 <td>ม.{{ $user->level }} / {{ $user->room }}</td>
                 <td>{{ $audition->getStatus() }}</td>
                 <td>
-
-                    @if ($club->isAvailableForLevel($user->level))
+                    @if(!\App\Helper::isRound(\App\Helper::Round_Audition))
+                        ไม่อยู่ในช่วงออดิชั่น
+                    @elseif ($club->isAvailableForLevel($user->level))
                         <form method="POST" action="/president/audition">
                             {{ csrf_field() }}
                             <input type="hidden" name="audition" value="{{ $audition->id }}"/>
@@ -54,7 +55,7 @@
                             @endif
                         </form>
                     @else
-                        <b class="red-text">เต็มแล้ว</b>
+                        <b class="red-text">เต็มโควตาแล้ว</b>
                     @endif
                 </td>
             </tr>
