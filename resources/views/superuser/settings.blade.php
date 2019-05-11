@@ -31,7 +31,7 @@
                 <label>Registration Phase</label>
             </div>
             <div class="input-field col s12">
-                <select class="browser-default">
+                <select class="browser-default" name="round">
                     <option value="WAITING" {{ \App\Helper::isRound(\App\Helper::Round_Waiting) ? 'selected' : '' }}>พัก/รอ</option>
                     <option value="CONFIRM" {{ \App\Helper::isRound(\App\Helper::Round_Confirm) ? 'selected' : '' }}>สมาชิกเก่ายืนยันสิทธิ์</option>
                     <option value="WAR" {{ \App\Helper::isRound(\App\Helper::Round_War) ? 'selected' : '' }}>รอบ 1 (สมัครทุกชมรม)</option>
@@ -43,7 +43,7 @@
 
         <br/>
 
-        <button type="submit" class="btn waves-effect blue fullwidth disabled" style="margin-left:10px">บันทึก (WIP)</button>
+        <button type="submit" class="btn waves-effect blue fullwidth" style="margin-left:10px">บันทึก</button>
         <br/><br />
     </form>
 

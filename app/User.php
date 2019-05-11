@@ -66,7 +66,7 @@ class User extends Model {
      * @throws \Exception
      */
     public static function current() {
-        if ($user = self::find(session('student'))) {
+        if ($user = self::find(session('userid'))) {
             return $user;
         } else {
             $e = new UserFriendlyException('User not logged in');

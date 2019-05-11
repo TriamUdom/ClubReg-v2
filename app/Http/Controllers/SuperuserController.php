@@ -21,7 +21,7 @@ class SuperuserController extends Controller {
         {
             foreach($superuserList as $superuser)
             {
-                if (session()->get('userid') == $superuser)
+                if (session('userid') == $superuser)
                 {
                     return view('superuser.settings');
                 }
@@ -34,7 +34,6 @@ class SuperuserController extends Controller {
     }
 
     public function changeSettings(Request $request){
-        /*
         if (!session()->has('president') AND !session()->has('student')) { //Not logged in
             return view('errors.custom', ['title' => 'Access Denied', 'description' => 'ไม่อนุญาตให้เข้าใช้งาน']);
         }
@@ -45,19 +44,19 @@ class SuperuserController extends Controller {
         {
             foreach($superuserList as $superuser)
             {
-                if (session()->get('userid') == $superuser)
+                if (session('userid') == $superuser)
                 {
                     try {
                         $setting = \App\Setting::where('id', 'maintenance')->firstOrFail();
-                        $setting->value = json_encode($request->get('maintenance'));
+                        $setting->value = $request->get('maintenance') ? 1 : 0;
                         $setting->save();
 
                         $setting = \App\Setting::where('id', 'superuser_list')->firstOrFail();
-                        $setting->value = json_encode(array_map('trim', explode(',', $request->get('superuser_list'))));
+                        $setting->value = array_map('trim', explode(',', $request->get('superuser_list')));
                         $setting->save();
 
                         $setting = \App\Setting::where('id', 'round')->firstOrFail();
-                        $setting->value = json_encode($request->get('round'));
+                        $setting->value = $request->get('round');
                         $setting->save();
 
                         return redirect('/');
@@ -73,7 +72,5 @@ class SuperuserController extends Controller {
         }
 
         return view('errors.custom', ['title' => 'Invalid Setup', 'description' => 'การตั้งค่าของระบบไม่ถูกต้อง']);
-                    */
-
     }
 }
