@@ -23,6 +23,7 @@ class CreateClubsTable extends Migration {
             $table->json('user_id');
             $table->text('audition_location')->nullable();
             $table->text('audition_time')->nullable();
+            $table->text('audition_instruction')->nullable();
             $table->text('location')->nullable();
             $table->text('president_title')->nullable();
             $table->text('president_fname')->nullable();

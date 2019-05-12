@@ -46,6 +46,8 @@ use PhpOffice\PhpWord\TemplateProcessor;
  * @method static \Illuminate\Database\Query\Builder|\App\Club whereMaxMember($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Club whereUserId($value)
  * @property string                                                        $audition_location
+ * @property string                                                        $audition_time
+ * @property string                                                        $audition_instruction
  * @property string                                                        $location
  * @property string                                                        $president_phone
  * @property string                                                        $adviser_phone
@@ -70,6 +72,7 @@ class Club extends Model {
         'description',
         'audition_location',
         'audition_time',
+        'audition_instruction',
         'location'
     ];
     

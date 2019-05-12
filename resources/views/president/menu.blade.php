@@ -61,6 +61,7 @@
                     @if ($club->is_audition)
                     <br />สถานที่คัดเลือก: {{ $club->audition_location ?? '???' }}
                     <br />เวลาคัดเลือก: {{ $club->audition_time ?? '???' }}
+                    <br />รายละเอียดการคัดเลือก: {{ $club->audition_instruction ?? '???' }}
                     @endif
                     <br />สถานที่ทำการเรียนการสอน: {{ $club->location ?? '???' }} (<a href="/president/settings">ดูเพิ่มเติม/แก้ไข</a>)
                 </span>
