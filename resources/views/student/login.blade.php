@@ -122,10 +122,18 @@
             <div class="sector grey lighten-4 red-text" style="font-size: 1.5rem;line-height: 1.8rem">
                 นักเรียนจะต้องดำเนินการด้วยความระมัดระวัง หากลงทะเบียนแล้วไม่สามารถยกเลิกได้
             </div>
-            <p>โปรดเข้าสู่ระบบเพื่อดำเนินการต่อ</p>
+
+            <p>นักเรียนจะต้องยืนยันตัวตนในระบบและตั้งรหัสผ่านก่อนที่จะสามารถเข้าสู่ระบบได้</p>
             <div class="row">
                 <div class="col s12">
-                    <a class="waves-effect waves-light btn-large orange fullwidth" href="/login"><i class="material-icons left">fingerprint</i>เข้าสู่ระบบ</a>
+                    <a class="waves-effect waves-light btn-large green fullwidth" href="/register"><i class="material-icons left">fingerprint</i>ยืนยันตัวตนและตั้งรหัสผ่าน</a>
+                </div>
+            </div>
+
+            <p>เมื่อได้ทำการยืนยันตัวตนและตั้งรหัสผ่านแล้ว สามารถเข้าสู่ระบบได้ตามปกติ</p>
+            <div class="row">
+                <div class="col s12">
+                    <a class="waves-effect waves-light btn-large blue fullwidth" href="/login"><i class="material-icons left">lock</i>เข้าสู่ระบบ</a>
                 </div>
             </div>
         @endif

@@ -13,7 +13,7 @@ class CreateUsersTable extends Migration {
     public function up() {
         Schema::create('users', function (Blueprint $table) {
             $table->decimal('student_id', 5, 0);
-            $table->string('password', 6);
+            $table->string('password', 255);
             $table->tinyInteger('level')->nullable();
             $table->string('room', 5)->nullable();
             $table->integer('number')->nullable();

@@ -50,7 +50,7 @@
             <input name="mac" id="iMac" value="" type="hidden">
             <div class="row">
                 <div class="input-field col s12 center">
-                    <h4 class="center login-form-text">กรุณาเข้าสู่ระบบเพื่อดำเนินการต่อ</h4>
+                    <h4 class="center login-form-text">เข้าสู่ระบบ</h4>
                 </div>
             </div>
             <div class="row">

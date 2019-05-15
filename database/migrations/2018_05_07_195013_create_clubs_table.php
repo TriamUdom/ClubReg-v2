@@ -12,7 +12,7 @@ class CreateClubsTable extends Migration {
      */
     public function up() {
         Schema::create('clubs', function (Blueprint $table) {
-            $table->string('id', 6);
+            $table->string('id', 8);
             $table->string('name', 75);
             $table->text('english_name');
             $table->boolean('is_audition');

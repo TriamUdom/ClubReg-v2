@@ -69,7 +69,7 @@
 
                 <div class="input-field col s12">
                     <input id="iAuditionInst" name="audition_instruction" type="text" class="validate" length="150" value="{{ $club->audition_instruction }}"/>
-                    <label for="iAuditionInst">เวลาคัดเลือก</label>
+                    <label for="iAuditionInst">รายละเอียดคัดเลือก</label>
                 </div>
             </div>
         @endif

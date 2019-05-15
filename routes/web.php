@@ -21,6 +21,10 @@ Route::group(['middleware' => ['web']], function () {
     });
     Route::post('login', 'UserController@login');
     Route::get('logout', 'UserController@logout');
+    Route::get('register', function(){
+        return view('register');
+    });
+    Route::post('register', 'UserController@register');
 
     Route::get('info', function () { return view('info'); });
     Route::get('clubinfo', function () { return view('detail'); });
