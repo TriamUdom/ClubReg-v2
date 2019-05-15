@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration {
             $table->string('title')->nullable();
             $table->string('firstname', 75)->nullable();
             $table->string('lastname', 75)->nullable();
-            $table->string('club_id', 6)->nullable();
+            $table->string('club_id', 8)->nullable();
             $table->string('reason')->nullable();
             $table->string('comment', 100)->nullable();
             $table->string('old_club_id', 6)->nullable();
