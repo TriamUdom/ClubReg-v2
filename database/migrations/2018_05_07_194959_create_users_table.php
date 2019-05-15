@@ -13,17 +13,17 @@ class CreateUsersTable extends Migration {
     public function up() {
         Schema::create('users', function (Blueprint $table) {
             $table->decimal('student_id', 5, 0);
-            $table->string('password', 6);
+            $table->string('password', 255);
             $table->tinyInteger('level')->nullable();
             $table->string('room', 5)->nullable();
             $table->integer('number')->nullable();
             $table->string('title')->nullable();
             $table->string('firstname', 75)->nullable();
             $table->string('lastname', 75)->nullable();
-            $table->string('club_id', 6)->nullable();
+            $table->string('club_id', 8)->nullable();
             $table->string('reason')->nullable();
             $table->string('comment', 100)->nullable();
-            $table->string('old_club_id', 6)->nullable();
+            $table->string('old_club_id', 8)->nullable();
             
             $table->primary('password');
         });
