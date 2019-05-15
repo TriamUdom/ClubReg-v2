@@ -11,6 +11,12 @@
     <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet"/>
     <link href="/css/app.css" rel="stylesheet"/>
     <link rel="shortcut icon" href="/favicon.png"/>
+    <!--
+    Developed by TUCMC
+    Siwat Techavoranant (TU78)
+    Piyachet Kanda (TU79)
+    Possawat Suksai (TU81)
+    -->
     @yield('style')
 </head>
 <body>
