@@ -17,6 +17,9 @@
     Piyachet Kanda (TU79)
     Possawat Suksai (TU81)
     -->
+    <!--
+    If you want to join us contact: cmc@triamudom.club!
+    -->
     @yield('style')
 </head>
 <body>
