@@ -122,12 +122,7 @@
             <div class="sector grey lighten-4 red-text" style="font-size: 1.5rem;line-height: 1.8rem">
                 นักเรียนจะต้องดำเนินการด้วยความระมัดระวัง หากลงทะเบียนแล้วไม่สามารถยกเลิกได้
             </div>
-
-            <div class="sector lighten-4 red-text" style="font-size: 1.25rem;line-height: 1.8rem">
-                จะทำการปิดปรับปรุงระบบในเวลา 23:50 - 00:00 ของวันที่ 16 พฤษภาคม<br/>
-                ขออภัยในความไม่สะดวก<br/>
-            </div>
-
+        
             <p>นักเรียนจะต้องยืนยันตัวตนในระบบและตั้งรหัสผ่านก่อนที่จะสามารถเข้าสู่ระบบได้</p>
             <div class="row">
                 <div class="col s12">
