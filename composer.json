@@ -10,7 +10,7 @@
         "lcobucci/jwt": "^3.2",
         "phpoffice/phpword": "^0.13.0",
         "greggilbert/recaptcha": "^2.1",
-        "sentry/sentry-laravel": "^0.6.1"
+        "sentry/sentry-laravel": "1.0.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
