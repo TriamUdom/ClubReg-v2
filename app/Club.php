@@ -312,7 +312,7 @@ class Club extends Model {
     
     public function isAvailableForConfirm() {
         // 65%/35% Available for existing member
-        return $this->members()->where('reason', User::RegisterType_ExistingMember)->count() < ($this->max_member * ($this->is_audition ? 0.65 : 0.35)) AND $this->isAvailable();
+        return $this->members()->where('reason', User::RegisterType_ExistingMember)->orWhere('reason', User::RegisterType_Special)->count() < ($this->max_member * ($this->is_audition ? 0.65 : 0.35)) AND $this->isAvailable();
     }
     
     public function isAvailableForLevel($level) {
@@ -357,7 +357,7 @@ class Club extends Model {
             }
         }
         elseif (Helper::isRound(Helper::Round_Confirm)){
-            return floor($this->max_member * ($this->is_audition ? 0.65 : 0.35)) - $this->members()->where('reason', User::RegisterType_ExistingMember)->count();
+            return floor($this->max_member * ($this->is_audition ? 0.65 : 0.35)) - $this->members()->where('reason', User::RegisterType_ExistingMember)->orWhere('reason', User::RegisterType_Special)->count();
         }
         else { //Glean
             return $this->max_member - $this->countMember();
