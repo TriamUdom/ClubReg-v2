@@ -73,7 +73,7 @@ class UserController extends Controller {
             ])->first();
 
             if (is_null($user)){
-                return redirect()->back()->withErrors(['error' => 'ไม่สามารถยืนยันตัวต้นได้ กรุณาติดต่อหัวหน้างานกิจกรรมพัฒนาผู้เรียน ณ ตึก 50 ปี']);
+                return redirect()->back()->withErrors(['error' => 'ไม่สามารถยืนยันตัวตนได้ กรุณาติดต่อหัวหน้างานกิจกรรมพัฒนาผู้เรียน ณ ตึก 50 ปี']);
             }
 
             if (!empty($user->password)){
