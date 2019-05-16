@@ -335,7 +335,7 @@ class Club extends Model {
                     return $this->members()->where('level', 4)->count() < $this->max_member * 0.35 AND $this->isAvailable();
                 case 5:
                 case 6:
-                    return $this->members()->where('level', '!=', 4)->count() < $this->max_member * 0.2 AND $this->isAvailable();
+                    return $this->members()->where('level', '!=', 4)->where('reason', '!=', User::RegisterType_ExistingMember)->count() < $this->max_member * 0.2 AND $this->isAvailable();
             }
         }
         return $this->isAvailable();
