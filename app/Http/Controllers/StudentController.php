@@ -24,7 +24,7 @@ class StudentController extends Controller {
      */
     public function confirmOldClub(Request $request) {
         $this->validate($request, [
-            'club' => 'required|size:6|exists:clubs,id' // Club ID, as confirmation
+            'club' => 'required|exists:clubs,id' // Club ID, as confirmation
         ]);
         
         if (!Helper::isRound(Helper::Round_Confirm)) {
@@ -58,7 +58,7 @@ class StudentController extends Controller {
      */
     public function applyForAudition(Request $request) {
         $this->validate($request, [
-            'club' => 'required|size:6|exists:clubs,id' // Club ID
+            'club' => 'required|exists:clubs,id' // Club ID
         ]);
         
         if (!Helper::isRound(Helper::Round_Register)) { //Audition is only allowed during round 1
@@ -146,7 +146,7 @@ class StudentController extends Controller {
         }
         
         $this->validate($request, [
-            'club' => 'required|size:6|exists:clubs,id' // Club ID
+            'club' => 'required|exists:clubs,id' // Club ID
         ]);
         
         $student = User::current();
