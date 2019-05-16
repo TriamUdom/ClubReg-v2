@@ -13,8 +13,8 @@ class CreateAuditionsTable extends Migration {
     public function up() {
         Schema::create('auditions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('student_id', 6);
-            $table->string('club_id', 6);
+            $table->string('student_id', 5);
+            $table->string('club_id', 8);
             $table->enum('status', ['AWAITING', 'FAILED', 'PASSED', 'REJECTED', 'JOINED'])->default('AWAITING');
             $table->text('comment')->nullable();
             
