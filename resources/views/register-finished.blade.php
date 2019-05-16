@@ -37,14 +37,14 @@
                 <br/>
                 <b>เลขประจำตัวนักเรียนชั่วคราวของคุณคือ</b>
             </p>
-            <h4>{{ $user->student_id }}</h4>
+            <h4>{{ str_pad($user->student_id, 5, "0", STR_PAD_LEFT) }}</h4>
             <br/>
         @endif
 
         <p class="center-align">
             <b>รหัสผ่านของคุณคือ</b>
         </p>
-        <h4>{{ $password }}</h4>
+        <h4>{{ str_pad($password, 6, "0", STR_PAD_LEFT) }}</h4>
         <br/>
         <p class="center-align">กรุณาถ่ายภาพหน้าจอเพื่อเก็บไว้เป็นหลักฐาน
             @if($user->level == 4)
