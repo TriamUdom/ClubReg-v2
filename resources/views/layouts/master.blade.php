@@ -98,7 +98,7 @@
             m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
         })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-        ga('create', 'UA-88470919-6', 'auto');
+        ga('create', 'UA-74722377-5', 'auto');
 
         @if (session()->has('president'))
             ga('set', 'userId', '{{ sha1('PRESIDENT'.session('president')) }}');
