@@ -60,11 +60,6 @@
                 นักเรียน ห้อง 111 เลขที่ 9 มีเลขประจำตัว 11109<br/>
             </div>
 
-            <div class="sector lighten-4 red-text" style="font-size: 1.25rem;line-height: 1.8rem">
-               จะทำการปิดปรับปรุงระบบในเวลา 23:50 - 00:00 ของวันที่ 16 พฤษภาคม<br/>
-                ขออภัยในความไม่สะดวก<br/>
-            </div>
-
 
             <div class="row">
                 <div class="input-field col s12">
