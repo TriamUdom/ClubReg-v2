@@ -53,6 +53,13 @@
                     <h4 class="center login-form-text">เข้าสู่ระบบ</h4>
                 </div>
             </div>
+
+            <div class="sector grey lighten-4 orange-text" style="font-size: 1.25rem;line-height: 1.8rem">
+                ให้นักเรียนชั้น ม.4 ใช้เลขประจำตัวนักเรียนชนิดชั่วคราว เช่น<br/>
+                นักเรียน ห้อง 77 เลขที่ 35 มีเลขประจำตัว 07735<br/>
+                นักเรียน ห้อง 111 เลขที่ 9 มีเลขประจำตัว 11109<br/>
+            </div>
+
             <div class="row">
                 <div class="input-field col s12">
                     <input id="username" name="student_id" class="validate " required="" type="text">
