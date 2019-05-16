@@ -351,9 +351,8 @@ class Club extends Model {
                     case 4:
                         return floor($this->max_member * 0.35) - $this->members()->where('level', 4)->count();
                     case 5:
-                        return floor($this->max_member * 0.2) - $this->members()->where('level', '!=', 4)->count();
                     case 6:
-                        return floor($this->max_member * 0.2) - $this->members()->where('level', '!=', 4)->count();
+                        return floor($this->max_member * 0.2) - $this->members()->where('level', '!=', 4)->where('reason', '!=', User::RegisterType_ExistingMember)->count();
                 }
             }
         }
