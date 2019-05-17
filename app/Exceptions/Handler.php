@@ -26,19 +26,22 @@ class Handler extends ExceptionHandler {
     /**
      * Report or log an exception.
      *
-     * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
+     * This is a great spot to send exceptions to Sentry etc.
      *
      * @param  \Exception $exception
      * @return void
+     * @throws Exception
      */
-    public function report(Exception $exception) {
-        if (!config('app.debug') && app()->bound('sentry') && $this->shouldReport($exception)) {
+    public function report(Exception $exception)
+    {
+        if (app()->bound('sentry') && $this->shouldReport($exception)){
             app('sentry')->captureException($exception);
         }
-        
+
         parent::report($exception);
     }
-    
+
+
     /**
      * Render an exception into an HTTP response.
      *

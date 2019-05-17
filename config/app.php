@@ -177,8 +177,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-    
-        Sentry\SentryLaravel\SentryLaravelServiceProvider::class,
+
+        Sentry\Laravel\ServiceProvider::class,
         Greggilbert\Recaptcha\RecaptchaServiceProvider::class,
 
     ],
@@ -231,8 +231,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
     
         'Recaptcha' => Greggilbert\Recaptcha\Facades\Recaptcha::class,
-        'Sentry' => Sentry\SentryLaravel\SentryFacade::class,
-
+        'Sentry' => Sentry\Laravel\Facade::class,
     ],
 
 ];
