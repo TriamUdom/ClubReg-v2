@@ -151,7 +151,7 @@ class StudentController extends Controller {
         
         $student = User::current();
 
-        if (Helper::isRound(Helper::Round_Glean) && $student->auditions()->count() == 0){
+        if (Helper::isRound(Helper::Round_Glean) && count($student->getAuditions()) == 0){
             return response()->view('errors.exception', ['title' => 'ไม่อนุญาต', 'description' => 'คุณไม่มีสิทธิ์ลงทะเบียนในรอบ 2']);
         }
         

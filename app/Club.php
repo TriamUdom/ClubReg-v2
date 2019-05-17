@@ -332,10 +332,10 @@ class Club extends Model {
         elseif (!$this->is_audition && Helper::isRound(Helper::Round_Register)){
             switch($level){
                 case 4:
-                    return $this->members()->where('level', 4)->count() < $this->max_member * 0.35 AND $this->isAvailable();
+                    return $this->members()->where('reason', '=', 'WAR')->where('level', 4)->count() < $this->max_member * 0.35 AND $this->isAvailable();
                 case 5:
                 case 6:
-                    return $this->members()->where('level', '!=', 4)->where('reason', '!=', User::RegisterType_ExistingMember)->count() < $this->max_member * 0.2 AND $this->isAvailable();
+                    return $this->members()->where('reason', '=', 'WAR')->where('level', '!=', 4)->count() < $this->max_member * 0.2 AND $this->isAvailable();
             }
         }
         return $this->isAvailable();
@@ -349,10 +349,10 @@ class Club extends Model {
             else {
                 switch($level){
                     case 4:
-                        return floor($this->max_member * 0.35) - $this->members()->where('level', 4)->count();
+                        return floor($this->max_member * 0.35) - $this->members()->where('reason', '=', 'WAR')->where('level', 4)->count();
                     case 5:
                     case 6:
-                        return floor($this->max_member * 0.2) - $this->members()->where('level', '!=', 4)->where('reason', '!=', User::RegisterType_ExistingMember)->count();
+                        return floor($this->max_member * 0.2) - $this->members()->where('reason', '=', 'WAR')->where('level', '!=', 4)->count();
                 }
             }
         }
