@@ -21,6 +21,7 @@
         <a href="/" class="blue-text"><i class="small material-icons" style="vertical-align: middle">arrow_back</i> เมนู</a>
         <h4 class="center-align">{{ $club->name }}</h4>
         <h5 class="center-align">{{ $club->english_name }}</h5>
+        <p class="red-text">กดยืนยันสิทธิ์ที่ด้านล่าง</p>
         <p>&ensp;{!! nl2br($club->description) !!}</p>
         <p>สถานะ:
             @if ($club->isAvailableForLevel($student->level))

@@ -172,7 +172,7 @@
                             </div>
                         </div>
                         <button class="btn waves-effect waves-light purple fullwidth" type="submit">
-                            ยืนยันและดูข้อมูลเพิ่มเติม
+                            ดูข้อมูลเพิ่มเติม
                             <i class="material-icons left">info_outline</i>
                         </button>
                     </form>
