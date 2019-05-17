@@ -108,7 +108,7 @@
             <div class="row">
                 <div class="input-field col s12">
                     <input id="password" name="password" class="validate " required="" type="password">
-                    <label for="password">รหัสผ่านที่จะตั้ง (ความยาว 6 หลัก)</label>
+                    <label for="password">รหัสผ่านที่จะตั้ง</label>
                 </div>
 
                 <div class="input-field col s12">

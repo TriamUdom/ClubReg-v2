@@ -51,8 +51,8 @@ class UserController extends Controller {
             'level' => ['required', Rule::in(['4', '5', '6'])],
             'firstname' => 'required',
             'lastname' => 'required',
-            'password' => 'required|string|size:6|regex:/^[\w-]*$/',
-            'password_val' => 'required|string|size:6|regex:/^[\w-]*$/',
+            'password' => 'required|string|regex:/^[\w-]*$/',
+            'password_val' => 'required|string|regex:/^[\w-]*$/',
             'room' => 'required|numeric',
             'number' => 'required|numeric'
         ]);
