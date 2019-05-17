@@ -70,6 +70,10 @@
                 </div>
             </div>
 
+            <p class="red-text">
+                หากนักเรียนมีชื่อกลาง ให้นักเรีียนกรอกในช่อง นามสกุล
+            </p>
+
             <div class="row">
                 <div class="input-field col s12">
                     <select autocomplete="off" id="level" name="level">
