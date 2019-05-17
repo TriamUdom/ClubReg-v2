@@ -69,5 +69,11 @@
         $(document).ready(function () {
             $('select').material_select();
         });
+
+        window.onbeforeunload = function(e) {
+            return 'คุณยังไม่ได้ทำการยืนยันสิทธิ์ แน่ใจหรือไม่ว่าจะกลับไปหน้าหลัก';
+        };
     </script>
+
+
 @endsection
