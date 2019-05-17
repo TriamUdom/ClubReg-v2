@@ -156,6 +156,9 @@
                 <p class="center-align">หากนักเรียนประสบปัญหาหรือมีข้อสงสัย โปรดติดต่องานกิจกรรมพัฒนาผู้เรียน ตึก 50 ปี</p>
             @elseif (\App\Helper::isRound(\App\Helper::Round_Register))
                 <div class="sector">
+                    <div class="sector grey lighten-4 red-text" style="font-size: 1.5rem;line-height: 1.8rem">
+                        นักเรียนจะต้องดำเนินการด้วยความระมัดระวัง หากนักเรียนลงทะเบียนเรียนชมรมที่ไม่มีการคัดเลือกไปแล้ว จะไม่สามารถแก้ไขหรือยกเลิกได้ และจะไม่สามารถกดตอบรับการคัดเลือกได้อีก
+                    </div>
                     <form method="POST" action="/club-register" class="select-append">
                         {{ csrf_field() }}
                         <h5>สมัครคัดเลือกเข้าชมรม รอบที่ 1</h5>
