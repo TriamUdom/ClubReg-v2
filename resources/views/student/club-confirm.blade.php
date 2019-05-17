@@ -70,10 +70,8 @@
             $('select').material_select();
         });
 
-        window.onbeforeunload = function(e) {
-            return 'คุณยังไม่ได้ทำการยืนยันสิทธิ์ แน่ใจหรือไม่ว่าจะกลับไปหน้าหลัก';
-        };
+        window.addEventListener('beforeunload', function(e) {
+            window.confirm('คุณยังไม่ได้ยืนยันสิทธิ์ แน่ใจหรือไม่ว่าจะย้อนกลับ')
+        })
     </script>
-
-
 @endsection
