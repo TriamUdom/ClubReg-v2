@@ -85,6 +85,18 @@ class Audition extends Model {
     public function user() {
         return $this->belongsTo('App\User', 'student_id', 'student_id');
     }
+
+    public function getUser(){
+
+        foreach (\App\User::all() as $user){
+            if (str_pad($this->student_id, 5, "0", STR_PAD_LEFT) ==
+                str_pad($user->student_id, 5, "0", STR_PAD_LEFT)){
+                return $user;
+            }
+        }
+
+        return null;
+    }
     
     /**
      * Update audition request status

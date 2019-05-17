@@ -23,7 +23,7 @@
         <tbody>
         @foreach(($club = \App\Club::currentPresident())->auditions()->orderBy('status')->get() as $audition)
             <tr>
-                <td>{{ ($user = $audition->user)->student_id }}</td>
+                <td>{{ str_pad(($user = $audition->getUser())->student_id, 5, "0", STR_PAD_LEFT) }}</td>
                 <td>{{ $user->getName() }}</td>
                 <td>ม.{{ $user->level }} / {{ $user->room }}</td>
                 <td>{{ $audition->getStatus() }}</td>

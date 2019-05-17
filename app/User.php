@@ -90,6 +90,20 @@ class User extends Model {
     public function auditions() {
         return $this->hasMany('App\Audition', 'student_id', 'student_id');
     }
+
+    public function getAuditions(){
+
+        $auditions = array();
+
+        foreach (\App\Audition::all() as $audition){
+            if (str_pad($this->student_id, 5, "0", STR_PAD_LEFT) ==
+                str_pad($audition->student_id, 5, "0", STR_PAD_LEFT)){
+                $auditions[] = $audition;
+            }
+        }
+
+        return $auditions;
+    }
     
     /**
      * Register the student to club

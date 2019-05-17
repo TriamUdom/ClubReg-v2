@@ -223,7 +223,7 @@
                         <p class="center-align">หากนักเรียนประสบปัญหาหรือมีข้อสงสัย โปรดติดต่องานกิจกรรมพัฒนาผู้เรียน ตึก 50 ปี</p>
                     @endif
                 </div>
-            @elseif (\App\Helper::isRound(\App\Helper::Round_Glean) AND $user->auditions()->count() > 0)
+            @elseif (\App\Helper::isRound(\App\Helper::Round_Glean) AND count($user->getAuditions()) > 0)
                 <div class="sector">
                     <form method="POST" action="/club-register" class="select-append">
                         {{ csrf_field() }}

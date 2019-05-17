@@ -22,7 +22,7 @@
         <tbody>
         @foreach(($club = \App\Club::currentPresident())->members()->orderBy('student_id', 'ASC')->orderBy('room', 'ASC')->get() as $member)
             <tr>
-                <td>{{ $member->student_id ?? '-' }}</td>
+                <td>{{ str_pad($member->student_id, 5, "0", STR_PAD_LEFT) ?? '-' }}</td>
                 <td>{{ $member->getName() }}</td>
                 <td>{{ $member->level }}</td>
                 <td>{{ $member->room }}</td>
