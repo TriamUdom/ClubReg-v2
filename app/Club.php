@@ -164,7 +164,7 @@ class Club extends Model {
      * @return  string  path to generated FM3304 file
      */
     public function createFM3304($semester) {
-        return self::generateFM3304($this->members()->orderBy('student_id', 'ASC')->orderBy('room', 'ASC')->get(), $semester);
+        return self::generateFM3304($this->members()->orderBy('level', 'ASC')->orderBy('room', 'ASC')->get(), $semester);
     }
     
     public function generateFM3304(Collection $studentData, $semester) {
