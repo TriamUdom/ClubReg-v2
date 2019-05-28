@@ -30,9 +30,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('clubinfo', function () { return view('detail'); });
     Route::get('contact', function () { return view('contact'); });
 
-    Route::get('settings', 'SuperuserController@settingsPage');
-    Route::post('settings', 'SuperuserController@changeSettings');
-    
     if (config('app.debug')) {
         Route::get('phpinfo', function () {
             return response(phpinfo());
@@ -64,6 +61,13 @@ Route::group(['middleware' => ['web', 'student']], function () {
     Route::get('club-register/{club}', function (\App\Club $club) {
         return view('student.club-confirm', ['club' => $club]);
     });
+});
+
+Route::group(['middleware' => ['web', 'superuser']], function () {
+    Route::get('settings', function () { return view('superuser.settings'); });
+    Route::get('setClub', function () { return view('superuser.addclub'); });
+    Route::post('settings', 'SuperuserController@changeSettings');
+    Route::post('setClub', 'SuperuserController@setClub');
 });
 
 Route::group(['middleware' => ['web', 'president'], 'prefix' => 'president'], function () {
