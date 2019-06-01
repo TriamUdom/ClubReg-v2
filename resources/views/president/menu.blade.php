@@ -68,12 +68,6 @@
             </div>
         </div>
         <div class="divider"></div>
-        <div>
-            <div class="sector grey lighten-4 red-text" style="font-size: 1.5rem;line-height: 1.8rem">
-                งานกิจกรรมพัฒนาผู้เรียน จะทำการปิดระบบเพื่อปรับปรุง ระหว่างเวลา 16:00 - 21:00 ของวันที่ 27 พฤษภาคม 2562
-                ขอให้ประธานชมรมดาวน์โหลดใบเช็คชื่อ (FM33-04) เพื่อใช้ในการเช็คชื่อนักเรียน ก่อนเวลาดังกล่าว ขออภัยในความไม่สะดวก
-            </div>
-        </div>
         <div class="divider"></div>
 
         <div class="sector">
