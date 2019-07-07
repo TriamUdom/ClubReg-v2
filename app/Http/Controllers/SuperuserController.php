@@ -8,10 +8,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class SuperuserController extends Controller
-{
-    public function changeSettings(Request $request)
-    {
+class SuperuserController extends Controller {
+    public function changeSettings(Request $request) {
         try {
             $setting = \App\Setting::where('id', 'maintenance')->firstOrFail();
             $setting->value = $request->get('maintenance') ? 1 : 0;
@@ -31,22 +29,21 @@ class SuperuserController extends Controller
         }
     }
 
-    public function setClub(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
+    public function setClub(Request $request) {
+        $validator = Validator::make($request->all(), array(
             'student_id' => 'required',
             'club' => 'required',
             'reason' => 'required'
-        ]);
+        ));
 
         if ($validator->fails()) {
-            return response()->json(['code' => 100]);
+            return response()->json(array('code' => 100));
         }
 
         $student = \App\User::find($request->get('student_id'));
 
         if (is_null($student)) {
-            return response()->json(['code' => 100]);
+            return response()->json(array('code' => 100));
         }
 
         if ($request->get('club') == 'none') {
@@ -56,7 +53,7 @@ class SuperuserController extends Controller
             $club = \App\Club::find($request->get('club'));
 
             if (is_null($club)) {
-                return response()->json(['code' => 100]);
+                return response()->json(array('code' => 100));
             }
 
             $student->club_id = $request->get('club');
@@ -65,6 +62,6 @@ class SuperuserController extends Controller
 
         $student->save();
 
-        return response()->json(['code' => 200]);
+        return response()->json(array('code' => 200));
     }
 }

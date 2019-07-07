@@ -2,17 +2,14 @@
 
 namespace App\Exceptions;
 
-class UserFriendlyException extends \Exception
-{
+class UserFriendlyException extends \Exception {
     protected $description;
     
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description ?? false;
     }
     
-    public function setDescription(string $description)
-    {
+    public function setDescription(string $description) {
         $this->description = $description;
     }
 }

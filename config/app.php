@@ -1,6 +1,6 @@
 <?php
 
-return [
+return array(
 
     /*
     |--------------------------------------------------------------------------
@@ -135,7 +135,7 @@ return [
     |
     */
 
-    'providers' => [
+    'providers' => array(
 
         /*
          * Laravel Framework Service Providers...
@@ -181,7 +181,7 @@ return [
         Sentry\Laravel\ServiceProvider::class,
         Greggilbert\Recaptcha\RecaptchaServiceProvider::class,
 
-    ],
+    ),
 
     /*
     |--------------------------------------------------------------------------
@@ -194,7 +194,7 @@ return [
     |
     */
 
-    'aliases' => [
+    'aliases' => array(
 
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
@@ -232,6 +232,6 @@ return [
     
         'Recaptcha' => Greggilbert\Recaptcha\Facades\Recaptcha::class,
         'Sentry' => Sentry\Laravel\Facade::class,
-    ],
+    ),
 
-];
+);

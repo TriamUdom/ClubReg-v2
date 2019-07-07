@@ -2,6 +2,5 @@
 
 namespace App\Exceptions;
 
-class TransactionException extends UserFriendlyException
-{
+class TransactionException extends UserFriendlyException {
 }

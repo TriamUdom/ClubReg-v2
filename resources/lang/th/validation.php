@@ -1,6 +1,6 @@
 <?php
 
-return [
+return array(
 
     /*
     |--------------------------------------------------------------------------
@@ -23,12 +23,12 @@ return [
     'array'                => 'ข้อมูล :attribute ต้องเป็น array เท่านั้น',
     'before'               => 'ข้อมูล :attribute ต้องเป็นวันที่ก่อน :date.',
     'before_or_equal'      => 'The :attribute must be a date before or equal to :date.',
-    'between'              => [
+    'between'              => array(
         'numeric' => 'ข้อมูล :attribute ต้องอยู่ในช่วงระหว่าง :min - :max.',
         'file'    => 'ข้อมูล :attribute ต้องอยู่ในช่วงระหว่าง :min - :max กิโลไบต์',
         'string'  => 'ข้อมูล :attribute ต้องอยู่ในช่วงระหว่าง :min - :max ตัวอักษร',
         'array'   => 'ข้อมูล :attribute ต้องอยู่ในช่วงระหว่าง :min - :max ค่า',
-    ],
+    ),
     'boolean'              => 'ข้อมูล :attribute ต้องเป็นจริง หรือเท็จ เท่านั้น',
     'confirmed'            => 'ข้อมูล :attribute ไม่ตรงกัน',
     'date'                 => 'ข้อมูล :attribute ต้องเป็นวันที่',
@@ -50,20 +50,20 @@ return [
     'ipv4'                 => 'The :attribute must be a valid IPv4 address.',
     'ipv6'                 => 'The :attribute must be a valid IPv6 address.',
     'json'                 => 'ข้อมูล :attribute ต้องเป็นอักขระ JSON ที่สมบูรณ์',
-    'max'                  => [
+    'max'                  => array(
         'numeric' => 'ข้อมูล :attribute ต้องมีจำนวนไม่เกิน :max.',
         'file'    => 'ข้อมูล :attribute ต้องมีจำนวนไม่เกิน :max กิโลไบต์',
         'string'  => 'ข้อมูล :attribute ต้องมีจำนวนไม่เกิน :max ตัวอักษร',
         'array'   => 'ข้อมูล :attribute ต้องมีจำนวนไม่เกิน :max ค่า',
-    ],
+    ),
     'mimes'                => 'ข้อมูล :attribute ต้องเป็นชนิดไฟล์: :values.',
     'mimetypes'            => 'ข้อมูล :attribute ต้องเป็นชนิดไฟล์: :values.',
-    'min'                  => [
+    'min'                  => array(
         'numeric' => 'ข้อมูล :attribute ต้องมีจำนวนอย่างน้อย :min.',
         'file'    => 'ข้อมูล :attribute ต้องมีจำนวนอย่างน้อย :min กิโลไบต์',
         'string'  => 'ข้อมูล :attribute ต้องมีจำนวนอย่างน้อย :min ตัวอักษร',
         'array'   => 'ข้อมูล :attribute ต้องมีจำนวนอย่างน้อย :min ค่า',
-    ],
+    ),
     'not_in'               => 'ข้อมูล ที่เลือกจาก :attribute ไม่ถูกต้อง',
     'numeric'              => 'ข้อมูล :attribute ต้องเป็นตัวเลข',
     'present'              => 'ข้อมูล :attribute ต้องเป็นปัจจุบัน',
@@ -76,12 +76,12 @@ return [
     'required_without'     => 'ข้อมูล :attribute จำเป็นต้องกรอกเมื่อ :values ไม่มีค่า',
     'required_without_all' => 'ข้อมูล :attribute จำเป็นต้องกรอกเมื่อ :values ไม่มีค่าทั้งหมด',
     'same'                 => 'ข้อมูล :attribute และ :other ต้องถูกต้อง',
-    'size'                 => [
+    'size'                 => array(
         'numeric' => 'ข้อมูล :attribute ต้องเท่ากับ :size',
         'file'    => 'ข้อมูล :attribute ต้องเท่ากับ :size กิโลไบต์',
         'string'  => 'ข้อมูล :attribute ต้องเท่ากับ :size ตัวอักษร',
         'array'   => 'ข้อมูล :attribute ต้องเท่ากับ :size ค่า',
-    ],
+    ),
     'string'               => 'ข้อมูล :attribute ต้องเป็นอักขระ',
     'timezone'             => 'ข้อมูล :attribute ต้องเป็นข้อมูลเขตเวลาที่ถูกต้อง',
     'unique'               => 'ข้อมูล :attribute ไม่สามารถใช้ได้',
@@ -100,11 +100,11 @@ return [
     |
     */
 
-    'custom'               => [
-        'attribute-name' => [
+    'custom'               => array(
+        'attribute-name' => array(
             'rule-name' => 'custom-message',
-        ],
-    ],
+        ),
+    ),
 
     /*
     |--------------------------------------------------------------------------
@@ -117,7 +117,7 @@ return [
     |
     */
 
-    'attributes' => [
+    'attributes' => array(
         'email' => 'อีเมล',
         'password' => 'รหัสผ่าน',
         'password_val' => 'รหัสผ่าน',
@@ -139,6 +139,6 @@ return [
         'id' => 'รหัสประจำตัวนักเรียน',
         'citizen_id' => 'เลขประจำตัวประชาชน',
         'file' => 'เอกสาร'
-    ],
+    ),
 
-];
+);

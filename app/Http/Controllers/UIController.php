@@ -7,8 +7,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class UIController extends Controller
-{
+class UIController extends Controller {
     
     /*public function getCountdownTime() {
         if (Helper::shouldCountdown()) {
@@ -18,8 +17,7 @@ class UIController extends Controller
         return 0;
     }*/
     
-    public function logout(Request $request)
-    {
+    public function logout(Request $request) {
         $request->session()->flush();
         
         return redirect('/');

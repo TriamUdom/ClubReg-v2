@@ -1,7 +1,7 @@
 @extends('layouts.error')
 
 <?php
-$allvar = ['title', 'description'];
+$allvar = array('title', 'description');
 foreach ($allvar as $av) {
     if (empty($title)) {
         $var[$av] = session()->get('error.' . $av, 'Error');

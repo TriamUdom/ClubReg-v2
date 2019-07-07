@@ -1,15 +1,15 @@
 <?php
 
-Route::group(['middleware' => ['web']], function () {
+Route::group(array('middleware' => array('web')), function () {
     Route::get('/', function () {
         if (session()->has('president') and !session()->has('student')) {
             return view('president.menu');
         } elseif (session()->has('student')) {
             $user = \App\User::current();
             if ($user->hasClub()) {
-                return view('student.finished', ['user' => $user]);
+                return view('student.finished', array('user' => $user));
             } else {
-                return view('student.menu', ['user' => $user]);
+                return view('student.menu', array('user' => $user));
             }
         }
         return view('student.login');
@@ -58,13 +58,13 @@ Route::group(['middleware' => ['web']], function () {
     }
 });
 
-Route::group(['middleware' => ['web', 'student']], function () {
+Route::group(array('middleware' => array('web', 'student')), function () {
     Route::post('club-register/old', 'StudentController@confirmOldClub');
     Route::post('club-register/audition', 'StudentController@applyForAudition');
     Route::post('club-register/apply', 'StudentController@joinClub');
     Route::post('club-register/confirm-audition', 'StudentController@confirmAudition');
     Route::get('club-register/{club}', function (\App\Club $club) {
-        return view('student.club-confirm', ['club' => $club]);
+        return view('student.club-confirm', array('club' => $club));
     });
     Route::post('confirm', 'StudentController@verifyClub');
     Route::get('invalidInfo', function () {
@@ -73,7 +73,7 @@ Route::group(['middleware' => ['web', 'student']], function () {
     Route::post('invalidInfo', 'StudentController@saveInvalidInfo');
 });
 
-Route::group(['middleware' => ['web', 'superuser']], function () {
+Route::group(array('middleware' => array('web', 'superuser')), function () {
     Route::get('settings', function () {
         return view('superuser.settings');
     });
@@ -84,7 +84,7 @@ Route::group(['middleware' => ['web', 'superuser']], function () {
     Route::post('setClub', 'SuperuserController@setClub');
 });
 
-Route::group(['middleware' => ['web', 'president'], 'prefix' => 'president'], function () {
+Route::group(array('middleware' => array('web', 'president'), 'prefix' => 'president'), function () {
     Route::get('president', function () {
         return view('president.menu');
     });

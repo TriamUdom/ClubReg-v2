@@ -8,7 +8,7 @@ foreach ($lines as $line) {
 }
 
 foreach ($a as $student) {
-    $user = \App\User::where([['student_id', '=', $student[0]]])->first();
+    $user = \App\User::where(array(array('student_id', '=', $student[0])))->first();
 
     if (!is_null($user)) {
         $user->room=$student[4];

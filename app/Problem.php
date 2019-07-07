@@ -9,8 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  *  @property string $real_club_id
  */
-class Problem extends Model
-{
+class Problem extends Model {
     /**
      * The table associated with the model.
      *

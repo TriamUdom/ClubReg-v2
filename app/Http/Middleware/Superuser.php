@@ -4,8 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class Superuser
-{
+class Superuser {
     /**
      * Handle an incoming request.
      *
@@ -14,8 +13,7 @@ class Superuser
      * @param  string|null              $guard
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
-    {
+    public function handle($request, Closure $next, $guard = null) {
         if (!session()->has('president') and !session()->has('student')) { //Not logged in
             return response('Unauthorized.', 401);
         }

@@ -1,6 +1,6 @@
 <?php
 
-return [
+return array(
     'openid_provider' => 'https://accounts.triamudom.cc',
     "authorization_endpoint" => "https://accounts.triamudom.cc/openid/authorize",
     "token_endpoint" => "https://accounts.triamudom.cc/openid/token",
@@ -21,4 +21,4 @@ return [
     }),
 
     'captcha_enable' => env('ENABLE_CAPTCHA', false),
-];
+);

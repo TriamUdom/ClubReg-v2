@@ -45,8 +45,7 @@ use Log;
  * @method static \Illuminate\Database\Query\Builder|\App\User whereUpdatedAt($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Audition[] $auditions
  */
-class User extends Model
-{
+class User extends Model {
     const RegisterType_ExistingMember = 'EXISTING';
     const RegisterType_Audition = 'AUDITION';
     const RegisterType_War = 'WAR';
@@ -57,9 +56,9 @@ class User extends Model
      *
      * @var array
      */
-    protected $hidden = [
+    protected $hidden = array(
         'password'
-    ];
+    );
     
     /**
      * Get currently login user
@@ -67,8 +66,7 @@ class User extends Model
      * @return User
      * @throws \Exception
      */
-    public static function current()
-    {
+    public static function current() {
         if ($user = self::find(session('userid'))) {
             return $user;
         } else {
@@ -83,21 +81,18 @@ class User extends Model
      *
      * @return mixed
      */
-    public function club()
-    {
+    public function club() {
         return $this->belongsTo('App\Club', 'club_id');
     }
     
     /**
      * Get the audition records of this user.
      */
-    public function auditions()
-    {
+    public function auditions() {
         return $this->hasMany('App\Audition', 'student_id', 'student_id');
     }
 
-    public function getAuditions()
-    {
+    public function getAuditions() {
         $auditions = array();
 
         foreach (\App\Audition::all() as $audition) {
@@ -117,8 +112,7 @@ class User extends Model
      * @param string $registerType
      * @return bool
      */
-    public function registerClub(string $clubId, string $registerType): bool
-    {
+    public function registerClub(string $clubId, string $registerType): bool {
         if ($club = Club::find($clubId) and $club->isAvailableForLevel($this->level) and !$this->hasClub()) {
             $this->club_id = $club->id;
             $this->reason = $registerType;
@@ -140,8 +134,7 @@ class User extends Model
      * @param bool $asModel
      * @return bool|Club|string
      */
-    public function getPreviousClub(bool $asModel = false)
-    {
+    public function getPreviousClub(bool $asModel = false) {
         /*
         if ($old = \DB::table('old_users')->where('citizen_id', $this->citizen_id)->first()) {
             if (!empty($old->club_id)) {
@@ -172,13 +165,11 @@ class User extends Model
      *
      * @return bool
      */
-    public function hasClub()
-    {
+    public function hasClub() {
         return !empty($this->club_id);
     }
     
-    public function getName()
-    {
+    public function getName() {
         return $this->title . $this->firstname . ' ' . $this->lastname;
     }
     
@@ -187,8 +178,7 @@ class User extends Model
      *
      * @return string|int
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->{$this->primaryKey};
     }
 }

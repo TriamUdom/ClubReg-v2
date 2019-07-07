@@ -1,6 +1,6 @@
 <?php
 
-return [
+return array(
 
     /*
     |--------------------------------------------------------------------------
@@ -31,15 +31,15 @@ return [
     |
     */
 
-    'connections' => [
+    'connections' => array(
 
-        'sqlite' => [
+        'sqlite' => array(
             'driver' => 'sqlite',
             'database' => env('DB_DATABASE', database_path('database.sqlite')),
             'prefix' => '',
-        ],
+        ),
 
-        'mysql' => [
+        'mysql' => array(
             'driver' => 'mysql',
             'host' => env('DB_HOST', 'localhost'),
             'port' => env('DB_PORT', '3306'),
@@ -53,9 +53,9 @@ return [
             'engine' => null,
             
             'unix_socket' => env('DB_SOCKET', '')
-        ],
+        ),
 
-        'pgsql' => [
+        'pgsql' => array(
             'driver' => 'pgsql',
             'host' => env('DB_HOST', 'localhost'),
             'port' => env('DB_PORT', '5432'),
@@ -66,9 +66,9 @@ return [
             'prefix' => '',
             'schema' => 'public',
             'sslmode' => 'prefer',
-        ],
+        ),
 
-    ],
+    ),
 
     /*
     |--------------------------------------------------------------------------
@@ -94,17 +94,17 @@ return [
     |
     */
 
-    'redis' => [
+    'redis' => array(
     
         'client' => 'predis',
 
-        'default' => [
+        'default' => array(
             'host' => env('REDIS_HOST', 'localhost'),
             'password' => env('REDIS_PASSWORD', null),
             'port' => env('REDIS_PORT', 6379),
             'database' => 0,
-        ],
+        ),
 
-    ],
+    ),
 
-];
+);

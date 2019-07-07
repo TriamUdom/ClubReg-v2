@@ -4,8 +4,7 @@ namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
-class Kernel extends HttpKernel
-{
+class Kernel extends HttpKernel {
     /**
      * The application's global HTTP middleware stack.
      *
@@ -13,21 +12,21 @@ class Kernel extends HttpKernel
      *
      * @var array
      */
-    protected $middleware = [
+    protected $middleware = array(
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\DBMaintenance::class
-    ];
+    );
     
     /**
      * The application's route middleware groups.
      *
      * @var array
      */
-    protected $middlewareGroups = [
-        'web' => [
+    protected $middlewareGroups = array(
+        'web' => array(
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
@@ -35,13 +34,13 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        ],
+        ),
         
-        'api' => [
+        'api' => array(
             'throttle:60,1',
             'bindings',
-        ],
-    ];
+        ),
+    );
     
     /**
      * The application's route middleware.
@@ -50,7 +49,7 @@ class Kernel extends HttpKernel
      *
      * @var array
      */
-    protected $routeMiddleware = [
+    protected $routeMiddleware = array(
         //'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
         //'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         //'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
@@ -62,5 +61,5 @@ class Kernel extends HttpKernel
         'student' => \App\Http\Middleware\Student::class,
         'noclub' => \App\Http\Middleware\NoClubStudent::class,
         'superuser' => \App\Http\Middleware\Superuser::class
-    ];
+    );
 }

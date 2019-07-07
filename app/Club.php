@@ -56,11 +56,10 @@ use PhpOffice\PhpWord\TemplateProcessor;
  * @method static \Illuminate\Database\Query\Builder|\App\Club whereLocation($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Club wherePresidentPhone($value)
  */
-class Club extends Model
-{
+class Club extends Model {
     public $incrementing = false;
     
-    protected $fillable = [
+    protected $fillable = array(
         'president_title',
         'president_fname',
         'president_lname',
@@ -74,21 +73,20 @@ class Club extends Model
         'audition_time',
         'audition_instruction',
         'location'
-    ];
+    );
     
     /**
      * The attributes that should be casted to native types.
      *
      * @var array
      */
-    protected $casts = [
+    protected $casts = array(
         'is_audition' => 'boolean',
         'is_active' => 'boolean',
         'user_id' => 'array'
-    ];
+    );
     
-    public static function currentPresident()
-    {
+    public static function currentPresident() {
         if ($user = self::find(session('president'))) {
             /** @var $user Club */
             return $user;
@@ -104,8 +102,7 @@ class Club extends Model
      *
      * @return array
      */
-    public static function fetchAllClubs(): array
-    {
+    public static function fetchAllClubs(): array {
         $clubs = self::where('is_active', true)->get()->reject(function (Club $item) {
             return !$item->isAvailable();
         })->all();
@@ -122,8 +119,7 @@ class Club extends Model
      *
      * @return array
      */
-    public static function fetchAuditionClubs(): array
-    {
+    public static function fetchAuditionClubs(): array {
         $clubs = self::where('is_audition', true)->where('is_active', true)->get()->reject(function (Club $item) {
             return !$item->isAvailable();
         })->all();
@@ -140,8 +136,7 @@ class Club extends Model
      *
      * @return array
      */
-    public static function fetchWarClubs(): array
-    {
+    public static function fetchWarClubs(): array {
         $clubs = self::where('is_audition', false)->where('is_active', true)->get()->reject(function (Club $item) {
             return !$item->isAvailable();
         })->all();
@@ -153,13 +148,11 @@ class Club extends Model
         return $list;
     }
     
-    public function members()
-    {
+    public function members() {
         return $this->hasMany('App\User', 'club_id', 'id');
     }
     
-    public function auditions()
-    {
+    public function auditions() {
         return $this->hasMany('App\Audition', 'club_id', 'id');
     }
     
@@ -169,13 +162,11 @@ class Club extends Model
      * @param   int     semester that this FM3304 assigned to
      * @return  string  path to generated FM3304 file
      */
-    public function createFM3304($semester)
-    {
+    public function createFM3304($semester) {
         return self::generateFM3304($this->members()->orderBy('level', 'ASC')->orderBy('room', 'ASC')->get(), $semester);
     }
     
-    public function generateFM3304(Collection $studentData, $semester)
-    {
+    public function generateFM3304(Collection $studentData, $semester) {
         // StudentData: title firstname lastname level room
         $fileName = '[FM 33-04] ' . substr($this->id, -2) . '_' . $this->name;
         if (file_exists(storage_path('app/FMOutput/' . $fileName . '.docx'))) {
@@ -210,8 +201,7 @@ class Club extends Model
         return storage_path('app/FMOutput/' . $fileName . '.docx');
     }
     
-    public function generateFM3301(Collection $studentData, int $adviserCount)
-    {
+    public function generateFM3301(Collection $studentData, int $adviserCount) {
         $criterionCount = $adviserCount * 30;
         
         $fileName = '[FM 33-01] ' . substr($this->id, -2) . '_' . $this->name;
@@ -289,23 +279,19 @@ class Club extends Model
         return storage_path('app/FMOutput/' . $fileName . '.docx');
     }
     
-    public function getAdviserName()
-    {
+    public function getAdviserName() {
         return $this->adviser_title . $this->adviser_fname . ' ' . $this->adviser_lname;
     }
     
-    public function getPresidentName()
-    {
+    public function getPresidentName() {
         return $this->president_title . $this->president_fname . ' ' . $this->president_lname;
     }
     
-    public function countMember(): int
-    {
+    public function countMember(): int {
         return $this->members()->count();
     }
     
-    public function isAvailable(bool $asLevel = false)
-    {
+    public function isAvailable(bool $asLevel = false) {
         $memberNumber = $this->countMember();
         if (!$this->is_active) {
             return false;
@@ -323,14 +309,12 @@ class Club extends Model
         }
     }
     
-    public function isAvailableForConfirm()
-    {
+    public function isAvailableForConfirm() {
         // 65%/35% Available for existing member
         return $this->members()->count() < ($this->max_member * ($this->is_audition ? 0.65 : 0.35)) and $this->isAvailable();
     }
     
-    public function isAvailableForLevel($level)
-    {
+    public function isAvailableForLevel($level) {
         /*
         if (!$this->is_active) {
             return false;
@@ -355,8 +339,7 @@ class Club extends Model
         return $this->isAvailable();
     }
 
-    public function seatsAvailable($level)
-    {
+    public function seatsAvailable($level) {
         if (Helper::isRound(Helper::Round_Register)) {
             if ($this->is_audition) {
                 return $this->max_member - $this->countMember();

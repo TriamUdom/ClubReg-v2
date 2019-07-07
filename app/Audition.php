@@ -27,8 +27,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\User $user
  * @method static \Illuminate\Database\Query\Builder|Audition whereComment($value)
  */
-class Audition extends Model
-{
+class Audition extends Model {
     const Status_Awaiting = 'AWAITING'; // Beginning status (Step 1)
     const Status_Failed = 'FAILED'; // Audition failed
     const Status_Canceled = 'CANCELED'; // User cancel the audition request (in step 1)
@@ -36,7 +35,7 @@ class Audition extends Model
     const Status_Rejected = 'REJECTED'; // Student rejected
     const Status_Joined = 'JOINED'; // Student joined the club (Step 3)
     
-    protected $fillable = ['student_id', 'club_id'];
+    protected $fillable = array('student_id', 'club_id');
     
     /**
      * Apply for club audition
@@ -45,13 +44,12 @@ class Audition extends Model
      * @param $clubId
      * @return Audition|bool
      */
-    public static function apply($student_id, $clubId)
-    {
+    public static function apply($student_id, $clubId) {
         if (self::findRequest($student_id, $clubId)) {
             // Already exist
             return false;
         }
-        $audition = new self(['student_id' => $student_id, 'club_id' => $clubId]);
+        $audition = new self(array('student_id' => $student_id, 'club_id' => $clubId));
         $audition->status = self::Status_Awaiting;
         $audition->save();
         
@@ -65,8 +63,7 @@ class Audition extends Model
      * @param $clubId
      * @return bool|Audition|null|static
      */
-    public static function findRequest($student_id, $clubId)
-    {
+    public static function findRequest($student_id, $clubId) {
         return self::where('student_id', $student_id)->where('club_id', $clubId)->first() ?? false;
     }
     
@@ -75,8 +72,7 @@ class Audition extends Model
      *
      * @return mixed
      */
-    public function club()
-    {
+    public function club() {
         return $this->belongsTo('App\Club', 'club_id');
     }
     
@@ -85,13 +81,11 @@ class Audition extends Model
      *
      * @return mixed
      */
-    public function user()
-    {
+    public function user() {
         return $this->belongsTo('App\User', 'student_id', 'student_id');
     }
 
-    public function getUser()
-    {
+    public function getUser() {
         foreach (\App\User::all() as $user) {
             if (str_pad($this->student_id, 5, "0", STR_PAD_LEFT) ==
                 str_pad($user->student_id, 5, "0", STR_PAD_LEFT)) {
@@ -107,14 +101,12 @@ class Audition extends Model
      *
      * @param string $status
      */
-    public function updateStatus(string $status)
-    {
+    public function updateStatus(string $status) {
         $this->status = $status;
         $this->save();
     }
     
-    public function getStatus()
-    {
+    public function getStatus() {
         switch ($this->status) {
             case self::Status_Awaiting:
                 return 'รอออดิชั่น/การตอบรับจากชมรม';

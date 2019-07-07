@@ -5,8 +5,7 @@ namespace App\Http\Middleware;
 use App\Setting;
 use Closure;
 
-class DBMaintenance
-{
+class DBMaintenance {
     /**
      * Handle an incoming request.
      *
@@ -15,8 +14,7 @@ class DBMaintenance
      * @param  string|null              $guard
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
-    {
+    public function handle($request, Closure $next, $guard = null) {
         if (Setting::isUnderMaintenance()) {
             return response()->view('errors.503');
         }
