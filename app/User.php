@@ -23,6 +23,8 @@ use Log;
  * @property string                                                        $club_id
  * @property string                                                        $reason
  * @property string                                                        $comment
+ * @property string                                                        $old_club_id
+ * @property bool                                                          $confirmed
  * @method static Builder|User whereCitizenId($value)
  * @method static Builder|User whereClub($value)
  * @method static Builder|User whereComment($value)

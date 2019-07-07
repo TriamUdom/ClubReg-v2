@@ -30,11 +30,30 @@
 @section('main')
     <div class="z-depth-1 card-panel" style="max-width:900px;margin:auto" id="thebox">
         @php
-            /** @var $user \App\User */
+            $student = \App\User::current();
+            $clubId = $student->club_id;
         @endphp
         <p class="center-align"><i class="material-icons large green-text">check_circle</i></p>
         <p class="center-align">{{ $user->getName() }} ห้อง {{ $user->room }}<br />ได้ลงทะเบียนเรียนกิจกรรมชมรมในปีการศึกษา {{ config('core.current_year') }} แล้ว คือ</p>
         <h4>{{ $user->club->name }} ({{ $user->club_id }})</h4>
+        @if ($student->confirmed == true)
+            <p class="center green-text">นักเรียนได้ทำการยืนยันข้อมูลเรียบร้อยแล้ว​</p>
+        @else
+            <div>
+                <form method="POST" action="/confirm">
+                    {{ csrf_field() }}
+                    <div class="center">
+                        <button class="btn waves-effect waves-light green" type="submit" name="action" value="confirm" onClick="return confirm('ยืนยันว่าข้อมูลนักเรียนถูกต้องแล้ว เมื่อทำการยืนยันจะไม่สามารถแก้ไขได้อีก')">
+                            ข้อมูลถูกต้อง
+                        </button>
+                        <button class="btn waves-effect waves-light amber" type="submit" name="action" value="invalid">
+                            ข้อมูลไม่ถูกต้อง
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        @endif
         <p class="center-align">ขอให้นักเรียนมีความสุขในการเข้าร่วมกิจกรรมชมรม</p>
     </div>
 

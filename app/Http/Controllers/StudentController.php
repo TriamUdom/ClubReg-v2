@@ -49,12 +49,13 @@ class StudentController extends Controller {
         
         return response()->view('errors.exception', ['title' => 'ไม่สามารถลงทะเบียนชมรม', 'description' => 'รหัสยืนยันไม่ถูกต้อง หรือนักเรียนมีชมรมแล้ว']);
     }
-    
+
     /**
      * (Round AUDITION) Apply for audition
      *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
+     * @throws \Exception
      */
     public function applyForAudition(Request $request) {
         $this->validate($request, [
@@ -74,6 +75,39 @@ class StudentController extends Controller {
         } else {
             return response()->view('errors.exception', ['title' => 'ไม่สามารถลงทะเบียนออดิชั่น', 'description' => 'มีการออดิชั่นชมรมนี้อยู่แล้ว']);
         }
+    }
+
+    public function verifyClub(Request $request) {
+        $student = User::current();
+        if($request->input('action') == 'confirm') {
+            $student->confirmed=true;
+            $student->save();
+
+            return redirect('/')->with('notify', 'ยืนยันข้อมูลเรียบร้อยแล้ว');
+        } else if ($request->input('action') == 'invalid') {
+            return redirect('/invalidInfo');
+        }
+
+        return response()->view('errors.exception', ['title' => 'ไม่สามารถบันทึกข้อมูลได้']);
+    }
+
+    public function saveInvalidInfo(Request $request) {
+        $student = User::current();
+        $problem = new \App\Problem;
+
+        if($request->input('action') !== 'submit') {
+            if(\App\Problem::where('student_id', '=', $student->student_id)) {
+                return response()->view('errors.exception', ['title' => 'ไม่สามารถบันทึกข้อมูลได้', 'description' => 'คุณได้ทำการบันทึกข้อมูลไปแล้ว']);
+            } else {
+                $problem->student_id=$student->student_id;
+                $problem->real_club_id=$request->get('club');
+                $problem->save();
+
+                return redirect('/')->with('notify', 'บันทึกข้อมูลเรียบร้อยแล้ว');
+            }
+        }
+
+        return response()->view('errors.exception', ['title' => 'ไม่สามารถบันทึกข้อมูลได้']);
     }
     
     /**

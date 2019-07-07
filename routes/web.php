@@ -61,6 +61,9 @@ Route::group(['middleware' => ['web', 'student']], function () {
     Route::get('club-register/{club}', function (\App\Club $club) {
         return view('student.club-confirm', ['club' => $club]);
     });
+    Route::post('confirm', 'StudentController@verifyClub');
+    Route::get('invalidInfo', function () {return view('student.edit-info');});
+    Route::post('invalidInfo', 'StudentController@saveInvalidInfo');
 });
 
 Route::group(['middleware' => ['web', 'superuser']], function () {
