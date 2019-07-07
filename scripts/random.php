@@ -7,10 +7,10 @@ foreach ($lines as $line) {
     $a[] = explode(",", $line);
 }
 
-foreach ($a as $student){
+foreach ($a as $student) {
     $user = \App\User::where([['student_id', '=', $student[0]]])->first();
 
-    if (!is_null($user)){
+    if (!is_null($user)) {
         $aval_club = \App\Club::fetchWarClubs();
         $randIndex = array_rand($aval_club);
         $user->club_id = $aval_club[$randIndex];

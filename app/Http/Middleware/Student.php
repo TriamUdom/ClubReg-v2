@@ -4,7 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class Student {
+class Student
+{
     /**
      * Handle an incoming request.
      *
@@ -12,7 +13,8 @@ class Student {
      * @param  \Closure                 $next
      * @return mixed
      */
-    public function handle($request, Closure $next) {
+    public function handle($request, Closure $next)
+    {
         if (!$request->session()->has('student')) {
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);

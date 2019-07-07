@@ -10,8 +10,8 @@ use Illuminate\Http\Request;
  * Helper functions
  * Copyright (c) 2017 Siwat Techavoranant
  */
-class Helper {
-    
+class Helper
+{
     const Round_Waiting = 'WAITING';
     const Round_Confirm = 'CONFIRM';
     const Round_Register = 'REGISTER';
@@ -25,8 +25,9 @@ class Helper {
      * @param string $round
      * @return bool
      */
-    public static function isRound(string $round, bool $ignoreCountdown = false) {
-        if (self::shouldCountdown() AND !$ignoreCountdown) {
+    public static function isRound(string $round, bool $ignoreCountdown = false)
+    {
+        if (self::shouldCountdown() and !$ignoreCountdown) {
             // Force round WAITING
             return $round == self::Round_Waiting;
         }
@@ -34,10 +35,11 @@ class Helper {
         return in_array(strtoupper($round), explode('&', Setting::getValue('round')));
     }
     
-    public static function shouldCountdown(): bool {
+    public static function shouldCountdown(): bool
+    {
         $registerTime = Setting::getValue('allow_register_time');
         
-        return !empty($registerTime) AND $registerTime > time();
+        return !empty($registerTime) and $registerTime > time();
     }
     
     
@@ -48,7 +50,8 @@ class Helper {
      * @param string|NULL $selected
      * @return string
      */
-    public static function createOption(array $options, string $selected = NULL): string {
+    public static function createOption(array $options, string $selected = null): string
+    {
         // Input: ['value'] or ['option' => 'value']
         $html = '';
         $valueDifferent = self::isMultiDimensionalArray($options);
@@ -59,7 +62,8 @@ class Helper {
         return $html;
     }
     
-    public static function isArrayNotEmpty($input, bool $strict = false): bool {
+    public static function isArrayNotEmpty($input, bool $strict = false): bool
+    {
         if (!empty($input) && is_array($input) && count(array_filter($input)) > 0) {
             $valueFound = false;
             $emptyFound = false;
@@ -98,7 +102,8 @@ class Helper {
      * @param array $input
      * @return bool
      */
-    public static function isMultiDimensionalArray(array $input) {
+    public static function isMultiDimensionalArray(array $input)
+    {
         foreach ($input as $key => $val) {
             if (!is_numeric($key)) {
                 return true;
@@ -108,7 +113,8 @@ class Helper {
         return false;
     }
     
-    public static function stringToThaiDate($input = NULL) {
+    public static function stringToThaiDate($input = null)
+    {
         if (empty($input)) {
             return '';
         }
@@ -117,7 +123,8 @@ class Helper {
         return date('j', $time) . ' ' . config('static.months')[date('n', $time)] . ' ' . (date('Y', $time) + 543);
     }
     
-    public static function dateToAcademicYear($date) {
+    public static function dateToAcademicYear($date)
+    {
         $time = strtotime($date);
         if (is_numeric($date) && (strlen($date) == 10)) {
             // Input is unix timestamp
@@ -132,7 +139,8 @@ class Helper {
         return $ce;
     }
     
-    public static function objectToArray($object) {
+    public static function objectToArray($object)
+    {
         return json_decode(json_encode($object), true);
     }
     
@@ -142,7 +150,8 @@ class Helper {
      * @param Request $request
      * @return string IP address
      */
-    public static function getIPAddress(Request $request) {
+    public static function getIPAddress(Request $request)
+    {
         if ($request->ip() == '10.100.101.7' && isset($_SERVER['HTTP_X_REAL_IP'])) {
             $ip = $_SERVER['HTTP_X_REAL_IP'];
         } else {
@@ -151,5 +160,4 @@ class Helper {
         
         return $ip;
     }
-    
 }

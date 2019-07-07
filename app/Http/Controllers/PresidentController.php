@@ -5,21 +5,23 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Audition;
 use App\Club;
 use Illuminate\Http\Request;
 
-class PresidentController extends Controller {
-    public function downloadFM3304(Request $request) {
+class PresidentController extends Controller
+{
+    public function downloadFM3304(Request $request)
+    {
         /** @var $club Club */
         $club = Club::find($request->session()->get('president'));
         
         return response()->download($club->createFM3304(config('core.current_semester')))->deleteFileAfterSend(true);
     }
     
-    public function manageAudition(Request $request) {
-        if(!\App\Helper::isRound(\App\Helper::Round_Audition)){
+    public function manageAudition(Request $request)
+    {
+        if (!\App\Helper::isRound(\App\Helper::Round_Audition)) {
             return response()->view('errors.exception', ['title' => 'Not Yet', 'description' => 'ไม่สามารถแก้ไขผลการออดิชั่นในขณะนี้']);
         }
 
@@ -34,7 +36,7 @@ class PresidentController extends Controller {
         
         if ($club->id != $audition->club_id) {
             return response()->view('errors.exception', ['title' => 'Bad Request', 'description' => 'รหัสการออดิชั่นไม่สัมพันธ์กับชมรม']);
-        } elseif ($audition->status == Audition::Status_Canceled OR $audition->status == Audition::Status_Joined OR $audition->status == Audition::Status_Rejected) {
+        } elseif ($audition->status == Audition::Status_Canceled or $audition->status == Audition::Status_Joined or $audition->status == Audition::Status_Rejected) {
             return response()->view('errors.exception', ['title' => 'Bad Request', 'description' => 'คำขอคัดเลือกอยู่ในสถานะที่ไม่สามารถแก้ไขได้โดยชมรม']);
         } else {
             switch (strtolower($request->input('action'))) {
@@ -52,7 +54,8 @@ class PresidentController extends Controller {
         }
     }
     
-    public function saveSettings(Request $request) {
+    public function saveSettings(Request $request)
+    {
         $club = Club::currentPresident();
         if ($club->update($request->all())) {
             return redirect('/')->with('notify', 'บันทึกแล้ว');

@@ -7,10 +7,10 @@ foreach ($lines as $line) {
     $a[] = explode(",", $line);
 }
 
-foreach ($a as $student){
+foreach ($a as $student) {
     $user = \App\User::where([['student_id', '=', $student[0]]])->first();
 
-    if (!is_null($user)){
+    if (!is_null($user)) {
         $user->club_id = 'ก30914';
         $user->save();
         echo "DONE \n";

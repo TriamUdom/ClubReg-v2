@@ -5,7 +5,8 @@ namespace App\Http\Middleware;
 use App\User;
 use Closure;
 
-class NoClubStudent {
+class NoClubStudent
+{
     /**
      * Handle an incoming request.
      *
@@ -13,7 +14,8 @@ class NoClubStudent {
      * @param  \Closure                 $next
      * @return mixed
      */
-    public function handle($request, Closure $next) {
+    public function handle($request, Closure $next)
+    {
         if ($request->session()->has('student')) {
             $student = User::current();
             if ($student->hasClub()) {

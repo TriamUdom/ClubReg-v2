@@ -4,7 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class President {
+class President
+{
     /**
      * Handle an incoming request.
      *
@@ -13,7 +14,8 @@ class President {
      * @param  string|null              $guard
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = NULL) {
+    public function handle($request, Closure $next, $guard = null)
+    {
         if (!$request->session()->has('president')) {
             return redirect()->guest('login');
         } elseif (!$request->session()->has('president')) {

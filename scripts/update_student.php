@@ -10,7 +10,7 @@ foreach ($lines as $line) {
 foreach ($a as $student) {
     $user = \App\User::where([['student_id', '=', $student[0]]])->first();
 
-    if (!is_null($user)){
+    if (!is_null($user)) {
         $user->room=$student[4];
         $user->level=6;
         $user->number=$student[5];

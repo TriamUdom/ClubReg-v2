@@ -2,7 +2,6 @@
 
 namespace App;
 
-
 use Cache;
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,10 +26,12 @@ use Illuminate\Database\Eloquent\Model;
  *  - round: Enumerated types: WAITING, CONFIRM, CONFIRM&AUDITION, AUDITION, WAR, CLOSED (must be uppercase)
  */
 
-class Setting extends Model {
+class Setting extends Model
+{
     public $incrementing = false;
     
-    public static function getValue(string $id, $default = NULL) {
+    public static function getValue(string $id, $default = null)
+    {
         if ($item = self::find($id)) {
             return $item->value ?? $default;
         }
@@ -38,7 +39,8 @@ class Setting extends Model {
         return $default;
     }
     
-    public static function isUnderMaintenance(): bool {
+    public static function isUnderMaintenance(): bool
+    {
         return Cache::remember('maintenance', 2, function () {
             return self::getValue('maintenance', false);
         });
@@ -50,7 +52,8 @@ class Setting extends Model {
      * @param  string $value
      * @return string|int|float|\stdClass|array|boolean|null
      */
-    public function getValueAttribute($value) {
+    public function getValueAttribute($value)
+    {
         return json_decode($value);
     }
     
@@ -60,7 +63,8 @@ class Setting extends Model {
      * @param  string $value
      * @return void
      */
-    public function setValueAttribute($value) {
+    public function setValueAttribute($value)
+    {
         $this->attributes['value'] = json_encode($value);
     }
 }

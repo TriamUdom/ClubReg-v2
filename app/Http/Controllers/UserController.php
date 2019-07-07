@@ -14,8 +14,10 @@ use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Lcobucci\JWT\ValidationData;
 use Log;
 
-class UserController extends Controller {
-    public function login(Request $request){
+class UserController extends Controller
+{
+    public function login(Request $request)
+    {
         $this->validate($request, [
             'student_id' => 'required',
             'password' => 'required'
@@ -23,7 +25,7 @@ class UserController extends Controller {
 
         $user = User::where('student_id', '=', $request->get('student_id'))->first();
 
-        if (is_null($user) OR !\Hash::check($request->get('password'), $user->password)){
+        if (is_null($user) or !\Hash::check($request->get('password'), $user->password)) {
             return redirect()->back()->withErrors(['password' => 'เลขประจำตัวนักเรียนหรือรหัสผ่านไม่ถูกต้อง']);
         }
 
@@ -46,7 +48,8 @@ class UserController extends Controller {
         return redirect()->intended()->with('notify', 'เข้าสู่ระบบแล้ว')->cookie('current', $userId, 60);
     }
 
-    public function register(Request $request){
+    public function register(Request $request)
+    {
         $this->validate($request, [
             'level' => ['required', Rule::in(['4', '5', '6'])],
             'firstname' => 'required',
@@ -57,13 +60,13 @@ class UserController extends Controller {
             'number' => 'required|numeric'
         ]);
 
-        if ($request->get('password') != $request->get('password_val')){
+        if ($request->get('password') != $request->get('password_val')) {
             return redirect()->back()->withErrors(['password_val' => 'ช่องยืนยันรหัสผ่านไม่ตรงกับช่องรหัสผ่าน']);
         }
 
         $level = $request->get('level');
 
-        if ($level == 4){
+        if ($level == 4) {
             $user = User::where([
                 ['firstname', '=', $request->get('firstname')],
                 ['lastname', '=', $request->get('lastname')],
@@ -72,11 +75,11 @@ class UserController extends Controller {
                 ['number', '=', $request->get('number')],
             ])->first();
 
-            if (is_null($user)){
+            if (is_null($user)) {
                 return redirect()->back()->withErrors(['error' => 'ไม่สามารถยืนยันตัวตนได้ กรุณาติดต่อหัวหน้างานกิจกรรมพัฒนาผู้เรียน ณ ตึก 50 ปี วันที่ 21 พฤษภาคม 2562 เวลา 16:00']);
             }
 
-            if (!empty($user->password)){
+            if (!empty($user->password)) {
                 return redirect()->back()->withErrors(['error' => 'นักเรียนได้ยืนยันตัวตนและได้ตั้งรหัสผ่านใหม่แล้ว หากมีปัญหากรุณาติดต่อหัวหน้างานกิจกรรมพัฒนาผู้เรียน ณ ตึก 50 ปี วันที่ 21 พฤษภาคม 2562 เวลา 16:00']);
             }
 
@@ -84,8 +87,7 @@ class UserController extends Controller {
             $user->save();
 
             return view('register-finished', ['user' => $user, 'password' => $request->get('password')]);
-        }
-        else if ($level == 5 OR $level == 6){
+        } elseif ($level == 5 or $level == 6) {
             $this->validate($request, [
                 'id' => 'required|numeric'
             ]);
@@ -97,11 +99,11 @@ class UserController extends Controller {
                 ['student_id', '=', $request->get('id')],
             ])->first();
 
-            if (is_null($user)){
+            if (is_null($user)) {
                 return redirect()->back()->withErrors(['error' => 'ไม่สามารถยืนยันตัวต้นได้ กรุณาติดต่อหัวหน้างานกิจกรรมพัฒนาผู้เรียน ณ ตึก 50 ปี วันที่ 21 พฤษภาคม 2562 เวลา 16:00']);
             }
 
-            if (!empty($user->password)){
+            if (!empty($user->password)) {
                 return redirect()->back()->withErrors(['error' => 'นักเรียนได้ยืนยันตัวตนและได้ตั้งรหัสผ่านใหม่แล้ว หากมีปัญหากรุณาติดต่อหัวหน้างานกิจกรรมพัฒนาผู้เรียน ณ ตึก 50 ปี วันที่ 21 พฤษภาคม 2562 เวลา 16:00']);
             }
 
@@ -116,13 +118,15 @@ class UserController extends Controller {
         return redirect()->back()->withErrors(['level' => 'ระดับชั้นไม่ถูกต้อง']);
     }
     
-    public function logout(Request $request) {
+    public function logout(Request $request)
+    {
         $request->session()->flush();
 
         return redirect('/')->with('notify', 'ออกจากระบบแล้ว!')->cookie('current', false, 1);
     }
     
-    protected function findClubIdOfPresident(string $userid) {
+    protected function findClubIdOfPresident(string $userid)
+    {
         $clubs = Club::where('user_id', 'LIKE', '%' . $userid . '%')->get();
 
         foreach ($clubs as $club) {

@@ -8,10 +8,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class SuperuserController extends Controller {
-
-
-    public function changeSettings(Request $request){
+class SuperuserController extends Controller
+{
+    public function changeSettings(Request $request)
+    {
         try {
             $setting = \App\Setting::where('id', 'maintenance')->firstOrFail();
             $setting->value = $request->get('maintenance') ? 1 : 0;
@@ -26,9 +26,7 @@ class SuperuserController extends Controller {
             $setting->save();
 
             return redirect('/');
-        }
-        catch(\Exception $ex)
-        {
+        } catch (\Exception $ex) {
             return redirect()->back()->with('notify', 'ข้อมูลไม่ถูกต้อง');
         }
     }
@@ -51,11 +49,10 @@ class SuperuserController extends Controller {
             return response()->json(['code' => 100]);
         }
 
-        if ($request->get('club') == 'none'){
+        if ($request->get('club') == 'none') {
             $student->club_id = '';
             $student->reason = '';
-        }
-        else{
+        } else {
             $club = \App\Club::find($request->get('club'));
 
             if (is_null($club)) {

@@ -8,7 +8,8 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
 use Symfony\Component\HttpFoundation\Response;
 
-class Handler extends ExceptionHandler {
+class Handler extends ExceptionHandler
+{
     /**
      * A list of the exception types that should not be reported.
      *
@@ -34,7 +35,7 @@ class Handler extends ExceptionHandler {
      */
     public function report(Exception $exception)
     {
-        if (app()->bound('sentry') && $this->shouldReport($exception)){
+        if (app()->bound('sentry') && $this->shouldReport($exception)) {
             app('sentry')->captureException($exception);
         }
 
@@ -49,7 +50,8 @@ class Handler extends ExceptionHandler {
      * @param  \Exception               $exception
      * @return \Illuminate\Http\Response|Response
      */
-    public function render($request, Exception $exception) {
+    public function render($request, Exception $exception)
+    {
         if ($exception instanceof TokenMismatchException) {
             // CSRF Token Mismatch
             return response()->view('errors.custom', [
@@ -89,7 +91,8 @@ class Handler extends ExceptionHandler {
      * @param  \Illuminate\Auth\AuthenticationException $exception
      * @return \Illuminate\Http\Response
      */
-    protected function unauthenticated($request, AuthenticationException $exception) {
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
         if ($request->expectsJson()) {
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }

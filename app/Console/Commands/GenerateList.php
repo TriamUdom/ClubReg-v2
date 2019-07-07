@@ -5,7 +5,8 @@ namespace App\Console\Commands;
 use App\Club;
 use Illuminate\Console\Command;
 
-class GenerateList extends Command {
+class GenerateList extends Command
+{
     /**
      * The name and signature of the console command.
      *
@@ -25,7 +26,8 @@ class GenerateList extends Command {
      *
      * @return void
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
     }
     
@@ -34,7 +36,8 @@ class GenerateList extends Command {
      *
      * @return mixed
      */
-    public function handle() {
+    public function handle()
+    {
         $clubId = 'ก' . $this->ask('What is your club id (5 digits)?');
         $docType = $this->argument('doc') ?? $this->ask('Which document do you want? (3301 / 3304)');
         //$studentData = collect(\DB::table('before_war')->where('club_id', $clubId)->orderby('level')->orderBy('room')->orderBy('student_id')->get());

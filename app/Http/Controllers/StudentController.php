@@ -5,7 +5,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Audition;
 use App\Club;
 use App\Exceptions\TransactionException;
@@ -15,14 +14,16 @@ use DB;
 use Illuminate\Http\Request;
 use Throwable;
 
-class StudentController extends Controller {
+class StudentController extends Controller
+{
     /**
      * (Round CONFIRM) Register for old club
      *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
-    public function confirmOldClub(Request $request) {
+    public function confirmOldClub(Request $request)
+    {
         $this->validate($request, [
             'club' => 'required|exists:clubs,id' // Club ID, as confirmation
         ]);
@@ -33,10 +34,10 @@ class StudentController extends Controller {
         
         $student = User::current();
         
-        if ($student->getPreviousClub() == $request->input('club') AND !$student->hasClub()) {
+        if ($student->getPreviousClub() == $request->input('club') and !$student->hasClub()) {
             /** @var Club $club */
             $club = Club::find($student->getPreviousClub());
-            if ($club->isAvailableForConfirm() AND $club->isAvailableForLevel($student->level)) {
+            if ($club->isAvailableForConfirm() and $club->isAvailableForLevel($student->level)) {
                 if ($student->registerClub($club->id, User::RegisterType_ExistingMember)) {
                     return redirect('/')->with('notify', 'ลงทะเบียนชมรมแล้ว');
                 } else {
@@ -57,7 +58,8 @@ class StudentController extends Controller {
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      * @throws \Exception
      */
-    public function applyForAudition(Request $request) {
+    public function applyForAudition(Request $request)
+    {
         $this->validate($request, [
             'club' => 'required|exists:clubs,id' // Club ID
         ]);
@@ -77,26 +79,28 @@ class StudentController extends Controller {
         }
     }
 
-    public function verifyClub(Request $request) {
+    public function verifyClub(Request $request)
+    {
         $student = User::current();
-        if($request->input('action') == 'confirm') {
+        if ($request->input('action') == 'confirm') {
             $student->confirmed=true;
             $student->save();
 
             return redirect('/')->with('notify', 'ยืนยันข้อมูลเรียบร้อยแล้ว');
-        } else if ($request->input('action') == 'invalid') {
+        } elseif ($request->input('action') == 'invalid') {
             return redirect('/invalidInfo');
         }
 
         return response()->view('errors.exception', ['title' => 'ไม่สามารถบันทึกข้อมูลได้']);
     }
 
-    public function saveInvalidInfo(Request $request) {
+    public function saveInvalidInfo(Request $request)
+    {
         $student = User::current();
         $problem = new \App\Problem;
 
-        if($request->input('action') !== 'submit') {
-            if(\App\Problem::where('student_id', '=', $student->student_id)->count() > 0) {
+        if ($request->input('action') !== 'submit') {
+            if (\App\Problem::where('student_id', '=', $student->student_id)->count() > 0) {
                 return response()->view('errors.exception', ['title' => 'ไม่สามารถบันทึกข้อมูลได้', 'description' => 'คุณได้ทำการบันทึกข้อมูลไปแล้ว']);
             } else {
                 $problem->student_id=$student->student_id;
@@ -117,7 +121,8 @@ class StudentController extends Controller {
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      * @throws TransactionException
      */
-    public function confirmAudition(Request $request) {
+    public function confirmAudition(Request $request)
+    {
         $this->validate($request, [
             'audition' => 'required|exists:auditions,id', // Audition Request ID
             'action' => 'required|in:join,reject'
@@ -134,15 +139,15 @@ class StudentController extends Controller {
         } elseif ($audition = Audition::find($request->input('audition'))) {
             /** @var Audition $audition */
             if ($audition->student_id == $student->student_id) {
-                if ($request->input('action') == 'cancel' AND $audition->status == Audition::Status_Awaiting) {
+                if ($request->input('action') == 'cancel' and $audition->status == Audition::Status_Awaiting) {
                     $audition->updateStatus(Audition::Status_Canceled);
                     
                     return redirect('/')->with('notify', 'ยกเลิกการสมัครเข้าชมรมแล้ว');
-                } elseif ($request->input('action') == 'reject' AND $audition->status == Audition::Status_Passed) {
+                } elseif ($request->input('action') == 'reject' and $audition->status == Audition::Status_Passed) {
                     $audition->updateStatus(Audition::Status_Rejected);
                     
                     return redirect('/')->with('notify', 'ปฏิเสธการเข้าชมรมแล้ว');
-                } elseif ($request->input('action') == 'join' AND $audition->status == Audition::Status_Passed) {
+                } elseif ($request->input('action') == 'join' and $audition->status == Audition::Status_Passed) {
                     if ($audition->club->isAvailableForLevel($student->level)) {
                         try {
                             DB::transaction(function () use ($student, $audition) {
@@ -174,8 +179,9 @@ class StudentController extends Controller {
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function joinClub(Request $request) {
-        if (!Helper::isRound(Helper::Round_Register) AND !Helper::isRound(Helper::Round_Glean)) {
+    public function joinClub(Request $request)
+    {
+        if (!Helper::isRound(Helper::Round_Register) and !Helper::isRound(Helper::Round_Glean)) {
             return response()->view('errors.exception', ['title' => 'ไม่อนุญาต', 'description' => 'ขณะนี้ไม่อนุญาตให้ลงทะเบียน']);
         }
         
@@ -185,7 +191,7 @@ class StudentController extends Controller {
         
         $student = User::current();
 
-        if (Helper::isRound(Helper::Round_Glean) && count($student->getAuditions()) == 0){
+        if (Helper::isRound(Helper::Round_Glean) && count($student->getAuditions()) == 0) {
             return response()->view('errors.exception', ['title' => 'ไม่อนุญาต', 'description' => 'คุณไม่มีสิทธิ์ลงทะเบียนในรอบ 2']);
         }
         
