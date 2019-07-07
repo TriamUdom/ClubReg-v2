@@ -96,7 +96,7 @@ class StudentController extends Controller {
         $problem = new \App\Problem;
 
         if($request->input('action') !== 'submit') {
-            if(\App\Problem::where('student_id', '=', $student->student_id)) {
+            if(\App\Problem::where('student_id', '=', $student->student_id)->count() > 0) {
                 return response()->view('errors.exception', ['title' => 'ไม่สามารถบันทึกข้อมูลได้', 'description' => 'คุณได้ทำการบันทึกข้อมูลไปแล้ว']);
             } else {
                 $problem->student_id=$student->student_id;
