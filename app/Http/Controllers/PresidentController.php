@@ -29,14 +29,14 @@ class PresidentController extends Controller {
         
         $club = Club::currentPresident();
         /** @var Audition $audition */
-        $audition = Audition::find($request->input('audition'));
+        $audition = Audition::find($request->get('audition'));
         
         if ($club->id != $audition->club_id) {
-            return response()->view('errors.exception', array('title' => 'Bad Request', 'description' => 'รหัสการออดิชั่นไม่สัมพันธ์กับชมรม'));
+            return response()->json(array('code' => 100));
         } elseif ($audition->status == Audition::Status_Canceled or $audition->status == Audition::Status_Joined or $audition->status == Audition::Status_Rejected) {
-            return response()->view('errors.exception', array('title' => 'Bad Request', 'description' => 'คำขอคัดเลือกอยู่ในสถานะที่ไม่สามารถแก้ไขได้โดยชมรม'));
+            return response()->json(array('code' => 100));
         } else {
-            switch (strtolower($request->input('action'))) {
+            switch (strtolower($request->get('action'))) {
                 case 'pass':
                     $audition->updateStatus(Audition::Status_Passed);
                     break;
@@ -44,10 +44,10 @@ class PresidentController extends Controller {
                     $audition->updateStatus(Audition::Status_Failed);
                     break;
                 default:
-                    return response()->view('errors.exception', array('title' => 'Bad Request', 'description' => 'คำสั่งไม่ถูกต้อง'));
+                    return response()->json(array('code' => 100));
             }
-            
-            return redirect('/president/audition')->with('notfiy', 'แก้ไขสถานะคำขอแล้ว');
+
+            return response()->json(array('code' => 200));
         }
     }
     

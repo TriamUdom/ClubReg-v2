@@ -31,29 +31,24 @@
                     @if(!\App\Helper::isRound(\App\Helper::Round_Audition))
                         ไม่อยู่ในช่วงออดิชั่น
                     @elseif ($club->isAvailableForLevel($user->level))
-                        <form method="POST" action="/president/audition">
-                            {{ csrf_field() }}
-                            <input type="hidden" name="audition" value="{{ $audition->id }}"/>
-
                             @if ($audition->status == \App\Audition::Status_Awaiting)
-                                <button class="btn waves-effect waves-light green" type="submit" name="action" value="pass">
+                                <button class="btn waves-effect waves-light green" type="submit" onclick="updateAudition('pass');">
                                     ผ่าน
                                 </button>
-                                <button class="btn waves-effect waves-light red" type="submit" name="action" value="fail">
+                                <button class="btn waves-effect waves-light red" type="submit" onclick="updateAudition('fail');">
                                     ปฏิเสธ
                                 </button>
                             @elseif ($audition->status == \App\Audition::Status_Failed)
-                                <button class="btn waves-effect waves-light blue-grey" type="submit" name="action" value="pass">
+                                <button class="btn waves-effect waves-light blue-grey" type="submit" onclick="updateAudition('pass');">
                                     เปลี่ยนเป็นผ่าน
                                 </button>
                             @elseif ($audition->status == \App\Audition::Status_Passed)
-                                <button class="btn waves-effect waves-light blue-grey" type="submit" name="action" value="fail">
+                                <button class="btn waves-effect waves-light blue-grey" type="submit" onclick="updateAudition('fail');">
                                     เปลี่ยนเป็นปฏิเสธ
                                 </button>
                             @else
                                 -
                             @endif
-                        </form>
                     @else
                         <b class="red-text">เต็มโควตาแล้ว</b>
                     @endif
@@ -62,4 +57,33 @@
         @endforeach
         </tbody>
     </table>
+@endsection
+
+@section('script')
+    @parent
+    <script>
+        function updateAudition(action) {
+            $.ajax({
+                type: "POST",
+                url: '/president/audition',
+                data: jQuery.param({
+                    audition: '{{ $audition->id }}',
+                    action: action,
+                    _token: '{{ csrf_token() }}'
+                }),
+                success: function(data) {
+                    if (data.code === 200){
+                        Materialize.toast('สำเร็จ!', 4000);
+                    }
+                    else{
+                        Materialize.toast('มีข้อผิดพลาดเกิดขึ้น', 4000);
+                    }
+                },
+                error: function(error){
+                    Materialize.toast('มีข้อผิดพลาดเกิดขึ้น', 4000);
+                },
+                dataType: 'json'
+            });
+        }
+    </script>
 @endsection
