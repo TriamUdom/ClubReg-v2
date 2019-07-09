@@ -36,7 +36,8 @@
         <p class="center-align"><i class="material-icons large green-text">check_circle</i></p>
         <p class="center-align">{{ $user->getName() }} ห้อง {{ $user->room }}<br />ได้ลงทะเบียนเรียนกิจกรรมชมรมในปีการศึกษา {{ config('core.current_year') }} แล้ว คือ</p>
         <h4>{{ $user->club->name }} ({{ $user->club_id }})</h4>
-        @if ($student->confirmed == true)
+        <p class="center-align">กรุณาถ่ายภาพหน้าจอเพื่อเก็บไว้เป็นหลักฐาน</p>
+    @if ($student->confirmed == true)
             <p class="center green-text">นักเรียนได้ทำการยืนยันข้อมูลเรียบร้อยแล้ว​</p>
         @else
             <div>

@@ -98,9 +98,9 @@
                 </div>
             </div>
 
-            <div id="m5-6" class="row" style="display:none;">
+            <div  class="row" style="display:none;">
                 <div class="input-field col s12">
-                    <input disabled id="id" name="id" class="validate " required="" type="number">
+                    <input id="id" name="id" class="validate " required="" type="number">
                     <label for="id">เลขประจำตัวนักเรียน</label>
                 </div>
             </div>
@@ -142,21 +142,6 @@
             });
 
             $('select').material_select();
-
-            $("#level").on('change', function() {
-                var level = $("#level").val();
-
-                if (level == 4){
-                    $("#id").prop("disabled", true);
-
-                    $("#m5-6").hide();
-                }
-                else if (level == 5 || level == 6){
-                    $("#id").prop("disabled", false);
-
-                    $("#m5-6").show();
-                }
-            });
         });
     </script>
 @endsection

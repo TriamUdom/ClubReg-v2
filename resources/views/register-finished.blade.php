@@ -32,25 +32,7 @@
             ได้ยืนยันตัวตนในระบบทะเบียนชมรมแล้ว
         </p>
 
-        @if($user->level == 4)
-            <p class="center-align">
-                <br/>
-                <b>เลขประจำตัวนักเรียนชั่วคราวของคุณคือ</b>
-            </p>
-            <h4>{{ str_pad($user->student_id, 5, "0", STR_PAD_LEFT) }}</h4>
-            <br/>
-        @endif
-
-        <p class="center-align">
-            <b>รหัสผ่านของคุณคือ</b>
-        </p>
-        <h4>{{ str_pad($password, 6, "0", STR_PAD_LEFT) }}</h4>
-        <br/>
-        <p class="center-align">กรุณาถ่ายภาพหน้าจอเพื่อเก็บไว้เป็นหลักฐาน
-            @if($user->level == 4)
-                <br/>เลขประจำตัวนักเรียนชั่วคราวนี้สามารถใช้ได้ในเฉพาะระบบทะเบียนชมรมเท่านั้น
-            @endif
-        </p>
+        <p class="center-align">กรุณาถ่ายภาพหน้าจอเพื่อเก็บไว้เป็นหลักฐาน</p>
     </div>
 
     <br/>

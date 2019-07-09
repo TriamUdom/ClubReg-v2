@@ -10,6 +10,7 @@ use App\Club;
 use App\Exceptions\TransactionException;
 use App\Helper;
 use App\User;
+use App\Problem;
 use DB;
 use Illuminate\Http\Request;
 use Throwable;
@@ -20,6 +21,7 @@ class StudentController extends Controller {
      *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
+     * @throws \Exception
      */
     public function confirmOldClub(Request $request) {
         $this->validate($request, array(
@@ -92,14 +94,14 @@ class StudentController extends Controller {
 
     public function saveInvalidInfo(Request $request) {
         $student = User::current();
-        $problem = new \App\Problem;
+        $problem = new Problem;
 
         if ($request->input('action') !== 'submit') {
-            if (\App\Problem::where('student_id', '=', $student->student_id)->count() > 0) {
+            if (Problem::where('student_id', '=', $student->student_id)->count() > 0) {
                 return response()->view('errors.exception', array('title' => 'ไม่สามารถบันทึกข้อมูลได้', 'description' => 'คุณได้ทำการบันทึกข้อมูลไปแล้ว'));
             } else {
                 $problem->student_id=$student->student_id;
-                $problem->real_club_id=$request->get('club');
+                $problem->real_club_id=$request->input('club');
                 $problem->save();
 
                 return redirect('/')->with('notify', 'บันทึกข้อมูลเรียบร้อยแล้ว');
@@ -166,12 +168,13 @@ class StudentController extends Controller {
             return response()->view('errors.exception', array('title' => 'ไม่สามารถยืนยันการเข้าชมรม', 'description' => 'ไม่พบการออดิชั่น'));
         }
     }
-    
+
     /**
      * Register for supplied club instantly (For War or Glean)
      *
      * @param Request $request
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function joinClub(Request $request) {
         if (!Helper::isRound(Helper::Round_Register) and !Helper::isRound(Helper::Round_Glean)) {
