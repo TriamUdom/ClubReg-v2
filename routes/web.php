@@ -82,6 +82,7 @@ Route::group(array('middleware' => array('web', 'superuser')), function () {
     });
     Route::post('settings', 'SuperuserController@changeSettings');
     Route::post('setClub', 'SuperuserController@setClub');
+    Route::post('findStudent', 'SuperuserController@findStudent');
 });
 
 Route::group(array('middleware' => array('web', 'president'), 'prefix' => 'president'), function () {

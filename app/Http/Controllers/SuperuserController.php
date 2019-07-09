@@ -64,4 +64,22 @@ class SuperuserController extends Controller {
 
         return response()->json(array('code' => 200));
     }
+
+    public function findStudent(Request $request) {
+        $validator = Validator::make($request->all(), array(
+            'student_id' => 'required',
+        ));
+
+        if ($validator->fails()) {
+            return response()->json(array('code' => 100));
+        }
+
+        $student = \App\User::find($request->get('student_id'));
+
+        if($student) {
+            return response()->json(array('code' => 200, 'name' => $student->title . $student-> firstname . "  " . $student->lastname, 'room' => $student->room, 'level' => $student->level, 'club' => $student->club_id));
+        }
+
+        return response()->json(array('code' => 100));
+    }
 }
