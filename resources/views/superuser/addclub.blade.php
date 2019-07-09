@@ -58,7 +58,7 @@
         <span>ชมรม</span>: <span id="resclub"></span> <br/>
     </div>
 
-    <button type="submit" class="btn waves-effect blue fullwidth" onclick="findStudent();" style="margin-left:10px">บันทึก</button>
+    <button type="submit" class="btn waves-effect blue fullwidth" onclick="findStudent();" style="margin-left:10px">ค้นหา</button>
     <br/><br />
 
 @endsection
