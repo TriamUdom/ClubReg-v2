@@ -13,9 +13,9 @@
     <link rel="shortcut icon" href="/favicon.png"/>
     <!--
     Developed by TUCMC
-    Siwat Techavoranant (TU78)
-    Piyachet Kanda (TU79)
-    Possawat Suksai (TU81)
+    Siwat Techavoranant (TU78) <keenthekeen>
+    Piyachet Kanda (TU79) <piyachetk>
+    Possawat Suksai (TU81) <iammarkps>
     -->
     <!--
     If you want to join us contact: cmc@triamudom.club!

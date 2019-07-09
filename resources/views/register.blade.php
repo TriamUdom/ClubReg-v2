@@ -55,7 +55,7 @@
             </div>
 
             <div class="sector grey lighten-4 red-text">
-                นักเรียนจะต้องกรอกข้อมูลด้วยความระมัดระวัง หากนักเรียนกรอกข้อมูลผิดพลาด กรุณาติดต่องานกิจกรรมพัฒนาผู้เรียน ณ ตึก 50 ปี วันที่ 21 พฤษภาคม 2562 เวลา 16:00
+                นักเรียนจะต้องกรอกข้อมูลด้วยความระมัดระวัง หากนักเรียนกรอกข้อมูลผิดพลาด กรุณาติดต่องานกิจกรรมพัฒนาผู้เรียน ณ ตึก 50 ปี
             </div>
 
             <div class="row">
@@ -98,7 +98,7 @@
                 </div>
             </div>
 
-            <div  class="row" style="display:none;">
+            <div  class="row">
                 <div class="input-field col s12">
                     <input id="id" name="id" class="validate " required="" type="number">
                     <label for="id">เลขประจำตัวนักเรียน</label>
