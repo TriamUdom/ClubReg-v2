@@ -37,7 +37,7 @@ use Log;
  * @method static Builder|User whereStudentId($value)
  * @method static Builder|User whereTitle($value)
  * @mixin \Eloquent
- * @property-read \App\Club                                                $club
+ * @property-read Club                                                $club
  * @method static Builder|User whereClubId($value)
  * @property \Carbon\Carbon                                                $created_at
  * @property \Carbon\Carbon                                                $updated_at
@@ -135,20 +135,6 @@ class User extends Model {
      * @return bool|Club|string
      */
     public function getPreviousClub(bool $asModel = false) {
-        /*
-        if ($old = \DB::table('old_users')->where('citizen_id', $this->citizen_id)->first()) {
-            if (!empty($old->club_id)) {
-                if ($asModel) {
-                    return Club::find($old->club_id);
-                } else {
-                    return $old->club_id;
-                }
-            }
-        }
-
-        return false;
-        */
-
         if (strlen($this->old_club_id) != 0) {
             if ($asModel) {
                 return Club::find($this->old_club_id);
