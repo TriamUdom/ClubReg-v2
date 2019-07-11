@@ -13,9 +13,13 @@
                 </select>
             </div>
         </div>
+            <div class="sector grey lighten-4 red-text" style="font-size: 1.5rem;line-height: 1.8rem">
+                หากชมรมของนักเรียนไม่ถูกต้อง โปรดติดต่อประธานชมรม หรือ Facebook Page : TUCMC ภายในวันที่ 15 กรกฎาคม 2562
+            </div>
         <button class="btn waves-effect waves-light purple fullwidth" type="submit">
             บันทึกข้อมูล
         </button>
+
         </form>
     <br/>
     <br />
