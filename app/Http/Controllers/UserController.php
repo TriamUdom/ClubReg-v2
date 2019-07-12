@@ -74,11 +74,7 @@ class UserController extends Controller {
             ))->first();
 
         if (is_null($user)) {
-            return redirect()->back()->withErrors(array('error' => 'ไม่สามารถยืนยันตัวตนได้ กรุณาติดต่อหัวหน้างานกิจกรรมพัฒนาผู้เรียน ณ ตึก 50 ปี'));
-        }
-
-        if (!empty($user->password)) {
-            return redirect()->back()->withErrors(array('error' => 'นักเรียนได้ยืนยันตัวตนและได้ตั้งรหัสผ่านใหม่แล้ว หากมีปัญหากรุณาติดต่อหัวหน้างานกิจกรรมพัฒนาผู้เรียน ณ ตึก 50 ปี'));
+            return redirect()->back()->withErrors(array('error' => 'ไม่สามารถยืนยันตัวตนได้ กรุณาติดต่อเพจ TUCMC'));
         }
 
         $user->room = $request->get('room');
