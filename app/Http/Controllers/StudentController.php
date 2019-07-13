@@ -110,13 +110,14 @@ class StudentController extends Controller {
 
         return response()->view('errors.exception', array('title' => 'ไม่สามารถบันทึกข้อมูลได้'));
     }
-    
+
     /**
      * Confirm/Reject to join club which has passed audition
      *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      * @throws TransactionException
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function confirmAudition(Request $request) {
         $this->validate($request, array(

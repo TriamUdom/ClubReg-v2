@@ -9,7 +9,9 @@
             <div class="input-field col s12">
                 <select name="club" required>
                     <option value="none" selected>ไม่มีชมรม</option>
-                    {!! \App\Helper::createOption(\App\Club::fetchAllClubs()) !!}
+                    @foreach(\App\Club::all() as $club)
+                        <option value="{{ $club->id }}">{{ $club->name }}</option>
+                    @endforeach
                 </select>
             </div>
         </div>

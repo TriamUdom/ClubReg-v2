@@ -358,4 +358,13 @@ class Club extends Model {
             return $this->max_member - $this->countMember();
         }
     }
+
+    public static function findClubName($clubId) {
+        $club = self::find($clubId);
+        if($club) {
+            return $club->name;
+        }
+
+        return null;
+    }
 }
