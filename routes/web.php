@@ -25,12 +25,14 @@ Route::group(array('middleware' => array('web')), function () {
     });
     Route::post('register', 'UserController@register');
 
-    Route::get('info', function () {
-        return view('info');
-    });
-    Route::get('clubinfo', function () {
-        return view('detail');
-    });
+    // Route::get('info', function () {
+    //     return view('info');
+    // });
+
+    // Route::get('clubinfo', function () {
+    //     return view('detail');
+    // });
+
     Route::get('contact', function () {
         return view('contact');
     });
