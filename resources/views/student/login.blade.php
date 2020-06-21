@@ -137,7 +137,7 @@
                 </div>
             </div>
         @endif
-        <p class="center-align">ดู<a href="/info">รายละเอียดการลงทะเบียน</a> | <a href="/contact">ติดต่อ</a></p>
+        <!-- <p class="center-align">ดู<a href="/info">รายละเอียดการลงทะเบียน</a> | <a href="/contact">ติดต่อ</a></p> -->
     </div>
 
     <br/>
