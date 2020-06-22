@@ -207,10 +207,10 @@
                                             <form method="POST" action="/club-register/confirm-audition">
                                                 {{ csrf_field() }}
                                                 <input type="hidden" name="audition" value="{{ $audition->id }}"/>
-                                                <button class="btn waves-effect waves-light green" type="submit" name="action" value="join" onclick="return confirm('แน่ใจหรือไม่ที่จะเข้า{{ $audition->club->name }}? เมื่อเลือกแล้วไม่สามารถเปลี่ยนได้')">
+                                                <button class="btn waves-effect waves-light green" type="submit" name="action" value="join" onclick="return confirm('คุณแน่ใจหรือไม่ที่จะเข้า{{ $audition->club->name }}? เมื่อเลือกแล้วจะไม่สามารถเปลี่ยนเป็นชมรมอื่นได้อีก')">
                                                     ยืนยันเข้าชมรม
                                                 </button>
-                                                <button class="btn waves-effect waves-light red" type="submit" name="action" value="reject" onclick="return confirm('แน่ใจหรือไม่ที่จะปฏิเสธ{{ $audition->club->name }}?')">
+                                                <button class="btn waves-effect waves-light red" type="submit" name="action" value="reject" onclick="return confirm('คุณแน่ใจหรือไม่ที่จะปฏิเสธ{{ $audition->club->name }}? เมื่อปฏิเสธแล้วจะไม่สามารถเลือกชมรมนี้ได้อีก')">
                                                     ปฏิเสธ
                                                 </button>
                                             </form>
@@ -230,7 +230,7 @@
                 <div class="sector">
                     <form method="POST" action="/club-register" class="select-append">
                         {{ csrf_field() }}
-                        <h5>ลงทะเบียนเข้าชมรม รอบที่ 2 (เก็บตกสำหรับผู้ไม่ผ่านออดิชั่น)</h5>
+                        <h5>ลงทะเบียนเข้าชมรม รอบที่ 2 (สำหรับผู้ไม่ผ่านออดิชั่น)</h5>
                         <p class="red-text">เมื่อนักเรียนลงทะเบียนชมรมไปแล้ว จะไม่สามารถแก้ไขการลงทะเบียนชมรมได้อีก</p>
                         <div class="row">
                             <div class="input-field col s12">
