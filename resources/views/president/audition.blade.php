@@ -32,18 +32,18 @@
                         ไม่อยู่ในช่วงออดิชั่น
                     @elseif ($club->isAvailableForLevel($user->level))
                             @if ($audition->status == \App\Audition::Status_Awaiting)
-                                <button class="btn waves-effect waves-light green" type="submit" onclick="updateAudition('pass');">
+                                <button class="btn waves-effect waves-light green" type="submit" onclick="updateAudition('pass', '{{$audition->id}}');">
                                     ผ่าน
                                 </button>
-                                <button class="btn waves-effect waves-light red" type="submit" onclick="updateAudition('fail');">
+                                <button class="btn waves-effect waves-light red" type="submit" onclick="updateAudition('fail', '{{$audition->id}}');">
                                     ปฏิเสธ
                                 </button>
                             @elseif ($audition->status == \App\Audition::Status_Failed)
-                                <button class="btn waves-effect waves-light blue-grey" type="submit" onclick="updateAudition('pass');">
+                                <button class="btn waves-effect waves-light blue-grey" type="submit" onclick="updateAudition('pass', '{{$audition->id}}');">
                                     เปลี่ยนเป็นผ่าน
                                 </button>
                             @elseif ($audition->status == \App\Audition::Status_Passed)
-                                <button class="btn waves-effect waves-light blue-grey" type="submit" onclick="updateAudition('fail');">
+                                <button class="btn waves-effect waves-light blue-grey" type="submit" onclick="updateAudition('fail', '{{$audition->id}}');">
                                     เปลี่ยนเป็นปฏิเสธ
                                 </button>
                             @else
@@ -62,12 +62,12 @@
 @section('script')
     @parent
     <script>
-        function updateAudition(action) {
+        function updateAudition(action, id) {
             $.ajax({
                 type: "POST",
                 url: '/president/audition',
                 data: jQuery.param({
-                    audition: '{{ $audition->id }}',
+                    audition: id,
                     action: action,
                     _token: '{{ csrf_token() }}'
                 }),
