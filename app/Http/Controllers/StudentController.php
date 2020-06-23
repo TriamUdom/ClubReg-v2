@@ -152,6 +152,20 @@ class StudentController extends Controller {
                                 $student->registerClub($audition->club_id, User::RegisterType_Audition);
                             });
                             
+                            $auditionToCancle = Audition::where('student_id', $student->student_id)->get();
+
+                            foreach ($auditionToCancle as $aud) {
+                                if($aud->id == $audition->id) continue;
+
+                                if($aud->status == Audition::Status_Awaiting) {
+                                    $aud->updateStatus(Audition::Status_Canceled);
+                                }
+
+                                if($aud->status == Audition::Status_Passed) {
+                                    $aud->updateStatus(Audition::Status_Rejected);
+                                }
+                            }
+
                             return redirect('/')->with('notify', 'เข้าร่วมชมรมแล้ว');
                         } catch (Throwable $e) {
                             throw new TransactionException('Unable to join club (Audition)');

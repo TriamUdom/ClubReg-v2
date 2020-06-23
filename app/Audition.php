@@ -118,6 +118,8 @@ class Audition extends Model {
                 return 'ผ่านการคัดเลือก โปรดยืนยันหรือปฏิเสธ';
             case self::Status_Rejected:
                 return 'ปฏิเสธการเข้าชมรม';
+            case self::Status_Canceled:
+                return 'ยกเลิกการออดิชั่น';
             default:
                 return $this->status;
         }
