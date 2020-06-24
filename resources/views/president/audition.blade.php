@@ -36,7 +36,7 @@
                                     ผ่าน
                                 </button>
                                 <button class="btn waves-effect waves-light red" type="submit" onclick="updateAudition('fail', '{{$audition->id}}');">
-                                    ปฏิเสธ
+                                    ไม่ผ่าน
                                 </button>
                             @elseif ($audition->status == \App\Audition::Status_Failed)
                                 <button class="btn waves-effect waves-light blue-grey" type="submit" onclick="updateAudition('pass', '{{$audition->id}}');">
@@ -44,7 +44,7 @@
                                 </button>
                             @elseif ($audition->status == \App\Audition::Status_Passed)
                                 <button class="btn waves-effect waves-light blue-grey" type="submit" onclick="updateAudition('fail', '{{$audition->id}}');">
-                                    เปลี่ยนเป็นปฏิเสธ
+                                    เปลี่ยนเป็นไม่ผ่าน
                                 </button>
                             @else
                                 -

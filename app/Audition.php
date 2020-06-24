@@ -111,13 +111,13 @@ class Audition extends Model {
             case self::Status_Awaiting:
                 return 'รอออดิชั่น/การตอบรับจากชมรม';
             case self::Status_Failed:
-                return 'ถูกชมรมปฏิเสธ';
+                return 'ไม่ผ่านการคัดเลือก';
             case self::Status_Joined:
                 return 'เข้าร่วมชมรมแล้ว';
             case self::Status_Passed:
-                return 'ผ่านการคัดเลือก โปรดยืนยันหรือปฏิเสธ';
+                return 'ผ่านการคัดเลือก';
             case self::Status_Rejected:
-                return 'ปฏิเสธการเข้าชมรม';
+                return 'สละสิทธิ์';
             case self::Status_Canceled:
                 return 'ยกเลิกการออดิชั่น';
             default:

@@ -208,10 +208,10 @@
                                                 {{ csrf_field() }}
                                                 <input type="hidden" name="audition" value="{{ $audition->id }}"/>
                                                 <button class="btn waves-effect waves-light green" type="submit" name="action" value="join" onclick="return confirm('คุณแน่ใจหรือไม่ที่จะเข้า{{ $audition->club->name }}? เมื่อเลือกแล้วจะไม่สามารถเปลี่ยนเป็นชมรมอื่นได้อีก')">
-                                                    ยืนยันเข้าชมรม
+                                                    ยืนยันลงทะเบียนเข้าชมรม
                                                 </button>
                                                 <button class="btn waves-effect waves-light red" type="submit" name="action" value="reject" onclick="return confirm('คุณแน่ใจหรือไม่ที่จะปฏิเสธ{{ $audition->club->name }}? เมื่อปฏิเสธแล้วจะไม่สามารถเลือกชมรมนี้ได้อีก')">
-                                                    ปฏิเสธ
+                                                    สละสิทธิ์
                                                 </button>
                                             </form>
                                         @else
