@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="theme-color" content="#009688"/>
     <meta name="google" content="notranslate"/>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" integrity="sha256-e22BQKCF7bb/h/4MFJ1a4lTRR2OuAe8Hxa/3tgU5Taw=" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet"/>
     <link href="/css/app.css" rel="stylesheet"/>
@@ -35,9 +35,8 @@
                 <li <?= Request::is('/') ? 'class="active"' : '' ?>><a href="/">หน้าหลัก</a></li>
                 <li><a class="dropdown-button" href="#!" data-activates="dropdown1">เพิ่มเติม <i class="material-icons right">arrow_drop_down</i></a></li>
             </ul>
-            <!-- Dropdown Structure -->
             <ul id="dropdown1" class="dropdown-content">
-                <li <?= Request::is('info') ? 'class="active"' : '' ?>><a href="/info">รายละเอียด</a></li>
+                {{--<li <?= Request::is('info') ? 'class="active"' : '' ?>><a href="/info">รายละเอียด</a></li>--}}
                 <li <?= Request::is('contact') ? 'class="active"' : '' ?>><a href="/contact">ติดต่อ</a></li>
                 @if (session()->has('student') OR session()->has('president'))
                     <li><a href="/logout">ออกจากระบบ</a></li>
@@ -45,7 +44,7 @@
             </ul>
             <ul id="nav-mobile" class="side-nav">
                 <li <?= Request::is('/') ? 'class="active"' : '' ?>><a href="/">หน้าหลัก</a></li>
-                <li <?= Request::is('info') ? 'class="active"' : '' ?>><a href="/info">รายละเอียด</a></li>
+                {{--<li <?= Request::is('info') ? 'class="active"' : '' ?>><a href="/info">รายละเอียด</a></li>--}}
                 <li <?= Request::is('contact') ? 'class="active"' : '' ?>><a href="/contact">ติดต่อ</a></li>
                 @if (session()->has('student') OR session()->has('president'))
                     <li><a href="/logout">ออกจากระบบ</a></li>
@@ -63,11 +62,6 @@
 </main>
 
 @section('footer')
-    <!--
-    @if (session()->has('student') OR session()->has('president'))
-        <div id="bottomstick">#RegClubsTriam</div>
-    @endif
-    -->
     <footer class="page-footer teal">
         <div class="footer-copyright">
             <div class="container">
@@ -79,8 +73,8 @@
 @show
 
 @section('script')
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js" integrity="sha256-uWtSXRErwH9kdJTIr1swfHFJn/d/WQ6s72gELOHXQGM=" crossorigin="anonymous"></script>
     <script>
         $(function () {
             $(".button-collapse").sideNav();
@@ -91,10 +85,6 @@
             @endif
         });
     </script>
-    @if (isset($_SERVER["REQUEST_TIME_FLOAT"]))
-    <!-- It took {{ LARAVEL_START-$_SERVER["REQUEST_TIME_FLOAT"] }} milliseconds to start the framework -->
-    @endif
-    <!-- It took {{ (microtime(true)-LARAVEL_START)*1000 }} milliseconds (since the framework started) to process this page --->
     <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

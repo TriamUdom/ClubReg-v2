@@ -179,7 +179,6 @@ return array(
         App\Providers\RouteServiceProvider::class,
 
         Sentry\Laravel\ServiceProvider::class,
-        Greggilbert\Recaptcha\RecaptchaServiceProvider::class,
 
     ),
 
@@ -230,7 +229,6 @@ return array(
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
     
-        'Recaptcha' => Greggilbert\Recaptcha\Facades\Recaptcha::class,
         'Sentry' => Sentry\Laravel\Facade::class,
     ),
 

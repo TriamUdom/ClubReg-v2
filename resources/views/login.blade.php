@@ -23,10 +23,6 @@
         input::-webkit-inner-spin-button {
             -webkit-appearance: none;
         }
-
-        .g-recaptcha div {
-            margin: auto;
-        }
     </style>
 @endsection
 
@@ -76,19 +72,4 @@
 
         </form>
     </div>
-@endsection
-
-@section('script')
-    @parent
-    <script>
-        $(function () {
-            $('.login-form').submit(function (event) {
-                if (grecaptcha.getResponse().length == 0) {
-                    // ReCAPTCHA validation failed
-                    Materialize.toast("กรุณากด \"ฉันไม่ใช่โปรแกรมอัตโนมัติ\"", 4000);
-                    event.preventDefault();
-                }
-            });
-        });
-    </script>
 @endsection
