@@ -9,9 +9,6 @@ use App\Club;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Lcobucci\JWT\Parser;
-use Lcobucci\JWT\Signer\Hmac\Sha256;
-use Lcobucci\JWT\ValidationData;
 use Log;
 
 class UserController extends Controller {
@@ -62,9 +59,7 @@ class UserController extends Controller {
         }
 
 
-        $this->validate($request, array(
-                'id' => 'required|numeric'
-            ));
+        $this->validate($request, array('id' => 'required|numeric'));
 
         $user = User::where(array(
                 array('firstname', '=', $request->get('firstname')),
@@ -73,7 +68,7 @@ class UserController extends Controller {
                 array('student_id', '=', $request->get('id')),
             ))->first();
 
-        if (is_null($user)) {
+        if ($president = self::findClubIdOfPresident($userId) and !($user->password == '')) {
             return redirect()->back()->withErrors(array('error' => 'ไม่สามารถยืนยันตัวตนได้ กรุณาติดต่อเพจ TUCMC'));
         }
 
