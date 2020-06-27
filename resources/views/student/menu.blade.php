@@ -161,7 +161,7 @@
                     </div>
                     <form method="POST" action="/club-register" class="select-append">
                         {{ csrf_field() }}
-                        <h5>สมัครคัดเลือกเข้าชมรม รอบที่ 1</h5>
+                        <h5>สมัครคัดเลือกเข้าชมรม</h5>
                         <div class="row" style="margin-bottom:0">
                             <div class="input-field col s12">
                                 <select name="club" required>
@@ -172,8 +172,7 @@
                             </div>
                         </div>
                         <button class="btn waves-effect waves-light purple fullwidth" type="submit">
-                            ดูข้อมูลเพิ่มเติม
-                            <i class="material-icons left">info_outline</i>
+                            ต่อไป
                         </button>
                     </form>
 
@@ -230,7 +229,7 @@
                 <div class="sector">
                     <form method="POST" action="/club-register" class="select-append">
                         {{ csrf_field() }}
-                        <h5>ลงทะเบียนเข้าชมรม รอบที่ 2 (สำหรับผู้ไม่ผ่านออดิชั่น)</h5>
+                        <h5>ลงทะเบียนเข้าชมรม สำหรับผู้ไม่ผ่านออดิชั่นหรือผู้ที่สละสิทธิ์ทุกชมรมที่ออดิชั่นผ่าน</h5>
                         <p class="red-text">เมื่อนักเรียนลงทะเบียนชมรมไปแล้ว จะไม่สามารถแก้ไขการลงทะเบียนชมรมได้อีก</p>
                         <div class="row">
                             <div class="input-field col s12">
@@ -242,8 +241,7 @@
                             </div>
                         </div>
                         <button class="btn waves-effect waves-light fullwidth indigo" type="submit">
-                            ลงทะเบียนเข้าเรียนชมรม
-                            <i class="material-icons left">check</i>
+                            ต่อไป
                         </button>
                     </form>
                 </div>
