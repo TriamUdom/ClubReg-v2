@@ -5,15 +5,12 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="theme-color" content="#009688"/>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" integrity="sha256-e22BQKCF7bb/h/4MFJ1a4lTRR2OuAe8Hxa/3tgU5Taw=" crossorigin="anonymous" />
     <link rel="shortcut icon" href="/favicon.png" />
     <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet" />
     <style>
-        .th {
-            font-family: 'Kanit', Sans-Serif !important
-        }
-
         body {
+            font-family: 'Kanit', serif;
             display: flex;
             min-height: 100vh;
             flex-direction: column;
@@ -66,8 +63,8 @@
 <body>
 <nav class="teal white-text" role="navigation">
     <div class="nav-wrapper container">
-        <a id="logo-container" href="/" class="brand-logo th"><img src="/phrakiao.png" style="height:1.8rem"/>  ระบบทะเบียนชมรม</a>
-        <ul class="right hide-on-med-and-down th">
+        <a id="logo-container" href="/" class="brand-logo"><img src="/phrakiao.png" style="height:1.8rem"/>  ระบบทะเบียนชมรม</a>
+        <ul class="right hide-on-med-and-down">
             <li><a href="/">หน้าหลัก</a></li>
         </ul>
     </div>
@@ -78,33 +75,21 @@
     <div class="red darken-2 white-text" style="padding: 20px;margin-bottom:20px; padding-top:50px; padding-bottom:50px;">
         @section('content')
             <h1 class="center-align light" id="title">@yield('title')</h1>
-            <h2 class="center-align light th">@yield('description')</h2>
+            <h2 class="center-align">@yield('description')</h2>
         @show
     </div>
     @section('button')
-        <a href="/" class="waves-effect waves-light btn blue darken-2 tooltipped center-align th" data-tooltip="กลับสู่หน้าหลัก" style="width:80%;max-width:350px;margin-top:20px">กลับไปยังหน้าหลัก</a>
+        <a href="/" class="waves-effect waves-light btn blue darken-2 center-align" style="width:80%;max-width:350px;margin-top:20px">กลับไปยังหน้าหลัก</a>
     @show
 </main>
 
 <footer class="page-footer teal">
     <div class="footer-copyright">
-        <div class="container th">
+        <div class="container">
             งานกิจกรรมพัฒนาผู้เรียน โรงเรียนเตรียมอุดมศึกษา
         </div>
     </div>
 </footer>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script>
-    if ($('h1')[0].scrollWidth > $('h1').innerWidth()) {
-        var fs = 85;
-        while ($('h1')[0].scrollWidth > $('h1').innerWidth()) {
-            $('#title').css('font-size', fs + 'px');
-            fs--;
-        }
-        fs++;
-        console.log('Title font size has been decreased to ' + fs);
-    }
-</script>
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
             (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -112,11 +97,8 @@
     })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
     ga('create', 'UA-88470919-6', 'auto');
-
     ga('send', 'event', 'Error', 'occur', '@yield('code')');
-
-ga('send', 'pageview');
-
+    ga('send', 'pageview');
 </script>
 @yield('script')
 </body>

@@ -23,10 +23,6 @@
         input::-webkit-inner-spin-button {
             -webkit-appearance: none;
         }
-
-        .g-recaptcha div {
-            margin: auto;
-        }
     </style>
 @endsection
 
@@ -110,10 +106,8 @@
                             lastUpdated = Date.now();
                         }
                         setTimeout(function () {
-                            $(function () {
-                                showTime();
-                                setInterval('showTime()', 1000);
-                            });
+                            showTime();
+                            setInterval('showTime()', 1000);
                         }, 500);
                     </script>
                 @endif
@@ -145,10 +139,8 @@
     <div class="center-align minibox sector red darken-1 white-text" id="mini-al" style="font-size:1.3rem;line-height: 2rem;">
         <h4>ระบบอาจทำงานไม่ปกติ</h4>
         คุณกำลังใช้งานบนอุปกรณ์ที่ไม่เหมาะสม<br/>
-        งานกิจกรรม ฯ จะไม่รับผิดชอบหากเกิดข้อผิดพลาด<br/>
+        งานกิจกรรมพัฒนาผู้เรียนจะไม่รับผิดชอบหากเกิดข้อผิดพลาด<br/>
         ใช้งานได้ดีที่สุดบน Mozilla Firefox หรือ Google Chrome รุ่นล่าสุด
-        งานกิจกรรมฯจะไม่รับผิดชอบหากเกิดข้อผิดพลาด<br/>
-        ใช้งานได้ดีที่สุดบน Mozilla Firefox หรือ Google Chrome รุ่นล่าสุดบนอุปกรณ์ที่ไม่ใช่ iOS
     </div>
 @endsection
 
@@ -174,14 +166,6 @@
                 $('#mini-def').show();
                 $('#mini-al').hide();
             }
-
-            $('.login-form').submit(function (event) {
-                if (grecaptcha.getResponse().length == 0) {
-                    // ReCAPTCHA validation failed
-                    Materialize.toast("กรุณากด \"ฉันไม่ใช่โปรแกรมอัตโนมัติ\"", 4000);
-                    event.preventDefault();
-                }
-            });
         });
     </script>
 @endsection

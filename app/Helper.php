@@ -22,6 +22,7 @@ class Helper {
      * Is currently in supplied round?
      *
      * @param string $round
+     * @param bool   $ignoreCountdown
      * @return bool
      */
     public static function isRound(string $round, bool $ignoreCountdown = false) {
