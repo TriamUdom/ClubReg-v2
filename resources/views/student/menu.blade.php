@@ -59,8 +59,8 @@
             <h4>{{ $user->club->name }} ({{ $user->club_id }})</h4>
             <p class="center-align">หากนักเรียนประสบปัญหาหรือมีข้อสงสัย โปรดติดต่องานกิจกรรมพัฒนาผู้เรียน ตึก 50 ปี</p>
         @elseif (\App\Helper::isRound(\App\Helper::Round_Closed))
-            <h5 class="center-align" style="margin-top:2rem">หมดเวลาลงทะเบียนชมรมแล้ว</h5>
-            <p class="center-align">โปรดติดต่องานกิจกรรมพัฒนาผู้เรียน ตึก 50 ปี</p>
+            <h5 class="center-align" style="margin-top:2rem">ยังไม่ถึงเวลาลงทะเบียนชมรม</h5>
+            <!-- <p class="center-align">โปรดติดต่องานกิจกรรมพัฒนาผู้เรียน ตึก 50 ปี</p> -->
         @elseif (\App\Helper::isRound(\App\Helper::Round_Waiting))
             <h5 class="center-align" style="margin-top:2rem">ไม่อนุญาตให้นักเรียนลงทะเบียนในขณะนี้</h5>
             @if (\App\Helper::shouldCountdown())
