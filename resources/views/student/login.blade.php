@@ -38,6 +38,12 @@
                 <h4 class="center login-form-text">ลงทะเบียนเข้าร่วมชมรม</h4>
             </div>
         </div>
+        <div class="row">
+                <div class="col s12">
+                    <a class="waves-effect waves-light btn-large blue fullwidth" href="/handbook.pdf"><i class="material-icons left">lock</i>คู่มือแนะนำชมรม ปีการศึกษา 2563</a>
+                </div>
+            </div>
+
         @if (count($errors) > 0)
             <div class="sector red white-text">
                 {{ implode(', ', $errors->all()) }}
