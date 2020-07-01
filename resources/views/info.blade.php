@@ -16,7 +16,7 @@
 @section('main')
     <h3 class="center-align">รายละเอียดการลงทะเบียน</h3>
 
-    <h4>การรับลงทะเบียนในรอบต่างๆ</h4>
+    <!-- <h4>การรับลงทะเบียนในรอบต่างๆ</h4>
     <div id="timeline" style="height: 300px;"></div>
     <p>
         ระดับชั้นมัธยมศึกษาปีที่ 4 :<br />
@@ -31,10 +31,10 @@
         3.	วันที่ 21 – 24 พฤษภาคม ดำเนินการออดิชั่น<br />
         4.	วันที่ 21 – 25 พฤษภาคม นักเรียนทำการตอบรับการออดิชั่น<br />
         5.	วันที่ 26 พฤษภาคม นักเรียนที่ไม่ผ่านการออดิชั่น ลงทะเบียนเรียนชมรมที่ไม่มีการออดิชั่น<br />
-    </p>
+    </p> -->
 
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
+    <!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> -->
+    <!-- <script type="text/javascript">
         google.charts.load('current', {'packages': ['timeline'], 'language': 'th'});
         google.charts.setOnLoadCallback(drawChart);
         function drawChart() {
@@ -60,7 +60,7 @@
 
             chart.draw(dataTable, options);
         }
-    </script>
+    </script> -->
 
     <h4>เงื่อนไข</h4>
     <p>
