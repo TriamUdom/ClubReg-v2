@@ -21,13 +21,13 @@ Route::group(['middleware' => ['web']], function () {
     Route::view('register', 'register');
     Route::post('register', 'UserController@register');
 
-    // Route::get('info', function () {
-    //     return view('info');
-    // });
+    Route::get('info', function () {
+        return view('info');
+    });
 
-    // Route::get('clubinfo', function () {
-    //     return view('detail');
-    // });
+    Route::get('clubinfo', function () {
+        return view('detail');
+    });
 
     Route::view('contact', 'contact');
 
