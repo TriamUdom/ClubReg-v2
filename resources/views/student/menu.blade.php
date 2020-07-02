@@ -133,7 +133,7 @@
                 <p class="center-align">กรุณาลองใหม่ภายหลัง</p>
             @endif
         @else
-            @if (\App\Helper::isRound(\App\Helper::Round_Confirm) AND $user->getPreviousClub())
+            @if (\App\Helper::isRound(\App\Helper::Round_Confirm) AND $user->getPreviousClub() AND \App\Helper::isRound(\App\Helper::Round_Register))
                 <div class="sector">
                     <h5>ลงทะเบียนเข้าชมรมเดิม</h5>
                     <p>ปีการศึกษาที่ผ่านมา นักเรียนอยู่ชมรม <b>{{ ($oldClub = $user->getPreviousClub(true))->name }} ({{ $oldClub->id }})</b></p>
@@ -151,9 +151,42 @@
                         <p class="red-text"><span style="font-size: 1.3rem">ชมรมรับนักเรียนเดิมเต็มอัตราส่วนแล้ว</span> (นักเรียนสามารถลงทะเบียนใหม่เสมือนไม่ได้อยู่ชมรมนี้อยู่ก่อน)</p>
                     @endif
                 </div>
-            @elseif (\App\Helper::isRound(\App\Helper::Round_Confirm) AND !$user->getPreviousClub())
-                <h5 class="center-align" style="margin-top:2rem">การลงทะเบียนชมรมอยู่ในช่วงการยืนยันสิทธิ์ของสมาชิกเก่า</h5>
-                <p class="center-align">หากนักเรียนประสบปัญหาหรือมีข้อสงสัย โปรดติดต่องานกิจกรรมพัฒนาผู้เรียน ตึก 50 ปี</p>
+                <div class="sector">
+                    <div class="sector grey lighten-4 red-text" style="font-size: 1.5rem;line-height: 1.8rem">
+                        นักเรียนจะต้องดำเนินการด้วยความระมัดระวัง หากนักเรียนลงทะเบียนเรียนชมรมที่ไม่มีการคัดเลือกไปแล้ว จะไม่สามารถแก้ไขหรือยกเลิกได้ และจะไม่สามารถกดตอบรับการคัดเลือกได้อีก
+                    </div>
+                    <form method="POST" action="/club-register" class="select-append">
+                        {{ csrf_field() }}
+                        <h5>สมัครคัดเลือกเข้าชมรม</h5>
+                        <div class="row" style="margin-bottom:0">
+                            <div class="input-field col s12">
+                                <select name="club" required>
+                                    <option value="" disabled selected>เลือกชมรมที่ต้องการ</option>
+                                    {!! \App\Helper::createOption(\App\Club::fetchAllClubs()) !!}
+                                </select>
+                                <label>ชมรมที่ต้องการสมัคร</label>
+                            </div>
+                        </div>
+                        <button class="btn waves-effect waves-light purple fullwidth" type="submit">
+                            ต่อไป
+                        </button>
+                    </form>
+
+                    <br/>
+                    <p><span style="font-size:1.3rem">ชมรมที่ได้ลงทะเบียนเพื่อเข้าคัดเลือก (ออดิชั่น)</span>
+                    <ul class="collection">
+                        @if(empty($user->auditions))
+                            ไม่พบชมรมที่ได้ลงทะเบียนเพื่อเข้าคัดเลือก (ออดิชั่น)
+                        @else
+                            @foreach($user->auditions as $audition)
+                                <li class="collection-item">
+                                    <b class="title">{{ $audition->club->name }}</b>
+                                    <a href="/club-register/{{ $audition->club->id }}">ดูข้อมูล</a>
+                                </li>
+                            @endforeach
+                        @endif
+                    </ul>
+                </div>
             @elseif (\App\Helper::isRound(\App\Helper::Round_Register))
                 <div class="sector">
                     <div class="sector grey lighten-4 red-text" style="font-size: 1.5rem;line-height: 1.8rem">
