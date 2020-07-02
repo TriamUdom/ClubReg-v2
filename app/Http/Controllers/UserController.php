@@ -68,9 +68,9 @@ class UserController extends Controller {
                 array('student_id', '=', $request->get('id')),
             ))->first();
 
-        if ($president = self::findClubIdOfPresident($userId) and !($user->password == '')) {
-            return redirect()->back()->withErrors(array('error' => 'ไม่สามารถยืนยันตัวตนได้ กรุณาติดต่อเพจ TUCMC'));
-        }
+        // if ($president = self::findClubIdOfPresident($userId) and !($user->password == '')) {
+        //     return redirect()->back()->withErrors(array('error' => 'ไม่สามารถยืนยันตัวตนได้ กรุณาติดต่อเพจ TUCMC'));
+        // }
 
         $user->room = $request->get('room');
         $user->number = $request->get('number');
