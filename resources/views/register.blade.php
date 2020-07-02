@@ -57,7 +57,7 @@
             <div class="row">
                 <div class="input-field col s6">
                     <input id="firstname" name="firstname" class="validate " required="" type="text">
-                    <label for="firstname">ชื่อ</label>
+                    <label for="firstname">ชื่อ (ไม่ต้องกรอกคำนำหน้า)</label>
                 </div>
 
                 <div class="input-field col s6">
@@ -67,7 +67,7 @@
             </div>
 
             <p class="red-text">
-                หากนักเรียนมีชื่อกลาง ให้นักเรียนกรอกในช่อง นามสกุล
+                หากนักเรียนมีชื่อกลาง ให้นักเรียนกรอกในช่อง ชื่อ
             </p>
 
             <div class="row">
