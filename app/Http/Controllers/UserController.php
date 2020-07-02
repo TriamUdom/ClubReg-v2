@@ -68,7 +68,12 @@ class UserController extends Controller {
                 array('student_id', '=', $request->get('id')),
             ))->first();
 
-            
+        if(is_null($user)) {
+            return redirect()->back()->withErrors(array('no_user' => 'ไม่พบผู้ใช้งาน โปรดติดต่อเพจ TUCMC'));
+        }
+
+        $user->room = $request->get('room');
+        $user->number = $request->get('number');
         $user->password = \Hash::make($request->get('password'));
         $user->save();
 
