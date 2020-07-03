@@ -133,7 +133,7 @@
                 <p class="center-align">กรุณาลองใหม่ภายหลัง</p>
             @endif
         @else
-            @if (\App\Helper::isRound(\App\Helper::Round_Confirm) AND $user->getPreviousClub() AND \App\Helper::isRound(\App\Helper::Round_Register))
+            @if (\App\Helper::isRound(\App\Helper::Round_Confirm) AND $user->getPreviousClub())
                 <div class="sector">
                     <h5>ลงทะเบียนเข้าชมรมเดิม</h5>
                     <p>ปีการศึกษาที่ผ่านมา นักเรียนอยู่ชมรม <b>{{ ($oldClub = $user->getPreviousClub(true))->name }} ({{ $oldClub->id }})</b></p>
