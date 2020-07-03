@@ -10,7 +10,7 @@ return array(
     'redirect_uri' => env('APP_URL', 'http://localhost') . '/openid_login',
     'url' => env('APP_URL', 'http://localhost'),
     
-    'current_year' => '2562',
+    'current_year' => '2563',
     'current_semester' => value(function () {
         $month = date('m');
         if ($month >= 5 and $month <= 9) {

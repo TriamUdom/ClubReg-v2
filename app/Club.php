@@ -330,10 +330,10 @@ class Club extends Model {
         } elseif (!$this->is_audition && Helper::isRound(Helper::Round_Register)) {
             switch ($level) {
                 case 4:
-                    return $this->members()->where('reason', '=', 'WAR')->where('level', 4)->count() < $this->max_member * 0.15 and $this->isAvailable();
+                    return $this->members()->where('level', 4)->count() < $this->max_member * 0.15 and $this->isAvailable();
                 case 5:
                 case 6:
-                    return $this->members()->where('reason', '=', 'WAR')->where('level', '!=', 4)->count() < $this->max_member * 0.4 and $this->isAvailable();
+                    return $this->members()->where('level', '!=', 4)->count() < $this->max_member * 0.4 and $this->isAvailable();
             }
         }
         return $this->isAvailable();
@@ -346,10 +346,10 @@ class Club extends Model {
             } else {
                 switch ($level) {
                     case 4:
-                        return floor($this->max_member * 0.15) - $this->members()->where('reason', '=', 'WAR')->where('level', 4)->count();
+                        return floor($this->max_member * 0.15) - $this->members()->where('level', 4)->count();
                     case 5:
                     case 6:
-                        return floor($this->max_member * 0.4) - $this->members()->where('reason', '=', 'WAR')->where('level', '!=', 4)->count();
+                        return floor($this->max_member * 0.4) - $this->members()->where('level', '!=', 4)->count();
                 }
             }
         } elseif (Helper::isRound(Helper::Round_Confirm)) {
