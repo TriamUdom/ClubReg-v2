@@ -15,8 +15,8 @@ foreach ($a as $student) {
         $randIndex = array_rand($aval_club);
         $user->club_id = $aval_club[$randIndex];
         $user->save();
-        echo "DONE \n";
+        echo "$student[0]: DONE \n";
     } else {
-        echo $student[0];
+        echo "$student[0]: FAILED \n";
     }
 }
