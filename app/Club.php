@@ -178,7 +178,7 @@ class Club extends Model {
         $templateProcessor->setValue('clubName', htmlspecialchars($this->name));
         $templateProcessor->setValue('clubCode', htmlspecialchars($this->id));
         $templateProcessor->setValue('semester', htmlspecialchars($semester));
-        $templateProcessor->setValue('operation_year', htmlspecialchars(config('core.current_year')));
+        $templateProcessor->setValue('operation_year', htmlspecialchars('2563'));
         
         $studentCount = count($studentData);
         $templateProcessor->cloneRow('count', $studentCount);
